@@ -1,0 +1,18 @@
+
+CONFIGURAZIONE FILE BLUETOOTH
+
+1 BYTE 	--->	XX000000  	--->	COMANDO
+		--->  	00XXXX00  	--->	VALORE TEMPO
+		--->	000000XX	--->	UNITA' TEMPO 
+		
+COMANDI	--->	FF			---> 	MESSA A FUOCO
+		--->	FFXXXXXX	--->	IMPOSTA TEMPO FUOCO + FUOCO
+		--->	SS			--->	SCATTO
+		--->	SSXXXXXX	--->	IMPOSTA TEMPO SCATTO + SCATTO
+		---> 	FS			--->	FUOCO + SCATTO
+		--->	DFXXXXXX	--->	IMPOSTA TEMPO DI FUOCO
+		--->	DSXXXXXX	---> 	IMPOSTA TEMPO SCATTO
+		
+UNITA' 	--->	ms			--->	MILLISECONDI
+		--->	ss			--->	SECONDI
+		--->	mm			--->	MINUTI
