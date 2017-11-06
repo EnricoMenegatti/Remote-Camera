@@ -21,7 +21,7 @@ int modalita;
 int d_focus, d_shoot;
 int micro = 0;
 
-char c[8];
+char c[8], temp[10];
 int i = 0;
 
 SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
@@ -48,47 +48,78 @@ void loop()
   switch (modalita)
   {
 
-    case 1:
-    break;
+    case 1: //SCATTO REMOTO
 
-    case 2:
-    break;
-
-    case 3:
-    break;
-
-    case 4:
-    break;
-
-    defaul:
-  }
-
-  micro = analogRead(p_micro); 
-
-  display.clearDisplay();   // clears the screen and buffer
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(0,20);
-  display.println(micro);
-  display.display();
+      if (mySerial.available() > 0)
+      {
+        // Reading incoming bytes :
+        c[i] = mySerial.read();
     
-  if (mySerial.available() > 0)
-  {
-    // Reading incoming bytes :
-    c[i] = mySerial.read();
+        i = i + 1;
+    
+        if (c[i] == '*') //FINE STRINGA E CICLO
+        {
+          scatto();
+          i = 0;
+        }
+        else if (c[i] == '°') //FINE STRINGA E CAMBIO MODALITA'
+        {
+          c_modo();
+          i = 0;
+        }
+      }
+  
+    break;
 
-    i = i + 1;
+    case 2: //TIMELAPSE
+    break;
 
-    if (c[i] == '*') //FINE STRINGA
-    {
-      ciclo();
-      i = 0;
-    }
-  }
+    case 3: //FOTOTRAPPOLA LASER
+    break;
+
+    case 4: //FOTOTRAPPOLA ACUSTICA
+
+      micro = analogRead(p_micro); 
+
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println(micro);
+      display.display();
+      
+    break;
+
+    //defaul:
+  } 
 }
 
 //--------------------------FUNZIONI------------------------
-void ciclo()
+
+void c_modo()
+{
+  if (c[0] == 'S')
+  {
+    modalita = 1;
+  }
+
+  else if (c[0] == 'T')
+  {
+    modalita = 2;
+  }
+
+  else if (c[0] == 'L')
+  {
+    modalita = 3;
+  }
+
+  else if (c[0] == 'A')
+  {
+    modalita = 4;
+  }
+}
+
+void scatto()
 {
 
   if (c[0] == 'F')
