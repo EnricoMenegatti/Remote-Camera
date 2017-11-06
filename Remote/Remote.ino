@@ -17,7 +17,8 @@ const int p_TX = 10;
 const int p_RX = 11;
 const int p_micro = A3;
 
-int d_shoot;
+int modalita;
+int d_focus, d_shoot;
 int micro = 0;
 
 char c[8];
@@ -44,6 +45,23 @@ void setup()
 
 void loop() 
 {
+  switch (modalita)
+  {
+
+    case 1:
+    break;
+
+    case 2:
+    break;
+
+    case 3:
+    break;
+
+    case 4:
+    break;
+
+    defaul:
+  }
 
   micro = analogRead(p_micro); 
 
