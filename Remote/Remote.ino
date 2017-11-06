@@ -15,9 +15,11 @@ SoftwareSerial mySerial(11, 10); // RX, TX
 
 const int p_focus = 8;
 const int p_shoot = 9;
+const int p_micro = A3;
 
 int serial = 0;
 int d_shoot;
+int micro = 0;
 
 char c[8];
 int i = 0;
@@ -115,7 +117,7 @@ void setup()
   mySerial.println("Initializing I2C devices...");
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC); // initialize with the I2C addr 0x3D (for the 128x64)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3D (for the 128x64)
   // init done
 
   pinMode(p_focus, OUTPUT);
@@ -128,13 +130,15 @@ void setup()
 void loop() 
 {
 
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println(c);
-    display.display();
-    //ciclo();
+  micro = analogRead(p_micro); 
+
+  display.clearDisplay();   // clears the screen and buffer
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0,20);
+  display.println(micro);
+  display.display();
+  //ciclo();
     
   if (mySerial.available() > 0)
   {
