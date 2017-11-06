@@ -3,12 +3,6 @@
 #include <Adafruit_SSD1306.h>
 #include <SoftwareSerial.h>
 
-#include "I2Cdev.h"
-
-#define OUTPUT_READABLE_ACCELGYRO
-#define LED_PIN 13
-bool blinkState = false;
-
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -39,87 +33,81 @@ void clean()
 void ciclo()
 {
 
-  if (c[0] && c[1] == "FF")
+  if (c[0] == 'F')
   {
-    digitalWrite(p_focus, HIGH); // Focus..
-
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Focus");
-    mySerial.println("Focus");
-    display.display();
-
-    delay(1000);
+    if (c[1] == 'F')
+    {
+      digitalWrite(p_focus, HIGH); // Focus..
+  
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println("Focus");
+      mySerial.println("Focus");
+      display.display();
+  
+      delay(1000);
     
-    clean();
-    
-    digitalWrite(p_focus, LOW);
+      digitalWrite(p_focus, LOW);
+    }
 
+    if (c[1] == 'S')
+    {
+      digitalWrite(p_focus, HIGH); // Focus..
+  
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println("Focus");
+      mySerial.println("Focus");
+      display.display();
+  
+      delay(1000);
+      
+      digitalWrite(p_focus, LOW);
+  
+      digitalWrite(p_shoot, HIGH); // Shoot !!
+  
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println("Shoot");
+      mySerial.println("Shoot");
+      display.display();
+      
+      delay(d_shoot);
+
+      digitalWrite(p_shoot, LOW);
+    }
   }
 
-  if (c[0] && c[1] == 'SS')
+  if (c[0] == 'S')
   {
-    digitalWrite(p_shoot, HIGH); // Shoot !!
-
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Shoot");
-    mySerial.println("Shoot");
-    display.display();
-    
-    delay(d_shoot);
-    
-    clean();
-    
-    digitalWrite(p_shoot, LOW);
-  }
-
-  if (c[0] && c[1] == 'FS')
-  {
-    digitalWrite(p_focus, HIGH); // Focus..
-
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Focus");
-    mySerial.println("Focus");
-    display.display();
-
-    delay(1000);
-    
-    digitalWrite(p_focus, LOW);
-
-    digitalWrite(p_shoot, HIGH); // Shoot !!
-
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Shoot");
-    mySerial.println("Shoot");
-    display.display();
-    
-    delay(d_shoot);
-    
-    clean();
-    
-    digitalWrite(p_shoot, LOW);
+    if (c[0] == 'S')
+    {
+      
+      digitalWrite(p_shoot, HIGH); // Shoot !!
+  
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println("Shoot");
+      mySerial.println("Shoot");
+      display.display();
+      
+      delay(d_shoot);
+      
+      digitalWrite(p_shoot, LOW);
+    }  
   }
 }
 
 void setup()   
 {  
-  
-  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-      Wire.begin();
-  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-      Fastwire::setup(400, true);
-  #endif
 
   Serial.begin(19200);
   mySerial.begin(19200);
@@ -127,7 +115,7 @@ void setup()
   mySerial.println("Initializing I2C devices...");
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+  display.begin(SSD1306_SWITCHCAPVCC); // initialize with the I2C addr 0x3D (for the 128x64)
   // init done
 
   pinMode(p_focus, OUTPUT);
@@ -146,7 +134,7 @@ void loop()
     display.setCursor(0,20);
     display.println(c);
     display.display();
-    ciclo();
+    //ciclo();
     
   if (mySerial.available() > 0)
   {
