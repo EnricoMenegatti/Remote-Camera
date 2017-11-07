@@ -4,7 +4,7 @@
 #include <Adafruit_SSD1306.h>
 
 #define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
+
 
 #define NUMFLAKES 10
 #define XPOS 0
@@ -62,7 +62,7 @@ void loop()
           scatto();
           i = 0;
         }
-        else if (c[i] == '°') //FINE STRINGA E CAMBIO MODALITA'
+        else if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
           i = 0;
@@ -136,7 +136,7 @@ void scatto()
       mySerial.println("Focus");
       display.display();
   
-      delay(1000);
+      delay(d_focus);
     
       digitalWrite(p_focus, LOW);
     }
@@ -153,7 +153,7 @@ void scatto()
       mySerial.println("Focus");
       display.display();
   
-      delay(1000);
+      delay(d_focus);
       
       digitalWrite(p_focus, LOW);
   
@@ -175,8 +175,12 @@ void scatto()
 
   if (c[0] == 'S')
   {
-    if (c[0] == 'S') //SHOOT
+    if (c[1] == 'S') //SHOOT
     {
+      if (c[2] =! '-') //SHOOT
+      {
+        d_shoot = (c[2] && c[3] && c[4] && c[5]);
+      }
       
       digitalWrite(p_shoot, HIGH); // Shoot !!
   
