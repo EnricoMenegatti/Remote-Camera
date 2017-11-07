@@ -28,14 +28,13 @@ MODALITA' DI FUNZIONAMENTO
 						--->	000000X0	--->	UNITA' TEMPO 
 						--->	0000000X	--->	FINE STRINGA
 						
-			COMANDI			--->	FF			---> 	MESSA A FUOCO
-							--->	FFXXXXXX	--->	IMPOSTA TEMPO FUOCO + FUOCO
-							--->	SS			--->	SCATTO
-							--->	SSXXXXXX	--->	IMPOSTA TEMPO SCATTO + SCATTO
-							---> 	FS			--->	FUOCO + SCATTO
-							--->	DFXXXXXX	--->	IMPOSTA TEMPO DI FUOCO
-							--->	DSXXXXXX	---> 	IMPOSTA TEMPO SCATTO
-							
+			COMANDI			--->	FF-----X	---> 	MESSA A FUOCO STANDARD(1S)
+							--->	FFXXXXXX	--->	FUOCO CON TEMPO DIVERSO DA STANDARD
+							--->	SS-----X	--->	SCATTO STANDARD(DA IMPOSTAZIONI MACCHINA)
+							--->	SSXXXXXX	--->	SCATTO CON MACCHINA IN BULB
+							---> 	FS-----X	--->	FUOCO + SCATTO STANDARD(1S + SCATTO MACCHINA)
+
+
 			UNITA' 			--->	m			--->	MILLISECONDI
 							--->	S			--->	SECONDI
 							--->	M			--->	MINUTI

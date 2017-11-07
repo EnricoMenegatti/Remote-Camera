@@ -4,7 +4,7 @@
 #include <Adafruit_SSD1306.h>
 
 #define OLED_RESET 4
-
+Adafruit_SSD1306 display(OLED_RESET);
 
 #define NUMFLAKES 10
 #define XPOS 0
@@ -18,8 +18,8 @@ const int p_RX = 11;
 const int p_micro = A3;
 
 int modalita;
-int d_focus, d_shoot;
-int micro = 0;
+long d_focus, d_shoot;
+int micro = 0, mul_d;
 
 char c[8], temp[10];
 int i = 0;
@@ -35,7 +35,7 @@ void setup()
   mySerial.println("Initializing I2C devices...");
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3D (for the 128x64)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3D); // initialize with the I2C addr 0x3D (for the 128x64)
   // init done
 
   pinMode(p_focus, OUTPUT);
@@ -177,14 +177,27 @@ void scatto()
   {
     if (c[1] == 'S') //SHOOT
     {
-      if (c[2] =! '-') //SHOOT
+      if (c[2] =! '-') //IMPOSTA TEMPO BULB
       {
-        d_shoot = (c[2] && c[3] && c[4] && c[5]);
+        d_shoot = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
+
+        if (c[6] == 'm')
+        {
+          mul_d = 1;
+        }
+        else if (c[6] == 'S')
+        {
+          mul_d = 1000;
+        }
+        else if (c[6] == 'M')
+        {
+          mul_d = 60000;
+        }
+
+        d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
       }
-      
-      digitalWrite(p_shoot, HIGH); // Shoot !!
-  
-      display.clearDisplay();   // clears the screen and buffer
+
+      display.clearDisplay();
       display.setTextSize(2);
       display.setTextColor(WHITE);
       display.setCursor(0,20);
@@ -192,7 +205,16 @@ void scatto()
       mySerial.println("Shoot");
       display.display();
       
-      delay(d_shoot);
+      digitalWrite(p_shoot, HIGH); // Shoot !!
+      
+      if (c[2] =! '-') //SCATTA CON TEMPO BULB
+      {
+        delay(d_shoot);
+      }
+      else //SCATTA CON TEMPO MACCHINA
+      {
+        delay(50);
+      }
       
       digitalWrite(p_shoot, LOW);
     }  
