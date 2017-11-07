@@ -15,13 +15,14 @@ const int p_focus = 8;
 const int p_shoot = 9;
 const int p_TX = 10;
 const int p_RX = 11;
+const int p_laser = A2;
 const int p_micro = A3;
 
-int modalita;
+int modalita = 1;
 long d_focus, d_shoot;
-int micro = 0, mul_d;
+int micro, laser, mul_d;
 
-char c[8], temp[10];
+char c[8];
 int i = 0;
 
 SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
@@ -47,7 +48,6 @@ void loop()
 {
   switch (modalita)
   {
-
     case 1: //SCATTO REMOTO
 
       if (mySerial.available() > 0)
@@ -57,14 +57,14 @@ void loop()
     
         i = i + 1;
     
-        if (c[i] == '*') //FINE STRINGA E CICLO
-        {
-          scatto();
-          i = 0;
-        }
-        else if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
+          i = 0;
+        }
+        else if (c[i] == '*') //FINE STRINGA E CICLO
+        {
+          scatto();
           i = 0;
         }
       }
@@ -72,13 +72,81 @@ void loop()
     break;
 
     case 2: //TIMELAPSE
+
+      if (mySerial.available() > 0)
+      {
+        // Reading incoming bytes :
+        c[i] = mySerial.read();
+    
+        i = i + 1;
+    
+        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        {
+          c_modo();
+          i = 0;
+        }
+        else if (c[i] == '*') //FINE STRINGA E CICLO
+        {
+      
+          i = 0;
+        }
+      }
+      
     break;
 
     case 3: //FOTOTRAPPOLA LASER
+
+      if (mySerial.available() > 0)
+      {
+        // Reading incoming bytes :
+        c[i] = mySerial.read();
+    
+        i = i + 1;
+    
+        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        {
+          c_modo();
+          i = 0;
+        }
+        else if (c[i] == '*') //FINE STRINGA E CICLO
+        {
+    
+          i = 0;
+        }
+      }
+
+      laser = analogRead(p_laser); 
+
+      display.clearDisplay();   // clears the screen and buffer
+      display.setTextSize(2);
+      display.setTextColor(WHITE);
+      display.setCursor(0,20);
+      display.println(laser);
+      display.display();
+      
     break;
 
     case 4: //FOTOTRAPPOLA ACUSTICA
 
+      if (mySerial.available() > 0)
+      {
+        // Reading incoming bytes :
+        c[i] = mySerial.read();
+    
+        i = i + 1;
+    
+        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        {
+          c_modo();
+          i = 0;
+        }
+        else if (c[i] == '*') //FINE STRINGA E CICLO
+        {
+
+          i = 0;
+        }
+      }
+      
       micro = analogRead(p_micro); 
 
       display.clearDisplay();   // clears the screen and buffer
