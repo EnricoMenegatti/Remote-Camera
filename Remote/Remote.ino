@@ -126,8 +126,26 @@ void scatto()
   {
     if (c[1] == 'F') //FOCUS
     {
-      digitalWrite(p_focus, HIGH); // Focus..
-  
+      if (c[2] =! '-') //IMPOSTA TEMPO FUOCO
+      {
+        d_focus = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
+
+        if (c[6] == 'm')
+        {
+          mul_d = 1;
+        }
+        else if (c[6] == 'S')
+        {
+          mul_d = 1000;
+        }
+        else if (c[6] == 'M')
+        {
+          mul_d = 60000;
+        }
+
+        d_focus = d_focus * mul_d; //TRASFORMA IN MILLISECONDI
+      }
+
       display.clearDisplay();   // clears the screen and buffer
       display.setTextSize(2);
       display.setTextColor(WHITE);
@@ -135,31 +153,36 @@ void scatto()
       display.println("Focus");
       mySerial.println("Focus");
       display.display();
-  
-      delay(d_focus);
-    
+      
+      digitalWrite(p_focus, HIGH); // Focus..  
+      
+      if (c[2] =! '-') //FUOCO CON TEMPO IMPOSTATO
+      {
+        delay(d_focus);
+      }
+      else //FUOCO CON TEMPO STANDARD
+      {
+        delay(1000);
+      } 
+      
       digitalWrite(p_focus, LOW);
     }
 
     if (c[1] == 'S') //FOCUS + SHOOT
     {
-      digitalWrite(p_focus, HIGH); // Focus..
-  
-      display.clearDisplay();   // clears the screen and buffer
+
+      display.clearDisplay();
       display.setTextSize(2);
       display.setTextColor(WHITE);
       display.setCursor(0,20);
       display.println("Focus");
       mySerial.println("Focus");
       display.display();
-  
-      delay(d_focus);
       
-      digitalWrite(p_focus, LOW);
-  
-      digitalWrite(p_shoot, HIGH); // Shoot !!
-  
-      display.clearDisplay();   // clears the screen and buffer
+      digitalWrite(p_focus, HIGH); // Focus.. 
+      delay(1000);      
+
+      display.clearDisplay(); 
       display.setTextSize(2);
       display.setTextColor(WHITE);
       display.setCursor(0,20);
@@ -167,8 +190,9 @@ void scatto()
       mySerial.println("Shoot");
       display.display();
       
-      delay(d_shoot);
-
+      digitalWrite(p_shoot, HIGH); // Shoot !!     
+      delay(50);
+      digitalWrite(p_focus, LOW);
       digitalWrite(p_shoot, LOW);
     }
   }
