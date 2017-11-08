@@ -33,13 +33,6 @@ void setup()
 
   Serial.begin(19200);
   mySerial.begin(19200);
-
-  display.clearDisplay();   // clears the screen and buffer
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(0,20);
-  display.println("HELLO");
-  display.display();
   
   mySerial.println("Initializing I2C devices...");
 
@@ -60,17 +53,18 @@ void loop()
 
       if (mySerial.available() > 0)
       {
-        // Reading incoming bytes :
-        c[i] = mySerial.read();
-    
+
         i = i + 1;
-    
-        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        
+        // Reading incoming bytes :
+        c[i-1] = mySerial.read();
+
+        if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
           i = 0;
         }
-        else if (c[i] == '*') //FINE STRINGA E CICLO
+        else if (c[i-1] == '*') //FINE STRINGA E CICLO
         {
           scatto();
           i = 0;
@@ -197,127 +191,130 @@ void c_modo()
 
 void scatto()
 {
-
-  if (c[0] == 'F')
+  if (c[0] == 'F' && c[1] == 'F') //FOCUS
   {
-    if (c[1] == 'F') //FOCUS
+    Serial.print(c[0]);
+    Serial.println(c[1]);
+    if (c[2] =! '-') //IMPOSTA TEMPO FUOCO
     {
-      if (c[2] =! '-') //IMPOSTA TEMPO FUOCO
+      d_focus = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
+
+      if (c[6] == 'm')
       {
-        d_focus = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
-
-        if (c[6] == 'm')
-        {
-          mul_d = 1;
-        }
-        else if (c[6] == 'S')
-        {
-          mul_d = 1000;
-        }
-        else if (c[6] == 'M')
-        {
-          mul_d = 60000;
-        }
-
-        d_focus = d_focus * mul_d; //TRASFORMA IN MILLISECONDI
+        mul_d = 1;
+      }
+      else if (c[6] == 'S')
+      {
+        mul_d = 1000;
+      }
+      else if (c[6] == 'M')
+      {
+        mul_d = 60000;
       }
 
-      display.clearDisplay();   // clears the screen and buffer
-      display.setTextSize(2);
-      display.setTextColor(WHITE);
-      display.setCursor(0,20);
-      display.println("Focus");
-      mySerial.println("Focus");
-      display.display();
-      
-      digitalWrite(p_focus, HIGH); // Focus..  
-      
-      if (c[2] =! '-') //FUOCO CON TEMPO IMPOSTATO
-      {
-        delay(d_focus);
-      }
-      else //FUOCO CON TEMPO STANDARD
-      {
-        delay(1000);
-      } 
-      
-      digitalWrite(p_focus, LOW);
+      d_focus = d_focus * mul_d; //TRASFORMA IN MILLISECONDI
     }
 
-    if (c[1] == 'S') //FOCUS + SHOOT
+    display.clearDisplay();   // clears the screen and buffer
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(0,20);
+    display.println("Focus");
+    mySerial.println("Focus");
+    display.display();
+    
+    digitalWrite(p_focus, HIGH); // Focus..  
+    
+    if (c[2] =! '-') //FUOCO CON TEMPO IMPOSTATO
     {
-
-      display.clearDisplay();
-      display.setTextSize(2);
-      display.setTextColor(WHITE);
-      display.setCursor(0,20);
-      display.println("Focus");
-      mySerial.println("Focus");
-      display.display();
-      
-      digitalWrite(p_focus, HIGH); // Focus.. 
-      delay(1000);      
-
-      display.clearDisplay(); 
-      display.setTextSize(2);
-      display.setTextColor(WHITE);
-      display.setCursor(0,20);
-      display.println("Shoot");
-      mySerial.println("Shoot");
-      display.display();
-      
-      digitalWrite(p_shoot, HIGH); // Shoot !!     
-      delay(50);
-      digitalWrite(p_focus, LOW);
-      digitalWrite(p_shoot, LOW);
+      delay(d_focus);
     }
+    else //FUOCO CON TEMPO STANDARD
+    {
+      delay(1000);
+    } 
+    
+    digitalWrite(p_focus, LOW);
   }
 
-  if (c[0] == 'S')
+  if (c[0] == 'F' && c[1] == 'S') //FOCUS //FOCUS + SHOOT
   {
-    if (c[1] == 'S') //SHOOT
+    Serial.print(c[0]);
+    Serial.println(c[1]);
+    
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(0,20);
+    display.println("Focus");
+    mySerial.println("Focus");
+    display.display();
+    
+    digitalWrite(p_focus, HIGH); // Focus.. 
+    delay(1000);      
+
+    display.clearDisplay(); 
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(0,20);
+    display.println("Shoot");
+    mySerial.println("Shoot");
+    display.display();
+    
+    digitalWrite(p_shoot, HIGH); // Shoot !!     
+    delay(50);
+    digitalWrite(p_focus, LOW);
+    digitalWrite(p_shoot, LOW);
+  }
+
+
+  if (c[0] == 'S' && c[1] == 'S') //SHOOT
+  {
+    Serial.print(c[0]);
+    Serial.println(c[1]);
+    if (c[2] =! '-') //IMPOSTA TEMPO BULB
     {
-      if (c[2] =! '-') //IMPOSTA TEMPO BULB
+      d_shoot = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
+
+      if (c[6] == 'm')
       {
-        d_shoot = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
-
-        if (c[6] == 'm')
-        {
-          mul_d = 1;
-        }
-        else if (c[6] == 'S')
-        {
-          mul_d = 1000;
-        }
-        else if (c[6] == 'M')
-        {
-          mul_d = 60000;
-        }
-
-        d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
+        mul_d = 1;
+      }
+      else if (c[6] == 'S')
+      {
+        mul_d = 1000;
+      }
+      else if (c[6] == 'M')
+      {
+        mul_d = 60000;
       }
 
-      display.clearDisplay();
-      display.setTextSize(2);
-      display.setTextColor(WHITE);
-      display.setCursor(0,20);
-      display.println("Shoot");
-      mySerial.println("Shoot");
-      display.display();
-      
-      digitalWrite(p_shoot, HIGH); // Shoot !!
-      
-      if (c[2] =! '-') //SCATTA CON TEMPO BULB
-      {
-        delay(d_shoot);
-      }
-      else //SCATTA CON TEMPO MACCHINA
-      {
-        delay(50);
-      }
-      
-      digitalWrite(p_shoot, LOW);
-    }  
+      d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
+    }
+
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(0,20);
+    display.println("Shoot");
+    mySerial.println("Shoot");
+    display.display();
+
+    digitalWrite(p_focus, HIGH);
+    digitalWrite(p_shoot, HIGH); // Shoot !!
+    
+    if (c[2] =! '-') //SCATTA CON TEMPO BULB
+    {
+      delay(d_shoot);
+    }
+    else //SCATTA CON TEMPO MACCHINA
+    {
+      delay(200);
+    }
+    
+    digitalWrite(p_shoot, LOW);
+    digitalWrite(p_focus, LOW);
+   
   }
 }
 
