@@ -20,7 +20,7 @@ const int p_laser = A2;
 const int p_micro = A3;
 
 int modalita = 1;
-long d_focus, d_shoot;
+unsigned long d_focus, d_shoot;
 int micro, laser, mul_d;
 
 char c[8];
@@ -77,19 +77,20 @@ void loop()
 
       if (mySerial.available() > 0)
       {
-        // Reading incoming bytes :
-        c[i] = mySerial.read();
-    
+
         i = i + 1;
-    
-        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        
+        // Reading incoming bytes :
+        c[i-1] = mySerial.read();
+
+        if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
           i = 0;
         }
-        else if (c[i] == '*') //FINE STRINGA E CICLO
+        else if (c[i-1] == '*') //FINE STRINGA E CICLO
         {
-      
+
           i = 0;
         }
       }
@@ -100,19 +101,20 @@ void loop()
 
       if (mySerial.available() > 0)
       {
-        // Reading incoming bytes :
-        c[i] = mySerial.read();
-    
+
         i = i + 1;
-    
-        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        
+        // Reading incoming bytes :
+        c[i-1] = mySerial.read();
+
+        if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
           i = 0;
         }
-        else if (c[i] == '*') //FINE STRINGA E CICLO
+        else if (c[i-1] == '*') //FINE STRINGA E CICLO
         {
-    
+          
           i = 0;
         }
       }
@@ -132,19 +134,20 @@ void loop()
 
       if (mySerial.available() > 0)
       {
-        // Reading incoming bytes :
-        c[i] = mySerial.read();
-    
+
         i = i + 1;
-    
-        if (c[i] == '+') //FINE STRINGA E CAMBIO MODALITA'
+        
+        // Reading incoming bytes :
+        c[i-1] = mySerial.read();
+
+        if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
         {
           c_modo();
           i = 0;
         }
-        else if (c[i] == '*') //FINE STRINGA E CICLO
+        else if (c[i-1] == '*') //FINE STRINGA E CICLO
         {
-
+          
           i = 0;
         }
       }
@@ -193,11 +196,10 @@ void scatto()
 {
   if (c[0] == 'F' && c[1] == 'F') //FOCUS
   {
-    Serial.print(c[0]);
-    Serial.println(c[1]);
-    if (c[2] =! '-') //IMPOSTA TEMPO FUOCO
+
+    if (c[2] != '-') //IMPOSTA TEMPO FUOCO
     {
-      d_focus = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
+      d_focus = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
 
       if (c[6] == 'm')
       {
@@ -225,7 +227,7 @@ void scatto()
     
     digitalWrite(p_focus, HIGH); // Focus..  
     
-    if (c[2] =! '-') //FUOCO CON TEMPO IMPOSTATO
+    if (c[2] != '-') //FUOCO CON TEMPO IMPOSTATO
     {
       delay(d_focus);
     }
@@ -239,8 +241,6 @@ void scatto()
 
   if (c[0] == 'F' && c[1] == 'S') //FOCUS //FOCUS + SHOOT
   {
-    Serial.print(c[0]);
-    Serial.println(c[1]);
     
     display.clearDisplay();
     display.setTextSize(2);
@@ -270,12 +270,10 @@ void scatto()
 
   if (c[0] == 'S' && c[1] == 'S') //SHOOT
   {
-    Serial.print(c[0]);
-    Serial.println(c[1]);
-    if (c[2] =! '-') //IMPOSTA TEMPO BULB
+    if (c[2] != '-') //IMPOSTA TEMPO BULB
     {
-      d_shoot = long(c[2] && c[3] && c[4] && c[5]); //ESTRAI VALORI E CONVERI IN NUMERO
-
+      d_shoot = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+      
       if (c[6] == 'm')
       {
         mul_d = 1;
@@ -290,6 +288,7 @@ void scatto()
       }
 
       d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
+
     }
 
     display.clearDisplay();
@@ -303,13 +302,13 @@ void scatto()
     digitalWrite(p_focus, HIGH);
     digitalWrite(p_shoot, HIGH); // Shoot !!
     
-    if (c[2] =! '-') //SCATTA CON TEMPO BULB
+    if (c[2] != '-') //SCATTA CON TEMPO BULB
     {
       delay(d_shoot);
     }
     else //SCATTA CON TEMPO MACCHINA
     {
-      delay(200);
+      delay(100);
     }
     
     digitalWrite(p_shoot, LOW);
