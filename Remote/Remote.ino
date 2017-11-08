@@ -1,3 +1,4 @@
+#include <SPI.h>
 #include <Wire.h>
 #include <SoftwareSerial.h>
 #include <Adafruit_GFX.h>
@@ -23,7 +24,7 @@ long d_focus, d_shoot;
 int micro, laser, mul_d;
 
 char c[8];
-int i = 0;
+int i;
 
 SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
 
@@ -33,10 +34,17 @@ void setup()
   Serial.begin(19200);
   mySerial.begin(19200);
 
+  display.clearDisplay();   // clears the screen and buffer
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0,20);
+  display.println("HELLO");
+  display.display();
+  
   mySerial.println("Initializing I2C devices...");
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3D); // initialize with the I2C addr 0x3D (for the 128x64)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
   // init done
 
   pinMode(p_focus, OUTPUT);
