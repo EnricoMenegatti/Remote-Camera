@@ -159,6 +159,7 @@ void loop()
       display.setTextColor(WHITE);
       display.setCursor(0,20);
       display.println(micro);
+      Serial.println(micro);
       display.display();
       
     break;
