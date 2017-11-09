@@ -36,7 +36,7 @@ const int p_micro = A3;
 
 int modalita = 1;
 unsigned long d_focus, d_shoot;
-int micro, laser, mul_d;
+int micro, laser, mul_d, t_focus = 1, t_shoot = 100;
 
 char c[8];
 int i;
@@ -229,7 +229,7 @@ void scatto()
 
     if (c[2] != '-') //IMPOSTA TEMPO FUOCO
     {
-      d_focus = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+      t_focus = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
 
       if (c[6] == 'm')
       {
@@ -244,30 +244,46 @@ void scatto()
         mul_d = 60000;
       }
 
-      d_focus = d_focus * mul_d; //TRASFORMA IN MILLISECONDI
+      d_focus = t_focus * mul_d; //TRASFORMA IN MILLISECONDI
     }
 
     display.setTextColor(BLACK, WHITE);
     display.setTextSize(3);
-    display.drawLine(29, 29, 47, 29, WHITE); //LINEE ORIZZONTALI
-    display.drawLine(28, 28, 47, 28, WHITE);
-    display.drawLine(27, 27, 47, 27, WHITE);
-    display.drawLine(29, 29, 29, 53, WHITE); //LINEE VERTICALI
-    display.drawLine(28, 28, 28, 53, WHITE);
-    display.drawLine(27, 27, 27, 53, WHITE);
-    display.setCursor(30,30);
+    display.drawLine(36, 24, 54, 24, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(35, 23, 54, 23, WHITE);
+    display.drawLine(34, 22, 54, 22, WHITE);
+    display.drawLine(36, 24, 36, 48, WHITE); //LINEE VERTICALI
+    display.drawLine(35, 23, 35, 48, WHITE);
+    display.drawLine(34, 22, 34, 48, WHITE);
+    display.setCursor(37,25);
     display.write(70);
     mySerial.println("Focus");
-    display.display();
     
     digitalWrite(p_focus, HIGH); // Focus..  
     
     if (c[2] != '-') //FUOCO CON TEMPO IMPOSTATO
     {
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(33,53);
+      display.println(t_focus);
+      display.setCursor(50,53);
+      display.println(c[6]);
+      display.display();
+      
       delay(d_focus);
     }
     else //FUOCO CON TEMPO STANDARD
     {
+      t_focus = 1;
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(33,53);
+      display.println(t_focus);
+      display.setCursor(50,53);
+      display.println(c[6]);
+      display.display();
+      
       delay(1000);
     } 
 
@@ -282,36 +298,53 @@ void scatto()
     
     display.setTextColor(BLACK, WHITE);
     display.setTextSize(3);
-    display.drawLine(29, 29, 47, 29, WHITE); //LINEE ORIZZONTALI
-    display.drawLine(28, 28, 47, 28, WHITE);
-    display.drawLine(27, 27, 47, 27, WHITE);
-    display.drawLine(29, 29, 29, 53, WHITE); //LINEE VERTICALI
-    display.drawLine(28, 28, 28, 53, WHITE);
-    display.drawLine(27, 27, 27, 53, WHITE);
-    display.setCursor(30,30);
+    display.drawLine(36, 24, 54, 24, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(35, 23, 54, 23, WHITE);
+    display.drawLine(34, 22, 54, 22, WHITE);
+    display.drawLine(36, 24, 36, 48, WHITE); //LINEE VERTICALI
+    display.drawLine(35, 23, 35, 48, WHITE);
+    display.drawLine(34, 22, 34, 48, WHITE);
+    display.setCursor(37,25);
     display.write(70);
     mySerial.println("Focus");
-    display.display();
     
     digitalWrite(p_focus, HIGH); // Focus.. 
-    delay(1000);      
+    
+    t_focus = 1;
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(33,53);
+    display.println(t_focus);
+    display.setCursor(50,53);
+    display.println(c[6]);
+    display.display();
+      
+    delay(1000); 
 
     display.setTextColor(BLACK, WHITE);
     display.setTextSize(3);
-    display.drawLine(59, 29, 77, 29, WHITE); //LINEE ORIZZONTALI
-    display.drawLine(58, 28, 77, 28, WHITE);
-    display.drawLine(57, 27, 77, 27, WHITE);
-    display.drawLine(59, 29, 59, 53, WHITE); //LINEE VERTICALI
-    display.drawLine(58, 28, 58, 53, WHITE);
-    display.drawLine(57, 27, 57, 53, WHITE);
-    display.setCursor(60,30);
+    display.drawLine(76, 24, 94, 24, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(75, 23, 94, 23, WHITE);
+    display.drawLine(74, 22, 94, 22, WHITE);
+    display.drawLine(76, 24, 76, 48, WHITE); //LINEE VERTICALI
+    display.drawLine(75, 23, 75, 48, WHITE);
+    display.drawLine(74, 22, 74, 48, WHITE);
+    display.setCursor(77,25);
     display.write(83);
     mySerial.println("Shoot");
-    display.display();
     
     digitalWrite(p_shoot, HIGH); // Shoot !!  
+
+    t_shoot = 100;
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(73,53);
+    display.println(t_shoot);
+    display.setCursor(90,53);
+    display.println(c[6]);
+    display.display();
        
-    delay(50);
+    delay(100);
 
     pagina_1();
     display.display();
@@ -325,7 +358,7 @@ void scatto()
   {
     if (c[2] != '-') //IMPOSTA TEMPO BULB
     {
-      d_shoot = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+      t_shoot = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
       
       if (c[6] == 'm')
       {
@@ -340,31 +373,47 @@ void scatto()
         mul_d = 60000;
       }
 
-      d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
+      d_shoot = t_shoot * mul_d; //TRASFORMA IN MILLISECONDI
 
     }
     display.setTextColor(BLACK, WHITE);
     display.setTextSize(3);
-    display.drawLine(59, 29, 77, 29, WHITE); //LINEE ORIZZONTALI
-    display.drawLine(58, 28, 77, 28, WHITE);
-    display.drawLine(57, 27, 77, 27, WHITE);
-    display.drawLine(59, 29, 59, 53, WHITE); //LINEE VERTICALI
-    display.drawLine(58, 28, 58, 53, WHITE);
-    display.drawLine(57, 27, 57, 53, WHITE);
-    display.setCursor(60,30);
+    display.drawLine(76, 24, 94, 24, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(75, 23, 94, 23, WHITE);
+    display.drawLine(74, 22, 94, 22, WHITE);
+    display.drawLine(76, 24, 76, 48, WHITE); //LINEE VERTICALI
+    display.drawLine(75, 23, 75, 48, WHITE);
+    display.drawLine(74, 22, 74, 48, WHITE);
+    display.setCursor(77,25);
     display.write(83);
     mySerial.println("Shoot");
-    display.display();
 
     digitalWrite(p_focus, HIGH);
     digitalWrite(p_shoot, HIGH); // Shoot !!
     
     if (c[2] != '-') //SCATTA CON TEMPO BULB
     {
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(73,53);
+      display.println(t_shoot);
+      display.setCursor(90,53);
+      display.println(c[6]);
+      display.display();
+      
       delay(d_shoot);
     }
     else //SCATTA CON TEMPO MACCHINA
     {
+      t_shoot = 100;
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(73,53);
+      display.println(t_shoot);
+      display.setCursor(90,53);
+      display.println(c[6]);
+      display.display();
+      
       delay(100);
     }
 
@@ -383,12 +432,13 @@ void pagina_1()
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(WHITE);
-  display.setCursor(25,0);
-  display.println("REMOTE");
+  display.setCursor(29,0);
+  display.println("REMOTO");
+  
   display.setTextSize(3);
-  display.setCursor(30,30);
+  display.setCursor(37,25);
   display.write(70);
-  display.setCursor(60,30);
+  display.setCursor(77,25);
   display.write(83);
 
 }
