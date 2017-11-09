@@ -1,4 +1,3 @@
-#include <SPI.h>
 #include <Wire.h>
 #include <SoftwareSerial.h>
 #include <Adafruit_GFX.h>
@@ -11,6 +10,22 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define XPOS 0
 #define YPOS 1
 #define DELTAY 2
+
+/*static const unsigned char PROGMEM page_1[] =
+{ B11111111, B00000000,
+  B11111111, B00000000,
+  B11000000, B11000000,
+  B11000000, B11000000,
+  B11000000, B11000000,
+  B11000000, B11000000,
+  B11111111, B00000000,
+  B11111111, B00000000,
+  B11001100, B00000000,
+  B11001100, B00000000,
+  B11000011, B00000000,
+  B11000011, B00000000,
+  B11000000, B11000000,
+  B11000000, B11000000};*/
 
 const int p_focus = 8;
 const int p_shoot = 9;
@@ -42,6 +57,11 @@ void setup()
 
   pinMode(p_focus, OUTPUT);
   pinMode(p_shoot, OUTPUT);
+  
+  display.clearDisplay();
+
+  pagina_1();
+  display.display();
 
 }
 
@@ -51,6 +71,8 @@ void loop()
   {
     case 1: //SCATTO REMOTO
 
+      pagina_1();
+      
       if (mySerial.available() > 0)
       {
 
@@ -75,6 +97,8 @@ void loop()
 
     case 2: //TIMELAPSE
 
+      pagina_2();
+      
       if (mySerial.available() > 0)
       {
 
@@ -99,6 +123,8 @@ void loop()
 
     case 3: //FOTOTRAPPOLA LASER
 
+      pagina_3();
+      
       if (mySerial.available() > 0)
       {
 
@@ -121,7 +147,6 @@ void loop()
 
       laser = analogRead(p_laser); 
 
-      display.clearDisplay();   // clears the screen and buffer
       display.setTextSize(2);
       display.setTextColor(WHITE);
       display.setCursor(0,20);
@@ -131,6 +156,8 @@ void loop()
     break;
 
     case 4: //FOTOTRAPPOLA ACUSTICA
+
+      pagina_4();
 
       if (mySerial.available() > 0)
       {
@@ -154,7 +181,9 @@ void loop()
       
       micro = analogRead(p_micro); 
 
-      display.clearDisplay();   // clears the screen and buffer
+      micro = micro / 10;
+      micro = micro * 10;
+
       display.setTextSize(2);
       display.setTextColor(WHITE);
       display.setCursor(0,20);
@@ -218,11 +247,16 @@ void scatto()
       d_focus = d_focus * mul_d; //TRASFORMA IN MILLISECONDI
     }
 
-    display.clearDisplay();   // clears the screen and buffer
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Focus");
+    display.setTextColor(BLACK, WHITE);
+    display.setTextSize(3);
+    display.drawLine(29, 29, 47, 29, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(28, 28, 47, 28, WHITE);
+    display.drawLine(27, 27, 47, 27, WHITE);
+    display.drawLine(29, 29, 29, 53, WHITE); //LINEE VERTICALI
+    display.drawLine(28, 28, 28, 53, WHITE);
+    display.drawLine(27, 27, 27, 53, WHITE);
+    display.setCursor(30,30);
+    display.write(70);
     mySerial.println("Focus");
     display.display();
     
@@ -236,6 +270,9 @@ void scatto()
     {
       delay(1000);
     } 
+
+    pagina_1();
+    display.display();
     
     digitalWrite(p_focus, LOW);
   }
@@ -243,27 +280,42 @@ void scatto()
   if (c[0] == 'F' && c[1] == 'S') //FOCUS //FOCUS + SHOOT
   {
     
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Focus");
+    display.setTextColor(BLACK, WHITE);
+    display.setTextSize(3);
+    display.drawLine(29, 29, 47, 29, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(28, 28, 47, 28, WHITE);
+    display.drawLine(27, 27, 47, 27, WHITE);
+    display.drawLine(29, 29, 29, 53, WHITE); //LINEE VERTICALI
+    display.drawLine(28, 28, 28, 53, WHITE);
+    display.drawLine(27, 27, 27, 53, WHITE);
+    display.setCursor(30,30);
+    display.write(70);
     mySerial.println("Focus");
     display.display();
     
     digitalWrite(p_focus, HIGH); // Focus.. 
     delay(1000);      
 
-    display.clearDisplay(); 
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Shoot");
+    display.setTextColor(BLACK, WHITE);
+    display.setTextSize(3);
+    display.drawLine(59, 29, 77, 29, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(58, 28, 77, 28, WHITE);
+    display.drawLine(57, 27, 77, 27, WHITE);
+    display.drawLine(59, 29, 59, 53, WHITE); //LINEE VERTICALI
+    display.drawLine(58, 28, 58, 53, WHITE);
+    display.drawLine(57, 27, 57, 53, WHITE);
+    display.setCursor(60,30);
+    display.write(83);
     mySerial.println("Shoot");
     display.display();
     
-    digitalWrite(p_shoot, HIGH); // Shoot !!     
+    digitalWrite(p_shoot, HIGH); // Shoot !!  
+       
     delay(50);
+
+    pagina_1();
+    display.display();
+    
     digitalWrite(p_focus, LOW);
     digitalWrite(p_shoot, LOW);
   }
@@ -291,12 +343,16 @@ void scatto()
       d_shoot = d_shoot * mul_d; //TRASFORMA IN MILLISECONDI
 
     }
-
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-    display.setCursor(0,20);
-    display.println("Shoot");
+    display.setTextColor(BLACK, WHITE);
+    display.setTextSize(3);
+    display.drawLine(59, 29, 77, 29, WHITE); //LINEE ORIZZONTALI
+    display.drawLine(58, 28, 77, 28, WHITE);
+    display.drawLine(57, 27, 77, 27, WHITE);
+    display.drawLine(59, 29, 59, 53, WHITE); //LINEE VERTICALI
+    display.drawLine(58, 28, 58, 53, WHITE);
+    display.drawLine(57, 27, 57, 53, WHITE);
+    display.setCursor(60,30);
+    display.write(83);
     mySerial.println("Shoot");
     display.display();
 
@@ -311,10 +367,62 @@ void scatto()
     {
       delay(100);
     }
+
+    pagina_1();
+    display.display();
     
     digitalWrite(p_shoot, LOW);
     digitalWrite(p_focus, LOW);
    
   }
+}
+
+void pagina_1()
+{
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(25,0);
+  display.println("REMOTE");
+  display.setTextSize(3);
+  display.setCursor(30,30);
+  display.write(70);
+  display.setCursor(60,30);
+  display.write(83);
+
+}
+
+void pagina_2()
+{
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println("TIMELAPSE");
+
+}
+
+void pagina_3()
+{
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(20,0);
+  display.println("LASER");
+
+}
+
+void pagina_4()
+{
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(10,0);
+  display.println("ACUSTICO");
+
 }
 
