@@ -37,7 +37,7 @@ const int p_micro = A3;
 
 int modalita = 1;
 boolean interrupt_ok = 0;
-unsigned long d_focus, d_shoot, d_interrupt;
+unsigned long d_focus, d_shoot, d_interrupt = 1000, time_1, time_2;
 int micro, laser, mul_d, t_focus = 1, t_shoot = 100;
 
 char c[8];
@@ -172,8 +172,11 @@ void loop()
 
 		if (interrupt_ok == true)
 		{
+			noInterrupts();
+
 			interrupt_ok = 0;
 			delay(d_interrupt);
+			time_2 = millis();
 
 			digitalWrite(p_focus, HIGH);
 		    digitalWrite(p_shoot, HIGH); // Shoot !!
@@ -182,6 +185,8 @@ void loop()
 
 		    digitalWrite(p_shoot, LOW);
 		    digitalWrite(p_focus, LOW);
+
+		    interrupts();
 
 		}
 		else if (mySerial.available() > 0)
@@ -220,6 +225,7 @@ void loop()
 void f_interrupt()
 {
 	interrupt_ok = 1;
+	time_1 = millis();
 }	
 
 void c_modo()
