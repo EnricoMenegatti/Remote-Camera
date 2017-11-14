@@ -66,8 +66,6 @@ void setup()
 	pagina_1();
 	display.display();
 
-	attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, FALLING);
-
 }
 
 void loop() 
@@ -75,6 +73,8 @@ void loop()
 	switch (modalita)
 	{
 	case 1: //SCATTO REMOTO
+
+		detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 		pagina_1();
 
@@ -102,6 +102,8 @@ void loop()
 
 	case 2: //TIMELAPSE
 
+		detachInterrupt(digitalPinToInterrupt(p_interrupt));
+
 		pagina_2();
 
 		if (mySerial.available() > 0)
@@ -127,6 +129,8 @@ void loop()
 	break;
 
 	case 3: //FOTOTRAPPOLA LASER
+
+		detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 		pagina_3();
 
@@ -161,6 +165,8 @@ void loop()
 	break;
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
+
+		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, FALLING);
 
 		pagina_4();
 
