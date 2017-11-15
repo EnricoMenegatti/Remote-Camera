@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -38,10 +39,9 @@ const int p_micro = A3;
 int modalita = 1;
 boolean interrupt_ok = 0;
 unsigned long d_focus, d_shoot, d_interrupt = 1000, time_1, time_2;
-int micro, laser, mul_d, t_focus = 1, t_shoot = 100;
+int micro, laser, mul_d, t_focus = 1, t_shoot = 100, i;
 
 char c[8];
-int i;
 
 SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
 
@@ -170,9 +170,9 @@ void loop()
 
 		pagina_4();
 
-		if (interrupt_ok == true)
+		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 		{
-			noInterrupts();
+			noInterrupts(); // BLOCCO ALTRI INTERRUPT
 
 			interrupt_ok = 0;
 			delay(d_interrupt);
@@ -217,7 +217,9 @@ void loop()
 	break;
 
 	//defaul:
-	} 
+	}
+
+	EEPROM.update(0, modalita);
 }
 
 //--------------------------FUNZIONI------------------------
