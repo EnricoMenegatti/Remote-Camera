@@ -38,7 +38,7 @@ const int p_micro = A3;
 
 int modalita = 1;
 boolean interrupt_ok = 0;
-unsigned long d_focus, d_shoot, d_interrupt = 1000, time_1, time_2;
+unsigned long d_focus, d_shoot, d_laser, d_interrupt = 1000, time_1, time_2;
 int micro, laser, mul_d, t_focus = 1, t_shoot = 100, i;
 
 char c[8];
@@ -61,10 +61,13 @@ void setup()
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
-	display.clearDisplay();
+	display.display(); //LOGO
 
-	pagina_1();
-	display.display();
+  modalita = EEPROM.read(0);
+  d_focus = EEPROM.read(2);
+  d_shoot = EEPROM.read(6);
+  d_laser = EEPROM.read(10);
+  d_interrupt = EEPROM.read(14);
 
 }
 
@@ -96,7 +99,7 @@ void loop()
 			  	scatto();
 			  	i = 0;
 			}
-	  	}
+		}
 
 	break;
 
@@ -172,13 +175,13 @@ void loop()
 
 		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 		{
-			noInterrupts(); // BLOCCO ALTRI INTERRUPT
-
-			interrupt_ok = 0;
-			delay(d_interrupt);
-			time_2 = millis();
-
-			digitalWrite(p_focus, HIGH);
+  			noInterrupts(); // BLOCCO ALTRI INTERRUPT
+  
+  			interrupt_ok = 0;
+  			delay(d_interrupt);
+  			time_2 = millis();
+  
+  			digitalWrite(p_focus, HIGH);
 		    digitalWrite(p_shoot, HIGH); // Shoot !!
 		      
 		    delay(50);
@@ -215,11 +218,13 @@ void loop()
 		display.display();*/
 	  
 	break;
-
-	//defaul:
 	}
 
 	EEPROM.update(0, modalita);
+	EEPROM.update(2, d_focus);
+	EEPROM.update(6, d_shoot);
+  EEPROM.update(10, d_focus);
+	EEPROM.update(14, d_interrupt);
 }
 
 //--------------------------FUNZIONI------------------------
@@ -247,7 +252,7 @@ void c_modo()
 		modalita = 3;
 	}
 
-	else if (c[0] == 'A')
+	else if (c[0] == 'I')
 	{
 		modalita = 4;
 	}
@@ -299,7 +304,7 @@ void pagina_4()
 	display.setTextSize(2);
 	display.setTextColor(WHITE);
 	display.setCursor(10,0);
-	display.println("ACUSTICO");
+	display.println("INTERRUPT");
 
 }
 
