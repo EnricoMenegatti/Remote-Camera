@@ -10,6 +10,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define NUMFLAKES 10
 #define XPOS 0
 #define YPOS 1
+
 #define DELTAY 2
 
 /*static const unsigned char PROGMEM page_1[] =
@@ -45,8 +46,8 @@ char c[8];
 
 SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
 
-void setup()   
-{  
+void setup()
+{
 
 	Serial.begin(19200);
 	mySerial.begin(19200);
@@ -71,7 +72,7 @@ void setup()
 
 }
 
-void loop() 
+void loop()
 {
 	switch (modalita)
 	{
@@ -128,7 +129,7 @@ void loop()
 			  	i = 0;
 			}
 		}
-	  
+
 	break;
 
 	case 3: //FOTOTRAPPOLA LASER
@@ -152,19 +153,19 @@ void loop()
 			}
 			else if (c[i-1] == '*') //FINE STRINGA E CICLO
 			{
-			  
+
 				i = 0;
 			}
 		}
 
-		laser = analogRead(p_laser); 
+		laser = analogRead(p_laser);
 
 		display.setTextSize(2);
 		display.setTextColor(WHITE);
 		display.setCursor(0,20);
 		display.println(laser);
 		display.display();
-	  
+
 	break;
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
@@ -176,14 +177,14 @@ void loop()
 		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 		{
   			noInterrupts(); // BLOCCO ALTRI INTERRUPT
-  
+
   			interrupt_ok = 0;
   			delay(d_interrupt);
   			time_2 = millis();
-  
+
   			digitalWrite(p_focus, HIGH);
 		    digitalWrite(p_shoot, HIGH); // Shoot !!
-		      
+
 		    delay(50);
 
 		    digitalWrite(p_shoot, LOW);
@@ -207,7 +208,7 @@ void loop()
 			}
 		}
 
-		/*micro = analogRead(p_micro); 
+		/*micro = analogRead(p_micro);
 		micro = micro / 100;
 		micro = micro * 10;
 		display.setTextSize(2);
@@ -216,7 +217,7 @@ void loop()
 		display.println(micro);
 		Serial.println(micro);
 		display.display();*/
-	  
+
 	break;
 	}
 
@@ -233,7 +234,7 @@ void f_interrupt()
 {
 	interrupt_ok = 1;
 	time_1 = millis();
-}	
+}
 
 void c_modo()
 {
@@ -345,7 +346,7 @@ void scatto()
 		display.write(70);
 		mySerial.println("Focus");
 
-		digitalWrite(p_focus, HIGH); // Focus..  
+		digitalWrite(p_focus, HIGH); // Focus..
 
 		if (c[2] != '-') //FUOCO CON TEMPO IMPOSTATO
 		{
@@ -371,7 +372,7 @@ void scatto()
 			display.display();
 
 			delay(1000);
-		} 
+		}
 
 		pagina_1();
 		display.display();
@@ -394,7 +395,7 @@ void scatto()
 		display.write(70);
 		mySerial.println("Focus");
 
-		digitalWrite(p_focus, HIGH); // Focus.. 
+		digitalWrite(p_focus, HIGH); // Focus..
 
 		t_focus = 1;
 		display.setTextSize(1);
@@ -404,8 +405,8 @@ void scatto()
 		display.setCursor(50,53);
 		display.println(c[6]);
 		display.display();
-		  
-		delay(1000); 
+
+		delay(1000);
 
 		display.setTextColor(BLACK, WHITE);
 		display.setTextSize(3);
@@ -419,7 +420,7 @@ void scatto()
 		display.write(83);
 		mySerial.println("Shoot");
 
-		digitalWrite(p_shoot, HIGH); // Shoot !!  
+		digitalWrite(p_shoot, HIGH); // Shoot !!
 
 		t_shoot = 100;
 		display.setTextSize(1);
@@ -429,7 +430,7 @@ void scatto()
 		display.setCursor(90,53);
 		display.println(c[6]);
 		display.display();
-		   
+
 		delay(100);
 
 		pagina_1();
@@ -512,4 +513,3 @@ void scatto()
 
 	}
 }
-
