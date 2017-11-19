@@ -70,8 +70,6 @@ void setup()
   d_laser = EEPROM.read(10);
   d_interrupt = EEPROM.read(14);
 
-	mySerial.println(modalita);
-
 }
 
 void loop()
@@ -175,17 +173,23 @@ void loop()
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, FALLING);
+		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, HIGH);
 
 		pagina_4();
+		display.setCursor(20,30);
+		display.println(d_interrupt);
+		display.setCursor(100,30);
+		display.println(interrupt_ok);
 		display.display();
+
 
 		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 		{
-  			noInterrupts(); // BLOCCO ALTRI INTERRUPT
+				detachInterrupt(digitalPinToInterrupt(p_interrupt));
+  			//noInterrupts(); // BLOCCO ALTRI INTERRUPT
 
   			interrupt_ok = 0;
-  			delay(d_interrupt);
+  			delay(1000);
   			time_2 = millis();
 
   			digitalWrite(p_focus, HIGH);
@@ -196,7 +200,7 @@ void loop()
 		    digitalWrite(p_shoot, LOW);
 		    digitalWrite(p_focus, LOW);
 
-		    interrupts();
+		    //interrupts();
 
 		}
 		else if (mySerial.available() > 0)
