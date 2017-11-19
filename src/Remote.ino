@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
