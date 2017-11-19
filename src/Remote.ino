@@ -11,7 +11,6 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define NUMFLAKES 10
 #define XPOS 0
 #define YPOS 1
-
 #define DELTAY 2
 
 /*static const unsigned char PROGMEM page_1[] =
@@ -38,7 +37,7 @@ const int p_RX = 11;
 const int p_laser = A2;
 const int p_micro = A3;
 
-int modalita = 1;
+int modalita;
 boolean interrupt_ok = 0;
 unsigned long d_focus, d_shoot, d_laser, d_interrupt = 1000, time_1, time_2;
 int micro, laser, mul_d, t_focus = 1, t_shoot = 100, i;
@@ -71,6 +70,8 @@ void setup()
   d_laser = EEPROM.read(10);
   d_interrupt = EEPROM.read(14);
 
+	mySerial.println(modalita);
+
 }
 
 void loop()
@@ -82,6 +83,7 @@ void loop()
 		detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 		pagina_1();
+		display.display();
 
 		if (mySerial.available() > 0)
 		{
@@ -110,6 +112,7 @@ void loop()
 		detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 		pagina_2();
+		display.display();
 
 		if (mySerial.available() > 0)
 		{
@@ -138,6 +141,7 @@ void loop()
 		detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 		pagina_3();
+		display.display();
 
 		if (mySerial.available() > 0)
 		{
@@ -174,6 +178,7 @@ void loop()
 		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, FALLING);
 
 		pagina_4();
+		display.display();
 
 		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 		{
@@ -220,13 +225,37 @@ void loop()
 		display.display();*/
 
 	break;
+
+	default:
+
+		detachInterrupt(digitalPinToInterrupt(p_interrupt));
+
+		pagina_default();
+		display.display();
+
+		if (mySerial.available() > 0)
+		{
+
+			i = i + 1;
+
+			// Reading incoming bytes :
+			c[i-1] = mySerial.read();
+
+			if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+			{
+				c_modo();
+				i = 0;
+			}
+		}
+
+	break;
 	}
 
-	EEPROM.update(0, modalita);
-	EEPROM.update(2, d_focus);
-	EEPROM.update(6, d_shoot);
-  EEPROM.update(10, d_focus);
-	EEPROM.update(14, d_interrupt);
+	EEPROM.put(0, modalita);
+	EEPROM.put(2, d_focus);
+	EEPROM.put(6, d_shoot);
+  EEPROM.put(10, d_focus);
+	EEPROM.put(14, d_interrupt);
 }
 
 //--------------------------FUNZIONI------------------------
@@ -242,21 +271,33 @@ void c_modo()
 	if (c[0] == 'S')
 	{
 		modalita = 1;
+
+		pagina_1();
+		display.display();
 	}
 
 	else if (c[0] == 'T')
 	{
 		modalita = 2;
+
+		pagina_2();
+		display.display();
 	}
 
 	else if (c[0] == 'L')
 	{
 		modalita = 3;
+
+		pagina_3();
+		display.display();
 	}
 
 	else if (c[0] == 'I')
 	{
 		modalita = 4;
+
+		pagina_4();
+		display.display();
 	}
 }
 
@@ -307,6 +348,19 @@ void pagina_4()
 	display.setTextColor(WHITE);
 	display.setCursor(10,0);
 	display.println("INTERRUPT");
+
+}
+
+void pagina_default()
+{
+
+	display.clearDisplay();
+	display.setTextSize(2);
+	display.setTextColor(WHITE);
+	display.setCursor(10,0);
+	display.println("ERROR");
+	display.setCursor(0,20);
+	display.println(modalita);
 
 }
 
