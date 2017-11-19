@@ -39,8 +39,8 @@ const int p_micro = A3;
 
 int modalita;
 boolean interrupt_ok = 0;
-unsigned long d_focus, d_shoot, d_laser, d_interrupt = 1000, time_1, time_2;
-int micro, laser, mul_d, t_focus = 1, t_shoot = 100, i;
+unsigned long d_focus, d_shoot, d_laser, time_1, time_2, time_0;
+int micro, laser, d_interrupt, mul_d, t_focus = 1, t_shoot = 100, i;
 
 char c[8];
 
@@ -58,7 +58,7 @@ void setup()
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 	// init done
 
-	pinMode(p_interrupt, INPUT_PULLUP);
+	pinMode(p_interrupt, INPUT);
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
@@ -173,49 +173,50 @@ void loop()
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, HIGH);
+		attachInterrupt(digitalPinToInterrupt(2), f_interrupt, LOW);
 
 		pagina_4();
-		display.setCursor(20,30);
-		display.println(d_interrupt);
-		display.setCursor(100,30);
-		display.println(interrupt_ok);
 		display.display();
 
-
-		if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
+		while (modalita == 4)
 		{
-				detachInterrupt(digitalPinToInterrupt(p_interrupt));
-  			//noInterrupts(); // BLOCCO ALTRI INTERRUPT
+				if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
+				{
+						detachInterrupt(digitalPinToInterrupt(2)); // BLOCCO ALTRI INTERRUPT
 
-  			interrupt_ok = 0;
-  			delay(1000);
-  			time_2 = millis();
+						time_2 = millis();
+		  			interrupt_ok = false;
+		  			delay(1000);
 
-  			digitalWrite(p_focus, HIGH);
-		    digitalWrite(p_shoot, HIGH); // Shoot !!
+		  			digitalWrite(p_focus, HIGH);
+				    digitalWrite(p_shoot, HIGH); // Shoot !!
 
-		    delay(50);
+				    delay(50);
 
-		    digitalWrite(p_shoot, LOW);
-		    digitalWrite(p_focus, LOW);
+				    digitalWrite(p_shoot, LOW);
+				    digitalWrite(p_focus, LOW);
 
-		    //interrupts();
+						attachInterrupt(digitalPinToInterrupt(2), f_interrupt, LOW);
 
-		}
-		else if (mySerial.available() > 0)
-		{
+						time_0 = time_2 - time_1;
+						Serial.println(time_0);
+						//print_interrupt();
 
-			i = i + 1;
+				}
+				else if (mySerial.available() > 0)
+				{
 
-			// Reading incoming bytes :
-			c[i-1] = mySerial.read();
+					i = i + 1;
 
-			if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-			{
-				c_modo();
-				i = 0;
-			}
+					// Reading incoming bytes :
+					c[i-1] = mySerial.read();
+
+					if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+					{
+						c_modo();
+						i = 0;
+					}
+				}
 		}
 
 		/*micro = analogRead(p_micro);
@@ -266,7 +267,7 @@ void loop()
 
 void f_interrupt()
 {
-	interrupt_ok = 1;
+	interrupt_ok = true;
 	time_1 = millis();
 }
 
@@ -303,6 +304,14 @@ void c_modo()
 		pagina_4();
 		display.display();
 	}
+}
+
+void print_interrupt()
+{
+	pagina_4();
+	display.setCursor(20,20);
+	display.println(time_0);
+	display.display();
 }
 
 void pagina_1()
