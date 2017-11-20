@@ -37,10 +37,9 @@ const int p_RX = 11;
 const int p_laser = A2;
 const int p_micro = A3;
 
-int modalita;
 boolean interrupt_ok = 0;
+int modalita, micro, laser, d_interrupt, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
 unsigned long d_focus, d_shoot, d_laser, time_1, time_2, time_0;
-int micro, laser, d_interrupt, mul_d, t_focus = 1, t_shoot = 100, i;
 
 char c[8];
 
@@ -54,9 +53,7 @@ void setup()
 
 	mySerial.println("Initializing I2C devices...");
 
-	// by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
-	// init done
 
 	pinMode(p_interrupt, INPUT);
 	pinMode(p_focus, OUTPUT);
@@ -64,11 +61,21 @@ void setup()
 
 	display.display(); //LOGO
 
-  modalita = EEPROM.read(0);
-  d_focus = EEPROM.read(2);
-  d_shoot = EEPROM.read(6);
-  d_laser = EEPROM.read(10);
-  d_interrupt = EEPROM.read(14);
+	EE_ind = 0;
+  EEPROM.get(EE_ind, modalita);
+	EE_ind += sizeof(modalita);
+
+  EEPROM.get(EE_ind, d_focus);
+	EE_ind += sizeof(d_focus);
+
+  EEPROM.get(EE_ind, d_shoot);
+	EE_ind += sizeof(d_shoot);
+
+  EEPROM.get(EE_ind, d_laser);
+	EE_ind += sizeof(d_laser);
+
+  EEPROM.get(EE_ind, d_interrupt);
+	EE_ind += sizeof(d_interrupt);
 
 }
 
@@ -256,11 +263,22 @@ void loop()
 	break;
 	}
 
-	EEPROM.put(0, modalita);
-	EEPROM.put(2, d_focus);
-	EEPROM.put(6, d_shoot);
-  EEPROM.put(10, d_focus);
-	EEPROM.put(14, d_interrupt);
+	EE_ind = 0;
+	EEPROM.put(EE_ind, modalita);
+	EE_ind += sizeof(modalita);
+
+	EEPROM.put(EE_ind, d_focus);
+	EE_ind += sizeof(d_focus);
+
+	EEPROM.put(EE_ind, d_shoot);
+	EE_ind += sizeof(d_shoot);
+
+  EEPROM.put(EE_ind, d_focus);
+	EE_ind += sizeof(d_focus);
+
+	EEPROM.put(EE_ind, d_interrupt);
+	EE_ind += sizeof(d_interrupt);
+
 }
 
 //--------------------------FUNZIONI------------------------
