@@ -85,59 +85,13 @@ void loop()
 	{
 	case 1: //SCATTO REMOTO
 
-		detachInterrupt(digitalPinToInterrupt(p_interrupt));
-
-		pagina_1();
-		display.display();
-
-		if (mySerial.available() > 0)
-		{
-
-			i = i + 1;
-
-			// Reading incoming bytes :
-			c[i-1] = mySerial.read();
-
-			if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-			{
-			  	c_modo();
-			  	i = 0;
-			}
-			else if (c[i-1] == '*') //FINE STRINGA E CICLO
-			{
-			  	scatto();
-			  	i = 0;
-			}
-		}
+		Remoto();
 
 	break;
 
 	case 2: //TIMELAPSE
 
-		detachInterrupt(digitalPinToInterrupt(p_interrupt));
-
-		pagina_2();
-		display.display();
-
-		if (mySerial.available() > 0)
-		{
-
-			i = i + 1;
-
-			// Reading incoming bytes :
-			c[i-1] = mySerial.read();
-
-			if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-			{
-			  	c_modo();
-			  	i = 0;
-			}
-			else if (c[i-1] == '*') //FINE STRINGA E CICLO
-			{
-
-			  	i = 0;
-			}
-		}
+		Lapse();
 
 	break;
 
@@ -180,7 +134,7 @@ void loop()
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-		attachInterrupt(digitalPinToInterrupt(2), f_interrupt, LOW);
+		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
 
 		pagina_4();
 		display.display();
@@ -189,7 +143,7 @@ void loop()
 		{
 				if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
 				{
-						detachInterrupt(digitalPinToInterrupt(2)); // BLOCCO ALTRI INTERRUPT
+						detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
 
 						time_2 = millis();
 		  			interrupt_ok = false;
@@ -203,11 +157,10 @@ void loop()
 				    digitalWrite(p_shoot, LOW);
 				    digitalWrite(p_focus, LOW);
 
-						attachInterrupt(digitalPinToInterrupt(2), f_interrupt, LOW);
+						attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
 
 						time_0 = time_2 - time_1;
-						Serial.println(time_0);
-						//print_interrupt();
+						print_interrupt();
 
 				}
 				else if (mySerial.available() > 0)
@@ -327,7 +280,9 @@ void c_modo()
 void print_interrupt()
 {
 	pagina_4();
-	display.setCursor(20,20);
+	display.setCursor(0,20);
+	display.println(d_interrupt);
+	display.setCursor(60,20);
 	display.println(time_0);
 	display.display();
 }
