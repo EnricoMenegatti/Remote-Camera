@@ -37,9 +37,11 @@ const int p_RX = 11;
 const int p_laser = A2;
 const int p_micro = A3;
 
-boolean interrupt_ok = 0;
+volatile boolean interrupt_ok = 0;
+volatile unsigned long time_1, time_2, time_0;
+
 int modalita, micro, laser, d_interrupt, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
-unsigned long d_focus, d_shoot, d_laser, time_1, time_2, time_0;
+unsigned long d_focus, d_shoot, d_laser;
 
 char c[8];
 
@@ -134,60 +136,7 @@ void loop()
 
 	case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-		attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
-
-		pagina_4();
-		display.display();
-
-		while (modalita == 4)
-		{
-				if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
-				{
-						detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
-
-						time_2 = millis();
-		  			interrupt_ok = false;
-		  			delay(1000);
-
-		  			digitalWrite(p_focus, HIGH);
-				    digitalWrite(p_shoot, HIGH); // Shoot !!
-
-				    delay(50);
-
-				    digitalWrite(p_shoot, LOW);
-				    digitalWrite(p_focus, LOW);
-
-						attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
-
-						time_0 = time_2 - time_1;
-						print_interrupt();
-
-				}
-				else if (mySerial.available() > 0)
-				{
-
-					i = i + 1;
-
-					// Reading incoming bytes :
-					c[i-1] = mySerial.read();
-
-					if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-					{
-						c_modo();
-						i = 0;
-					}
-				}
-		}
-
-		/*micro = analogRead(p_micro);
-		micro = micro / 100;
-		micro = micro * 10;
-		display.setTextSize(2);
-		display.setTextColor(WHITE);
-		display.setCursor(0,20);
-		display.println(micro);
-		Serial.println(micro);
-		display.display();*/
+		Interrupt();
 
 	break;
 
