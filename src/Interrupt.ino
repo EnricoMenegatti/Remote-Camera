@@ -1,14 +1,14 @@
 void Interrupt()
 {
-  attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
+    attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
 
-  pagina_4();
-  display.display();
+    pagina_4();
+    display.display();
 
-  while (modalita == 4)
-  {
-      if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
-      {
+    while (modalita == 4)
+    {
+        if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
+        {
           detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
 
           time_2 = millis();
@@ -28,25 +28,52 @@ void Interrupt()
 
           while (digitalRead(p_interrupt) == false)
           {
-            delay(500);
+              delay(500);
           }
 
           attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
 
-      }
-      else if (mySerial.available() > 0)
-      {
-
-        i = i + 1;
-
-        // Reading incoming bytes :
-        c[i-1] = mySerial.read();
-
-        if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-        {
-          c_modo();
-          i = 0;
         }
-      }
-  }
+        else if (mySerial.available() > 0)
+        {
+
+            i = i + 1;
+
+            // Reading incoming bytes :
+            c[i-1] = mySerial.read();
+
+            if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+            {
+                c_modo();
+                i = 0;
+            }
+        }
+    }
+}
+
+void f_interrupt()
+{
+	interrupt_ok = true;
+	time_1 = millis();
+}
+
+void pagina_4()
+{
+
+  	display.clearDisplay();
+  	display.setTextSize(2);
+  	display.setTextColor(WHITE);
+  	display.setCursor(10,0);
+  	display.println("INTERRUPT");
+
+}
+
+void print_interrupt()
+{
+  	pagina_4();
+  	display.setCursor(0,20);
+  	display.println(d_interrupt);
+  	display.setCursor(60,20);
+  	display.println(time_0);
+  	display.display();
 }
