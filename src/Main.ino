@@ -50,7 +50,7 @@ SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
 void setup()
 {
 
-Serial.begin(19200);
+	Serial.begin(19200);
 	mySerial.begin(19200);
 
 	mySerial.println("Initializing I2C devices...");
@@ -64,19 +64,19 @@ Serial.begin(19200);
 	display.display(); //LOGO
 
 	EE_ind = 0;
-  EEPROM.get(EE_ind, modalita);
+  	EEPROM.get(EE_ind, modalita);
 	EE_ind += sizeof(modalita);
 
-  EEPROM.get(EE_ind, d_focus);
+  	EEPROM.get(EE_ind, d_focus);
 	EE_ind += sizeof(d_focus);
 
-  EEPROM.get(EE_ind, d_shoot);
+  	EEPROM.get(EE_ind, d_shoot);
 	EE_ind += sizeof(d_shoot);
 
-  EEPROM.get(EE_ind, d_laser);
+  	EEPROM.get(EE_ind, d_laser);
 	EE_ind += sizeof(d_laser);
 
-  EEPROM.get(EE_ind, d_interrupt);
+  	EEPROM.get(EE_ind, d_interrupt);
 	EE_ind += sizeof(d_interrupt);
 
 }
@@ -85,53 +85,53 @@ void loop()
 {
 	switch (modalita)
 	{
-	case 1: //SCATTO REMOTO
+		case 1: //SCATTO REMOTO
 
-		Remoto();
+			Remoto();
 
-	break;
+		break;
 
-	case 2: //TIMELAPSE
+		case 2: //TIMELAPSE
 
-		Lapse();
+			Lapse();
 
-	break;
+		break;
 
-	case 3: //FOTOTRAPPOLA LASER
+		case 3: //FOTOTRAPPOLA LASER
 
-		Laser();
+			Laser();
 
-	break;
+		break;
 
-	case 4: //FOTOTRAPPOLA SU INTERRUPT
+		case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-		Interrupt();
+			Interrupt();
 
-	break;
+		break;
 
-	default:
+		default:
 
-		detachInterrupt(digitalPinToInterrupt(p_interrupt));
+			detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
-		pagina_default();
-		display.display();
+			pagina_default();
+			display.display();
 
-		if (mySerial.available() > 0)
-		{
-
-			i = i + 1;
-
-			// Reading incoming bytes :
-			c[i-1] = mySerial.read();
-
-			if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+			if (mySerial.available() > 0)
 			{
-				c_modo();
-				i = 0;
-			}
-		}
 
-	break;
+				i = i + 1;
+
+				// Reading incoming bytes :
+				c[i-1] = mySerial.read();
+
+				if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+				{
+					c_modo();
+					i = 0;
+				}
+			}
+
+		break;
 	}
 
 	EE_ind = 0;
