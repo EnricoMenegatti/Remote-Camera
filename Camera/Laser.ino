@@ -18,7 +18,7 @@ void Laser()
       c_modo();
       i = 0;
     }
-    else if (c[i-1] == '*') //FINE STRINGA E CICLO
+    else if (c[i-1] == '*') //FINE STRINGA E CICLO DI SCATTO
     {
 
       i = 0;

@@ -15,13 +15,13 @@ void Remoto()
 
     if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
     {
-        c_modo();
-        i = 0;
+      c_modo();
+      i = 0;
     }
-    else if (c[i-1] == '*') //FINE STRINGA E CICLO
+    else if (c[i-1] == '*') //FINE STRINGA E CICLO DI SCATTO
     {
-        scatto();
-        i = 0;
+      scatto();
+      i = 0;
     }
   }
 }

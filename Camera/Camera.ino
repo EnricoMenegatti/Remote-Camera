@@ -64,19 +64,19 @@ void setup()
 	display.display(); //LOGO
 
 	EE_ind = 0;
-  	EEPROM.get(EE_ind, modalita);
+  EEPROM.get(EE_ind, modalita);
 	EE_ind += sizeof(modalita);
 
-  	EEPROM.get(EE_ind, d_focus);
+  EEPROM.get(EE_ind, d_focus);
 	EE_ind += sizeof(d_focus);
 
-  	EEPROM.get(EE_ind, d_shoot);
+  EEPROM.get(EE_ind, d_shoot);
 	EE_ind += sizeof(d_shoot);
 
-  	EEPROM.get(EE_ind, d_laser);
+  EEPROM.get(EE_ind, d_laser);
 	EE_ind += sizeof(d_laser);
 
-  	EEPROM.get(EE_ind, d_interrupt);
+  EEPROM.get(EE_ind, d_interrupt);
 	EE_ind += sizeof(d_interrupt);
 
 }
@@ -134,21 +134,7 @@ void loop()
 		break;
 	}
 
-	EE_ind = 0;
-	EEPROM.put(EE_ind, modalita);
-	EE_ind += sizeof(modalita);
-
-	EEPROM.put(EE_ind, d_focus);
-	EE_ind += sizeof(d_focus);
-
-	EEPROM.put(EE_ind, d_shoot);
-	EE_ind += sizeof(d_shoot);
-
-  	EEPROM.put(EE_ind, d_focus);
-	EE_ind += sizeof(d_focus);
-
-	EEPROM.put(EE_ind, d_interrupt);
-	EE_ind += sizeof(d_interrupt);
+	save_ee();
 
 }
 
@@ -187,6 +173,27 @@ void c_modo()
 		pagina_4();
 		display.display();
 	}
+}
+
+void save_ee()
+{
+  
+  EE_ind = 0;
+  EEPROM.put(EE_ind, modalita);//scrive valore su eeprom solo se viene modificato
+  EE_ind += sizeof(modalita);
+
+  EEPROM.put(EE_ind, d_focus);
+  EE_ind += sizeof(d_focus);
+
+  EEPROM.put(EE_ind, d_shoot);
+  EE_ind += sizeof(d_shoot);
+
+  EEPROM.put(EE_ind, d_focus);
+  EE_ind += sizeof(d_focus);
+
+  EEPROM.put(EE_ind, d_interrupt);
+  EE_ind += sizeof(d_interrupt);
+  
 }
 
 void pagina_default()
