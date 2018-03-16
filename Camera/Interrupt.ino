@@ -54,6 +54,9 @@ void Audio()
       {
         t_audio();
         i = 0;
+        
+        pagina_4();
+        display.display();
       }
     }
   }

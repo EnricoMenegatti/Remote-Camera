@@ -54,6 +54,9 @@ void Laser()
       {
         t_laser();
         i = 0;
+        
+        pagina_3();
+        display.display();
       }
     }
   }

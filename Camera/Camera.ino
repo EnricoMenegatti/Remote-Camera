@@ -57,8 +57,8 @@ void setup()
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
-	pinMode(p_audio, INPUT);
-  pinMode(p_laser, INPUT);
+	pinMode(p_audio, INPUT_PULLUP);
+  pinMode(p_laser, INPUT_PULLUP);
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
@@ -192,8 +192,8 @@ void save_ee()
   EEPROM.put(EE_ind, d_shoot);
   EE_ind += sizeof(d_shoot);
 
-  EEPROM.put(EE_ind, d_focus);
-  EE_ind += sizeof(d_focus);
+  EEPROM.put(EE_ind, d_laser);
+  EE_ind += sizeof(d_laser);
 
   EEPROM.put(EE_ind, d_audio);
   EE_ind += sizeof(d_audio);
