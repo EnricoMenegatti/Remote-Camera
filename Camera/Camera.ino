@@ -37,11 +37,11 @@ const int p_TX = 10;
 const int p_RX = 11;
 const int p_micro = A3;
 
-volatile boolean audio_ok, laser_ok;
+volatile boolean audio_ok, laser_ok; 
 volatile unsigned long time_1, time_2, time_0;
 
-int modalita, micro, laser, d_audio, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
-unsigned long d_focus, d_shoot, d_laser;
+int modalita, micro, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
+unsigned long d_focus, d_shoot, d_laser, d_audio;
 
 char c[8];
 
@@ -62,7 +62,7 @@ void setup()
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
-	display.display(); //LOGO
+	//display.display(); //LOGO
 
 	EE_ind = 0;
   EEPROM.get(EE_ind, modalita);
@@ -79,6 +79,8 @@ void setup()
 
   EEPROM.get(EE_ind, d_audio);
 	EE_ind += sizeof(d_audio);
+
+  mySerial.println(modalita);
 
 }
 

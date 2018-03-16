@@ -57,14 +57,6 @@ void Laser()
       }
     }
   }
-
-  laser = analogRead(p_laser);
-
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(0,20);
-  display.println(laser);
-  display.display();
 }
 
 void f_laser()
