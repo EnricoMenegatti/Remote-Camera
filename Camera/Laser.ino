@@ -1,6 +1,6 @@
 void Laser()
 {
-  detachInterrupt(digitalPinToInterrupt(p_interrupt));
+  //detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
   pagina_3();
   display.display();

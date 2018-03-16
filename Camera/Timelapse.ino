@@ -1,6 +1,6 @@
 void Lapse()
 {
-  detachInterrupt(digitalPinToInterrupt(p_interrupt));
+  //detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
   pagina_2();
   display.display();

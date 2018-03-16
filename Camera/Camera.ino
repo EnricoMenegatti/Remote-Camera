@@ -111,7 +111,7 @@ void loop()
 
 		default:
 
-			detachInterrupt(digitalPinToInterrupt(p_interrupt));
+			//detachInterrupt(digitalPinToInterrupt(p_interrupt));
 
 			pagina_default();
 			display.display();

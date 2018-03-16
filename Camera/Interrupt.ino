@@ -1,17 +1,21 @@
 void Interrupt()
 {
-  attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
-
+  //attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
+  
   pagina_4();
   display.display();
+
+  interrupt_setup();
 
   while (modalita == 4)
   {
     if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
     {
-      detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
+      //detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
 
-      time_2 = millis();
+      cli();
+
+      time_2 = micros();
       interrupt_ok = false;
       delay(d_interrupt);
 
@@ -31,8 +35,8 @@ void Interrupt()
         delay(500);
       }
 
-      attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
-
+      //attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
+      sei();
     }
     else if (mySerial.available() > 0)
     {
@@ -60,8 +64,14 @@ void Interrupt()
 void f_interrupt()
 {
 	interrupt_ok = true;
-	time_1 = millis();
+	time_1 = micros();
 }
+
+ISR(INT0_vect)
+{                         
+  interrupt_ok = true;
+  time_1 = micros();
+}// end isr
 
 void t_interrupt()
 {
@@ -85,9 +95,17 @@ void pagina_4()
 void print_interrupt()
 {
 	pagina_4();
-	display.setCursor(0,20);
+	display.setCursor(10,20);
 	display.println(d_interrupt);
-	display.setCursor(100,20);
+	display.setCursor(10,40);
 	display.println(time_0);
 	display.display();
 }
+
+void interrupt_setup()
+{
+  EICRA = 0b0000;//INTERRUP SU LIVELLO BASSO SU PIN 2 E 3
+  EIMSK = 0b01;//ABILITO INTERRUPT SU PIN 2
+  sei();
+}
+
