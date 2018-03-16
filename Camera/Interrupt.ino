@@ -11,20 +11,21 @@ void Interrupt()
     {
       detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
 
-      time_2 = millis();
+      time_2 = micros();
       interrupt_ok = false;
       delay(d_interrupt);
 
       digitalWrite(p_focus, HIGH);
       digitalWrite(p_shoot, HIGH); // Shoot !!
 
-      delay(50);
+      print_interrupt_1();
+      delay(100);
 
       digitalWrite(p_shoot, LOW);
       digitalWrite(p_focus, LOW);
 
       time_0 = time_2 - time_1;//delay da quando viene riconosciuto l'interrupt a quando viene elaborato
-      print_interrupt();
+      print_interrupt_2();
 
       while (digitalRead(p_interrupt) == false)
       {
@@ -60,7 +61,7 @@ void Interrupt()
 void f_interrupt()
 {
 	interrupt_ok = true;
-	time_1 = millis();
+	time_1 = micros();
 }
 
 void t_interrupt()
@@ -75,19 +76,46 @@ void pagina_4()
 {
 
 	display.clearDisplay();
+  display.setTextColor(WHITE);
+  display.setTextSize(3);
+  display.setCursor(80,30);
+  display.write(73);//I
 	display.setTextSize(2);
-	display.setTextColor(WHITE);
 	display.setCursor(10,0);
 	display.println("INTERRUPT");
+  display.setCursor(10,20);
+  display.println(d_interrupt);
 
 }
 
-void print_interrupt()
+void print_interrupt_1()
+{
+  display.clearDisplay();
+  
+  display.setTextColor(BLACK, WHITE);
+  display.setTextSize(3);
+  display.drawLine(79, 29, 97, 29, WHITE); //LINEE ORIZZONTALI
+  display.drawLine(78, 28, 97, 28, WHITE);
+  display.drawLine(77, 27, 97, 27, WHITE);
+  display.drawLine(79, 29, 79, 53, WHITE); //LINEE VERTICALI
+  display.drawLine(78, 28, 78, 53, WHITE);
+  display.drawLine(77, 27, 77, 53, WHITE);
+  display.setCursor(80,30);
+  display.write(73);//I
+  
+  display.setTextColor(WHITE);
+  display.setTextSize(2);
+  display.setCursor(10,0);
+  display.println("INTERRUPT");
+  display.setCursor(10,20);
+  display.println(d_interrupt);
+  display.display();
+}
+
+void print_interrupt_2()
 {
 	pagina_4();
-	display.setCursor(0,20);
-	display.println(d_interrupt);
-	display.setCursor(100,20);
+	display.setCursor(10,40);
 	display.println(time_0);
 	display.display();
 }
