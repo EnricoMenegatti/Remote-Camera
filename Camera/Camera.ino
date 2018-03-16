@@ -29,18 +29,18 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000,
   B11000000, B11000000};*/
 
-const int p_interrupt = 2;
+const int p_audio = 2;
+const int p_laser = 3;
 const int p_focus = 8;
 const int p_shoot = 9;
 const int p_TX = 10;
 const int p_RX = 11;
-const int p_laser = A2;
 const int p_micro = A3;
 
-volatile boolean interrupt_ok = 0;
+volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
 
-int modalita, micro, laser, d_interrupt, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
+int modalita, micro, laser, d_audio, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
 unsigned long d_focus, d_shoot, d_laser;
 
 char c[8];
@@ -57,7 +57,8 @@ void setup()
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
-	pinMode(p_interrupt, INPUT);
+	pinMode(p_audio, INPUT);
+  pinMode(p_laser, INPUT);
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
@@ -76,8 +77,8 @@ void setup()
   EEPROM.get(EE_ind, d_laser);
 	EE_ind += sizeof(d_laser);
 
-  EEPROM.get(EE_ind, d_interrupt);
-	EE_ind += sizeof(d_interrupt);
+  EEPROM.get(EE_ind, d_audio);
+	EE_ind += sizeof(d_audio);
 
 }
 
@@ -105,13 +106,14 @@ void loop()
 
 		case 4: //FOTOTRAPPOLA SU INTERRUPT
 
-			Interrupt();
+			Audio();
 
 		break;
 
 		default:
 
-			detachInterrupt(digitalPinToInterrupt(p_interrupt));
+			detachInterrupt(digitalPinToInterrupt(p_audio));
+      detachInterrupt(digitalPinToInterrupt(p_laser));
 
 			pagina_default();
 			display.display();
@@ -166,7 +168,7 @@ void c_modo()
 		display.display();
 	}
 
-	else if (c[0] == 'I')
+	else if (c[0] == 'A')
 	{
 		modalita = 4;
 
@@ -191,8 +193,8 @@ void save_ee()
   EEPROM.put(EE_ind, d_focus);
   EE_ind += sizeof(d_focus);
 
-  EEPROM.put(EE_ind, d_interrupt);
-  EE_ind += sizeof(d_interrupt);
+  EEPROM.put(EE_ind, d_audio);
+  EE_ind += sizeof(d_audio);
   
 }
 

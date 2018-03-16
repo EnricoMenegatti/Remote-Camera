@@ -1,6 +1,7 @@
 void Remoto()
 {
-  detachInterrupt(digitalPinToInterrupt(p_interrupt));
+  detachInterrupt(digitalPinToInterrupt(p_audio));
+  detachInterrupt(digitalPinToInterrupt(p_laser));
 
   pagina_1();
   display.display();

@@ -16,7 +16,7 @@ MODALITA' DI FUNZIONAMENTO
 			MODALITA'		--->	S 			---> 	SCATTO REMOTO
 							--->	T 			--->	TIMELAPSE
 							--->	L 			--->	FOTOTRAPPOLA LASER
-							--->	I 			--->	FOTOTRAPPOLA ACUSTICA
+							--->	A 			--->	FOTOTRAPPOLA ACUSTICA
 
 			FINE			--->	+			--->	CARATTERE FINALE DELLA STRINGA
 

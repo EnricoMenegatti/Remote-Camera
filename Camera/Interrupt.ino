@@ -1,38 +1,39 @@
-void Interrupt()
+void Audio()
 {
-  attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
+  attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
+  detachInterrupt(digitalPinToInterrupt(p_laser));
 
   pagina_4();
   display.display();
 
   while (modalita == 4)
   {
-    if (interrupt_ok == true) // SE INTERRUPT AVVENUTO
+    if (audio_ok == true) // SE INTERRUPT AVVENUTO
     {
-      detachInterrupt(digitalPinToInterrupt(p_interrupt)); // BLOCCO ALTRI INTERRUPT
+      detachInterrupt(digitalPinToInterrupt(p_audio)); // BLOCCO ALTRI INTERRUPT
 
       time_2 = micros();
-      interrupt_ok = false;
-      delay(d_interrupt);
+      audio_ok = false;
+      delay(d_audio);
 
       digitalWrite(p_focus, HIGH);
       digitalWrite(p_shoot, HIGH); // Shoot !!
 
-      print_interrupt_1();
+      print_audio_1();
       delay(100);
 
       digitalWrite(p_shoot, LOW);
       digitalWrite(p_focus, LOW);
 
       time_0 = time_2 - time_1;//delay da quando viene riconosciuto l'interrupt a quando viene elaborato
-      print_interrupt_2();
 
-      while (digitalRead(p_interrupt) == false)
+      while (digitalRead(p_audio) == false)
       {
         delay(500);
       }
 
-      attachInterrupt(digitalPinToInterrupt(p_interrupt), f_interrupt, LOW);
+      print_audio_2();
+      attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
 
     }
     else if (mySerial.available() > 0)
@@ -51,23 +52,23 @@ void Interrupt()
 
       else if (c[i-1] == '*') //FINE STRINGA E CICLO
       {
-        t_interrupt();
+        t_audio();
         i = 0;
       }
     }
   }
 }
 
-void f_interrupt()
+void f_audio()
 {
-	interrupt_ok = true;
+	audio_ok = true;
 	time_1 = micros();
 }
 
-void t_interrupt()
+void t_audio()
 {
 
-  d_interrupt = (c[0] - 48) * 1000000 + (c[1] - 48) * 100000 + (c[2] - 48) * 10000 + (c[3] - 48) * 1000 + (c[4] - 48) * 100 + (c[5] - 48) * 10 + (c[6] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+  d_audio = (c[0] - 48) * 1000000 + (c[1] - 48) * 100000 + (c[2] - 48) * 10000 + (c[3] - 48) * 1000 + (c[4] - 48) * 100 + (c[5] - 48) * 10 + (c[6] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
   save_ee();
   
 }
@@ -79,16 +80,16 @@ void pagina_4()
   display.setTextColor(WHITE);
   display.setTextSize(3);
   display.setCursor(80,30);
-  display.write(73);//I
+  display.write(65);//A
 	display.setTextSize(2);
-	display.setCursor(10,0);
-	display.println("INTERRUPT");
+	display.setCursor(30,0);
+	display.println("AUDIO");
   display.setCursor(10,20);
-  display.println(d_interrupt);
+  display.println(d_audio);
 
 }
 
-void print_interrupt_1()
+void print_audio_1()
 {
   display.clearDisplay();
   
@@ -101,18 +102,18 @@ void print_interrupt_1()
   display.drawLine(78, 28, 78, 53, WHITE);
   display.drawLine(77, 27, 77, 53, WHITE);
   display.setCursor(80,30);
-  display.write(73);//I
+  display.write(65);//A
   
   display.setTextColor(WHITE);
   display.setTextSize(2);
-  display.setCursor(10,0);
-  display.println("INTERRUPT");
+  display.setCursor(30,0);
+  display.println("AUDIO");
   display.setCursor(10,20);
-  display.println(d_interrupt);
+  display.println(d_audio);
   display.display();
 }
 
-void print_interrupt_2()
+void print_audio_2()
 {
 	pagina_4();
 	display.setCursor(10,40);
