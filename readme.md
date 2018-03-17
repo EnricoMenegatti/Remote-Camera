@@ -13,7 +13,7 @@ MODALITA' DI FUNZIONAMENTO
 		8 CARATTERI		--->	X0 			--->	MODALITA'
 						--->	0X 			--->	FINE STRINGA
 
-			MODALITA'		--->	S 			---> 	SCATTO REMOTO
+			MODALITA'		--->	R 			---> 	SCATTO REMOTO
 							--->	T 			--->	TIMELAPSE
 							--->	L 			--->	FOTOTRAPPOLA LASER
 							--->	A 			--->	FOTOTRAPPOLA ACUSTICA

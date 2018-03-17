@@ -98,12 +98,7 @@ void print_laser_1()
   
   display.setTextColor(BLACK, WHITE);
   display.setTextSize(3);
-  display.drawLine(79, 29, 97, 29, WHITE); //LINEE ORIZZONTALI
-  display.drawLine(78, 28, 97, 28, WHITE);
-  display.drawLine(77, 27, 97, 27, WHITE);
-  display.drawLine(79, 29, 79, 53, WHITE); //LINEE VERTICALI
-  display.drawLine(78, 28, 78, 53, WHITE);
-  display.drawLine(77, 27, 77, 53, WHITE);
+  linee_mancanti(80,30);
   display.setCursor(80,30);
   display.write(76);//L
   

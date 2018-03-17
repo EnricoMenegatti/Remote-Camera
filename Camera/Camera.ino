@@ -29,8 +29,8 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000,
   B11000000, B11000000};*/
 
-const int p_audio = 2;
-const int p_laser = 3;
+const int p_laser = 2;
+const int p_audio = 3;
 const int p_CLK = 7;//ENCODER
 const int p_DT = 6;//ENCODER
 const int p_SW = 5;//ENCODER
@@ -161,7 +161,7 @@ void loop()
 
 void c_modo()
 {
-	if (c[0] == 'S')
+	if (c[0] == 'R')
 	{
 		modalita = 1;
 
@@ -232,5 +232,17 @@ void pagina_default()
   display.write(76);//L
   display.setCursor(92,30);
   display.write(65);//A
-
 }
+
+void linee_mancanti(int X, int Y)
+{
+  display.drawLine(X - 1, Y - 1, X + 17, Y - 1, WHITE); //LINEE ORIZZONTALI
+  display.drawLine(X - 2, Y - 2, X + 17, Y - 2, WHITE);
+  display.drawLine(X - 3, Y - 3, X + 17, Y - 3, WHITE);
+  display.drawLine(X - 1, Y - 1, X - 1, Y + 23, WHITE); //LINEE VERTICALI
+  display.drawLine(X - 2, Y - 2, X - 2, Y + 23, WHITE);
+  display.drawLine(X - 3, Y - 3, X - 3, Y + 23, WHITE);
+}
+
+
+

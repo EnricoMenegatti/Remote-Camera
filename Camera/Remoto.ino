@@ -71,12 +71,7 @@ void scatto()
 
 		display.setTextColor(BLACK, WHITE);
 		display.setTextSize(3);
-		display.drawLine(36, 24, 54, 24, WHITE); //LINEE ORIZZONTALI
-		display.drawLine(35, 23, 54, 23, WHITE);
-		display.drawLine(34, 22, 54, 22, WHITE);
-		display.drawLine(36, 24, 36, 48, WHITE); //LINEE VERTICALI
-		display.drawLine(35, 23, 35, 48, WHITE);
-		display.drawLine(34, 22, 34, 48, WHITE);
+		linee_mancanti(37,25);
 		display.setCursor(37,25);
 		display.write(70);
 		mySerial.println("Focus");
@@ -120,12 +115,7 @@ void scatto()
 
 		display.setTextColor(BLACK, WHITE);
 		display.setTextSize(3);
-		display.drawLine(36, 24, 54, 24, WHITE); //LINEE ORIZZONTALI
-		display.drawLine(35, 23, 54, 23, WHITE);
-		display.drawLine(34, 22, 54, 22, WHITE);
-		display.drawLine(36, 24, 36, 48, WHITE); //LINEE VERTICALI
-		display.drawLine(35, 23, 35, 48, WHITE);
-		display.drawLine(34, 22, 34, 48, WHITE);
+		linee_mancanti(37,25);
 		display.setCursor(37,25);
 		display.write(70);
 		mySerial.println("Focus");
@@ -145,12 +135,7 @@ void scatto()
 
 		display.setTextColor(BLACK, WHITE);
 		display.setTextSize(3);
-		display.drawLine(76, 24, 94, 24, WHITE); //LINEE ORIZZONTALI
-		display.drawLine(75, 23, 94, 23, WHITE);
-		display.drawLine(74, 22, 94, 22, WHITE);
-		display.drawLine(76, 24, 76, 48, WHITE); //LINEE VERTICALI
-		display.drawLine(75, 23, 75, 48, WHITE);
-		display.drawLine(74, 22, 74, 48, WHITE);
+		linee_mancanti(77,25);
 		display.setCursor(77,25);
 		display.write(83);
 		mySerial.println("Shoot");
@@ -201,12 +186,7 @@ void scatto()
 
 		display.setTextColor(BLACK, WHITE);
 		display.setTextSize(3);
-		display.drawLine(76, 24, 94, 24, WHITE); //LINEE ORIZZONTALI
-		display.drawLine(75, 23, 94, 23, WHITE);
-		display.drawLine(74, 22, 94, 22, WHITE);
-		display.drawLine(76, 24, 76, 48, WHITE); //LINEE VERTICALI
-		display.drawLine(75, 23, 75, 48, WHITE);
-		display.drawLine(74, 22, 74, 48, WHITE);
+		linee_mancanti(77,25);
 		display.setCursor(77,25);
 		display.write(83);
 		mySerial.println("Shoot");
