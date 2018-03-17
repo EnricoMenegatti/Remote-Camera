@@ -31,6 +31,9 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 const int p_audio = 2;
 const int p_laser = 3;
+const int p_CLK = 7;//ENCODER
+const int p_DT = 6;//ENCODER
+const int p_SW = 5;//ENCODER
 const int p_focus = 8;
 const int p_shoot = 9;
 const int p_TX = 10;
@@ -40,7 +43,11 @@ const int p_micro = A3;
 volatile boolean audio_ok, laser_ok; 
 volatile unsigned long time_1, time_2, time_0;
 
+boolean bCW;
+ 
 int modalita, micro, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
+int Enc_cont, CLK_Last, CLK_Val;
+
 unsigned long d_focus, d_shoot, d_laser, d_audio;
 
 char c[8];
@@ -59,6 +66,11 @@ void setup()
 
 	pinMode(p_audio, INPUT_PULLUP);
   pinMode(p_laser, INPUT_PULLUP);
+  
+  pinMode (p_CLK,INPUT);
+  pinMode (p_DT,INPUT);
+  pinMode (p_SW,INPUT);
+  
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
@@ -80,7 +92,9 @@ void setup()
   EEPROM.get(EE_ind, d_audio);
 	EE_ind += sizeof(d_audio);
 
-  mySerial.println(modalita);
+  //mySerial.println(modalita);
+
+  CLK_Last = digitalRead(p_CLK);
 
 }
 
@@ -106,7 +120,7 @@ void loop()
 
 		break;
 
-		case 4: //FOTOTRAPPOLA SU INTERRUPT
+		case 4: //FOTOTRAPPOLA AUDIO
 
 			Audio();
 
@@ -117,6 +131,7 @@ void loop()
 			detachInterrupt(digitalPinToInterrupt(p_audio));
       detachInterrupt(digitalPinToInterrupt(p_laser));
 
+      modalita = 0;
 			pagina_default();
 			display.display();
 
@@ -206,9 +221,16 @@ void pagina_default()
 	display.clearDisplay();
 	display.setTextSize(2);
 	display.setTextColor(WHITE);
-	display.setCursor(10,0);
-	display.println("ERROR");
-	display.setCursor(0,20);
-	display.println(modalita);
+	display.setCursor(30,0);
+	display.println("HOME");
+	display.setTextSize(3);
+  display.setCursor(8,30);
+  display.write(82);//R
+  display.setCursor(36,30);
+  display.write(84);//T
+  display.setCursor(64,30);
+  display.write(76);//L
+  display.setCursor(92,30);
+  display.write(65);//A
 
 }
