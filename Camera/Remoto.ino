@@ -6,7 +6,12 @@ void Remoto()
   pagina_1();
   display.display();
 
-  if (mySerial.available() > 0)
+  if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
+  {
+    modalita = 0;
+  }
+
+  else if (mySerial.available() > 0)
   {
 
     i = i + 1;

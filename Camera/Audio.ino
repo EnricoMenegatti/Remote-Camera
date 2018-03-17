@@ -36,6 +36,12 @@ void Audio()
       attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
 
     }
+
+    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
+    {
+      modalita = 0;
+    }
+    
     else if (mySerial.available() > 0)
     {
 

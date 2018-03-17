@@ -36,6 +36,12 @@ void Laser()
       attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
 
     }
+    
+    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
+    {
+      modalita = 0;
+    }
+    
     else if (mySerial.available() > 0)
     {
 
