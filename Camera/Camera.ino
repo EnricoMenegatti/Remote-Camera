@@ -39,18 +39,14 @@ const int p_focus = 8;
 const int p_shoot = 9;
 const int p_TX = 10;
 const int p_RX = 11;
-const int p_micro = A3;
 
 Encoder myEnc(p_DT, p_CLK);
 
 volatile boolean audio_ok, laser_ok; 
 volatile unsigned long time_1, time_2, time_0;
  
-int modalita, micro, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
-int Enc_cont, CLK_Last, CLK_Val;
-
-long oldPosition  = -999;
-long newPosition;
+int modalita, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
+int Enc_cont, oldPosition  = -999, newPosition;
 
 unsigned long d_focus, d_shoot, d_laser, d_audio;
 
@@ -98,8 +94,7 @@ void setup()
 
   //mySerial.println(modalita);
 
-  CLK_Last = digitalRead(p_CLK);
-
+  Timer_2_Setup();
 }
 
 void loop()
