@@ -133,6 +133,7 @@ void loop()
 		case 4: //FOTOTRAPPOLA AUDIO
 
 			//Audio();
+      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
