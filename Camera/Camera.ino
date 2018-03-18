@@ -4,6 +4,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Encoder.h>
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -12,6 +13,8 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define XPOS 0
 #define YPOS 1
 #define DELTAY 2
+
+Encoder myEnc(2, 3);
 
 /*static const unsigned char PROGMEM page_1[] =
 { B11111111, B00000000,
@@ -42,11 +45,12 @@ const int p_micro = A3;
 
 volatile boolean audio_ok, laser_ok; 
 volatile unsigned long time_1, time_2, time_0;
-
-boolean bCW;
  
 int modalita, micro, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
 int Enc_cont, CLK_Last, CLK_Val;
+
+long oldPosition  = -999;
+long newPosition;
 
 unsigned long d_focus, d_shoot, d_laser, d_audio;
 
@@ -64,11 +68,11 @@ void setup()
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
-	pinMode(p_audio, INPUT_PULLUP);
-  pinMode(p_laser, INPUT_PULLUP);
+	//pinMode(p_audio, INPUT_PULLUP);
+  //pinMode(p_laser, INPUT_PULLUP);
   
-  pinMode (p_CLK,INPUT);
-  pinMode (p_DT,INPUT);
+  //pinMode (p_CLK,INPUT);
+  //pinMode (p_DT,INPUT);
   pinMode (p_SW,INPUT);
   
 	pinMode(p_focus, OUTPUT);
