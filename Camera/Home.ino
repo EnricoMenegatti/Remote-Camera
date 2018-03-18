@@ -54,10 +54,16 @@ void Home()
   
       break;
     }
-  
-    if (mySerial.available() > 0)
+
+    if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
     {
+      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+      
+      modalita = Enc_cont;
+    }
   
+    else if (mySerial.available() > 0)
+    {
       i = i + 1;
   
       // Reading incoming bytes :

@@ -39,12 +39,13 @@ void Laser()
     
     else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
     {
+      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+      
       modalita = 0;
     }
     
     else if (mySerial.available() > 0)
     {
-
       i = i + 1;
 
       // Reading incoming bytes :
