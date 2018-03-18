@@ -1,6 +1,6 @@
 void Lapse()
 {
-  detachInterrupt(digitalPinToInterrupt(p_audio));
+  //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
   pagina_2();

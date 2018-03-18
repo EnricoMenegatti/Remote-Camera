@@ -14,8 +14,6 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define YPOS 1
 #define DELTAY 2
 
-Encoder myEnc(2, 3);
-
 /*static const unsigned char PROGMEM page_1[] =
 { B11111111, B00000000,
   B11111111, B00000000,
@@ -33,15 +31,17 @@ Encoder myEnc(2, 3);
   B11000000, B11000000};*/
 
 const int p_laser = 2;
-const int p_audio = 3;
-const int p_CLK = 7;//ENCODER
-const int p_DT = 6;//ENCODER
+const int p_DT = 3;//ENCODER
+const int p_CLK = 4;//ENCODER
 const int p_SW = 5;//ENCODER
+const int p_audio = 7;
 const int p_focus = 8;
 const int p_shoot = 9;
 const int p_TX = 10;
 const int p_RX = 11;
 const int p_micro = A3;
+
+Encoder myEnc(p_DT, p_CLK);
 
 volatile boolean audio_ok, laser_ok; 
 volatile unsigned long time_1, time_2, time_0;
@@ -68,11 +68,11 @@ void setup()
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
-	//pinMode(p_audio, INPUT_PULLUP);
-  //pinMode(p_laser, INPUT_PULLUP);
+	pinMode(p_audio, INPUT_PULLUP);
+  pinMode(p_laser, INPUT_PULLUP);
   
-  //pinMode (p_CLK,INPUT);
-  //pinMode (p_DT,INPUT);
+  pinMode (p_CLK,INPUT);
+  pinMode (p_DT,INPUT);
   pinMode (p_SW,INPUT);
   
 	pinMode(p_focus, OUTPUT);
@@ -132,7 +132,7 @@ void loop()
 
 		case 4: //FOTOTRAPPOLA AUDIO
 
-			Audio();
+			//Audio();
 
 		break;
 
@@ -185,10 +185,10 @@ void c_modo()
 
 	else if (c[0] == 'A')
 	{
-		modalita = 4;
+		/*modalita = 4;
 
 		pagina_4();
-		display.display();
+		display.display();*/
 	}
 }
 

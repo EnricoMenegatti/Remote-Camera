@@ -1,7 +1,7 @@
 void Laser()
 {
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
-  detachInterrupt(digitalPinToInterrupt(p_audio));
+  //detachInterrupt(digitalPinToInterrupt(p_audio));
 
   pagina_3();
   display.display();

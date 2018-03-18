@@ -1,7 +1,7 @@
 void Home()
 {
   //detachInterrupt(digitalPinToInterrupt(p_audio));
-  //detachInterrupt(digitalPinToInterrupt(p_laser));
+  detachInterrupt(digitalPinToInterrupt(p_laser));
 
   pagina_0();
   display.display();
@@ -74,29 +74,34 @@ void Home()
 
 void Encoder()
 {
-  /*CLK_Val = digitalRead(p_CLK);
-   if (CLK_Val != CLK_Last)
-   { 
-     if (digitalRead(p_DT) != CLK_Val) 
-       Enc_cont ++;
-     
-     else 
-       Enc_cont --;
-
-     if (Enc_cont > 4 || Enc_cont < 0)
-      Enc_cont = 0;
-      
-     mySerial.println(Enc_cont);
-     
-   } 
-   CLK_Last = CLK_Val;*/
-
   newPosition = myEnc.read();
-  if (newPosition != oldPosition) 
+  
+  if (newPosition > oldPosition) 
   {
-    oldPosition = newPosition;
+    if (newPosition % 4 == 0)
+      Enc_cont ++;
+
+    if (Enc_cont > 4)
+      Enc_cont = 1;
+        
+    mySerial.println(Enc_cont);
     mySerial.println(newPosition);
-    Enc_cont ++;
+
+    oldPosition = newPosition;
+  }
+  
+  else if (newPosition < oldPosition) 
+  {
+    if (newPosition % 4 == 0)
+      Enc_cont --;
+
+    if (Enc_cont < 1)
+      Enc_cont = 4;
+      
+    mySerial.println(Enc_cont);
+    mySerial.println(newPosition);
+    
+    oldPosition = newPosition;
   }
 }
 
