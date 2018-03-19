@@ -3,11 +3,15 @@ void Laser()
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
   //detachInterrupt(digitalPinToInterrupt(p_audio));
 
+  Enc_cont = 0;
+  
   pagina_3();
   display.display();
 
   while (modalita == 3)
   {
+    encoder(3, 0);//VALORE MAX, MIN
+    
     if (laser_ok == true) // SE INTERRUPT AVVENUTO
     {
       detachInterrupt(digitalPinToInterrupt(p_laser)); // BLOCCO ALTRI INTERRUPT
@@ -71,8 +75,11 @@ void Laser()
 
 void f_laser()
 {
-  laser_ok = true;
-  time_1 = micros();
+  if (Enc_cont == 0)
+  {
+    laser_ok = true;
+    time_1 = micros();
+  }
 }
 
 void t_laser()

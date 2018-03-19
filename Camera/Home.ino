@@ -3,12 +3,14 @@ void Home()
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
+  Enc_cont = 0;
+
   pagina_0();
   display.display();
 
   while (modalita == 0)
   {
-    Encoder();
+    encoder(4, 1);//VALORE MAX, MIN
 
     switch (Enc_cont)
     {
@@ -75,39 +77,6 @@ void Home()
         i = 0;
       }
     }
-  }
-}
-
-void Encoder()
-{
-  newPosition = myEnc.read();
-  
-  if (newPosition > oldPosition) 
-  {
-    if (newPosition % 4 == 0)
-      Enc_cont ++;
-
-    if (Enc_cont > 4)
-      Enc_cont = 1;
-        
-    mySerial.println(Enc_cont);
-    mySerial.println(newPosition);
-
-    oldPosition = newPosition;
-  }
-  
-  else if (newPosition < oldPosition) 
-  {
-    if (newPosition % 4 == 0)
-      Enc_cont --;
-
-    if (Enc_cont < 1)
-      Enc_cont = 4;
-      
-    mySerial.println(Enc_cont);
-    mySerial.println(newPosition);
-    
-    oldPosition = newPosition;
   }
 }
 

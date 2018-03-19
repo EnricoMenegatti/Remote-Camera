@@ -209,6 +209,33 @@ void save_ee()
   
 }
 
+void encoder(int Max, int Min)
+{
+  newPosition = myEnc.read();
+  
+  if (newPosition > oldPosition) 
+  {
+    if (newPosition % Max == 0)
+      Enc_cont ++;
+
+      if (Enc_cont > Max)
+      Enc_cont = Min;
+
+    oldPosition = newPosition;
+  }
+  
+  else if (newPosition < oldPosition) 
+  {
+    if (newPosition % Max == 0)
+      Enc_cont --;
+
+      if (Enc_cont < Min)
+      Enc_cont = Max;
+    
+    oldPosition = newPosition;
+  }
+}
+
 void linee_mancanti(int X, int Y)
 {
   display.drawLine(X - 1, Y - 1, X + 17, Y - 1, WHITE); //LINEE ORIZZONTALI
