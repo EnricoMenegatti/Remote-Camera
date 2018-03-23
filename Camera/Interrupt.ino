@@ -1,12 +1,4 @@
-ISR(TIMER1_OVF_vect)
-{
-  
-}
 
-ISR(TIMER2_COMPA_vect)
-{
-  
-}
 
 void Timer_1_Setup() //ISR(TIMER1_OVF_vect)
 {

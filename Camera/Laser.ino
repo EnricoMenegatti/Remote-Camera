@@ -10,32 +10,6 @@ void Laser()
 
   while (modalita == 3)
   {
-    encoder(1, 0);//VALORE MAX, MIN
-
-    switch (Enc_cont)
-    {
-      case 0:
-
-        pagina_3();
-        display.display();
-
-      break;
-
-      case 1:
-
-        selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-        display.display();
-
-      break;
-
-      default:
-
-        pagina_3();
-        display.display();
-
-      break;
-    }
-
     if (laser_ok == true) // SE INTERRUPT AVVENUTO
     {
       detachInterrupt(digitalPinToInterrupt(p_laser)); // BLOCCO ALTRI INTERRUPT
@@ -65,11 +39,21 @@ void Laser()
 
     }
 
-    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
+    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
+      t_pulsante = 0;
+      
       while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+           
+      if (t_pulsante < 1000)//1000 = 2 SECONDI
+      {
+        selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+        display.display();
+      }
 
-      modalita = 0;
+      else 
+        modalita = 0;
+        
     }
 
     else if (mySerial.available() > 0)
@@ -93,6 +77,35 @@ void Laser()
         pagina_3();
         display.display();
       }
+
+     /* else
+      {
+        encoder(1, 0);//VALORE MAX, MIN
+
+        switch (Enc_cont)
+        {
+          case 0:
+    
+            pagina_3();
+            display.display();
+    
+          break;
+    
+          case 1:
+    
+            selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+            display.display();
+    
+          break;
+    
+          default:
+    
+            pagina_3();
+            display.display();
+    
+          break;
+        }
+      }*/
     }
   }
 }

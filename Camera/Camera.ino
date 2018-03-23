@@ -45,7 +45,7 @@ Encoder myEnc(p_DT, p_CLK);
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
 
-int modalita, laser, mul_d, t_focus, t_shoot, i, EE_ind;
+int modalita, laser, t_pulsante, t_focus, t_shoot, i, EE_ind;
 int Enc_cont, oldPosition  = -999, newPosition;
 
 unsigned long d_focus, d_shoot, d_laser, d_audio;
@@ -145,6 +145,13 @@ void loop()
 
 //--------------------------FUNZIONI------------------------
 
+ISR(TIMER2_COMPA_vect)
+{
+  cli();
+  t_pulsante ++;
+  sei();
+}
+
 void c_modo()
 {
   if (c[0] == 'H')
@@ -238,7 +245,7 @@ void encoder(int Max, int Min)
 
 void selezione(long var, int x, int y)//FUNZIONE PER CREARE LINEA DI SELEZIONE SOTTO A VARIABILE. SI UTILIZZA "dim_var".
 {
-	display.drawLine(x, y - 20, x + (17 * dim_var(var)), y - 20, WHITE); //LINEA ORIZZONTALE SOTTO A VARIABILE
+	display.drawLine(x, y + 20, x + (10 * dim_var(var)), y + 20, WHITE); //LINEA ORIZZONTALE SOTTO A VARIABILE
 }
 
 int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
