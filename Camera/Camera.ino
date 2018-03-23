@@ -215,7 +215,7 @@ void encoder(int Max, int Min)
   
   if (newPosition > oldPosition) 
   {
-    if (newPosition % Max == 0)
+    if (newPosition % 4 == 0)
       Enc_cont ++;
 
       if (Enc_cont > Max)
@@ -226,7 +226,7 @@ void encoder(int Max, int Min)
   
   else if (newPosition < oldPosition) 
   {
-    if (newPosition % Max == 0)
+    if (newPosition % 4 == 0)
       Enc_cont --;
 
       if (Enc_cont < Min)
