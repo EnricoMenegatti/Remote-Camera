@@ -42,9 +42,9 @@ const int p_RX = 11;
 
 Encoder myEnc(p_DT, p_CLK);
 
-volatile boolean audio_ok, laser_ok; 
+volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
- 
+
 int modalita, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
 int Enc_cont, oldPosition  = -999, newPosition;
 
@@ -66,11 +66,11 @@ void setup()
 
 	pinMode(p_audio, INPUT_PULLUP);
   pinMode(p_laser, INPUT_PULLUP);
-  
+
   pinMode (p_CLK,INPUT);
   pinMode (p_DT,INPUT);
   pinMode (p_SW,INPUT);
-  
+
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
 
@@ -106,7 +106,7 @@ void loop()
       Home();
 
     break;
-    
+
 		case 1: //SCATTO REMOTO
 
 			Remoto();
@@ -154,7 +154,7 @@ void c_modo()
     pagina_0();
     display.display();
   }
-  
+
 	if (c[0] == 'R')
 	{
 		modalita = 1;
@@ -190,7 +190,7 @@ void c_modo()
 
 void save_ee()
 {
-  
+
   EE_ind = 0;
   EEPROM.put(EE_ind, modalita);//scrive valore su eeprom solo se viene modificato
   EE_ind += sizeof(modalita);
@@ -206,14 +206,14 @@ void save_ee()
 
   EEPROM.put(EE_ind, d_audio);
   EE_ind += sizeof(d_audio);
-  
+
 }
 
 void encoder(int Max, int Min)
 {
   newPosition = myEnc.read();
-  
-  if (newPosition > oldPosition) 
+
+  if (newPosition > oldPosition)
   {
     if (newPosition % 4 == 0)
       Enc_cont ++;
@@ -223,17 +223,40 @@ void encoder(int Max, int Min)
 
     oldPosition = newPosition;
   }
-  
-  else if (newPosition < oldPosition) 
+
+  else if (newPosition < oldPosition)
   {
     if (newPosition % 4 == 0)
       Enc_cont --;
 
       if (Enc_cont < Min)
       Enc_cont = Max;
-    
+
     oldPosition = newPosition;
   }
+}
+
+void selezione(long var, int x, int y)//FUNZIONE PER CREARE LINEA DI SELEZIONE SOTTO A VARIABILE. SI UTILIZZA "dim_var".
+{
+	display.drawLine(x, y - 20, x + (17 * dim_var(var)), y - 20, WHITE); //LINEA ORIZZONTALE SOTTO A VARIABILE
+}
+
+int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
+{
+  if (var >= 0 && var < 10)//0-9ms = 1 CIFRA
+    return 1;
+
+  else if (var >= 10 && var < 100)//10-99ms = 2 CIFRE
+    return 2;
+
+  else if (var >= 100 && var < 1000)//100-999ms = 3 CIFRE
+    return 3;
+
+  else if (var >= 1000 && var < 10000)//1000-9999ms = 4 CIFRE
+    return 4;
+
+  else if (var >= 10000 && var < 100000)//10000-99999ms = 5 CIFRE
+    return 5;
 }
 
 void linee_mancanti(int X, int Y)
@@ -245,6 +268,3 @@ void linee_mancanti(int X, int Y)
   display.drawLine(X - 2, Y - 2, X - 2, Y + 23, WHITE);
   display.drawLine(X - 3, Y - 3, X - 3, Y + 23, WHITE);
 }
-
-
-
