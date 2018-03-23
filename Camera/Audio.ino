@@ -3,11 +3,39 @@ void Audio()
   attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
+  Enc_cont = 0;
+  
   pagina_4();
   display.display();
 
   while (modalita == 4)
   {
+    encoder(1, 0);//VALORE MAX, MIN
+
+    switch (Enc_cont)
+    {
+      case 0:
+
+        pagina_4();
+        display.display();
+
+      break;
+
+      case 1:
+
+        selezione(d_audio, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+        display.display();
+
+      break;
+
+      default:
+
+        pagina_4();
+        display.display();
+
+      break;
+    }
+
     if (audio_ok == true) // SE INTERRUPT AVVENUTO
     {
       detachInterrupt(digitalPinToInterrupt(p_audio)); // BLOCCO ALTRI INTERRUPT
@@ -40,10 +68,10 @@ void Audio()
     else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME
     {
       while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
-      
+
       modalita = 0;
     }
-    
+
     else if (mySerial.available() > 0)
     {
       i = i + 1;
@@ -61,7 +89,7 @@ void Audio()
       {
         t_audio();
         i = 0;
-        
+
         pagina_4();
         display.display();
       }
@@ -80,7 +108,7 @@ void t_audio()
 
   d_audio = (c[0] - 48) * 1000000 + (c[1] - 48) * 100000 + (c[2] - 48) * 10000 + (c[3] - 48) * 1000 + (c[4] - 48) * 100 + (c[5] - 48) * 10 + (c[6] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
   save_ee();
-  
+
 }
 
 void pagina_4()
@@ -102,13 +130,13 @@ void pagina_4()
 void print_audio_1()
 {
   display.clearDisplay();
-  
+
   display.setTextColor(BLACK, WHITE);
   display.setTextSize(3);
   linee_mancanti(80,30);
   display.setCursor(80,30);
   display.write(65);//A
-  
+
   display.setTextColor(WHITE);
   display.setTextSize(2);
   display.setCursor(30,0);
