@@ -6,22 +6,23 @@ void Remoto()
   pagina_1();
   display.display();
 
-  else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+  if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+  {
+    t_pulsante = 0;
+    
+    while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+      mySerial.print(t_pulsante);
+         
+    if (t_pulsante < 500)//1000 = 2 SECONDI
     {
-      t_pulsante = 0;
-      
-      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
-           
-      if (t_pulsante < 1000)//1000 = 2 SECONDI
-      {
-        //selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-        //display.display();
-      }
-
-      else 
-        modalita = 0;
-        
+      //selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+      //display.display();
     }
+
+    else 
+      modalita = 0;
+      
+  }
 
   else if (mySerial.available() > 0)
   {

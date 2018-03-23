@@ -145,13 +145,6 @@ void loop()
 
 //--------------------------FUNZIONI------------------------
 
-ISR(TIMER2_COMPA_vect)
-{
-  cli();
-  t_pulsante ++;
-  sei();
-}
-
 void c_modo()
 {
   if (c[0] == 'H')

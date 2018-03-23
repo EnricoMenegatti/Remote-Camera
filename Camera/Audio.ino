@@ -69,9 +69,10 @@ void Audio()
     {
       t_pulsante = 0;
       
-      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+        mySerial.print(t_pulsante);
            
-      if (t_pulsante < 1000)//1000 = 2 SECONDI
+      if (t_pulsante < 500)//1000 = 2 SECONDI
       {
         selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
         display.display();

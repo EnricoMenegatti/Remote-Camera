@@ -1,4 +1,10 @@
 
+ISR(TIMER2_COMPA_vect)
+{
+  cli();
+  t_pulsante ++;
+  sei();
+}
 
 void Timer_1_Setup() //ISR(TIMER1_OVF_vect)
 {
