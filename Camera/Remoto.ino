@@ -110,11 +110,12 @@ void scatto()
 		digitalWrite(p_focus, HIGH); // Focus..
 
 		d_focus = 1000;
+    t_focus = 1000;
 
 		display.setTextSize(1);
 		display.setTextColor(WHITE);
 		display.setCursor(33,53);
-		display.println(d_focus);
+		display.println(t_focus);
 		display.setCursor(50,53);
 		display.println(c[6]);
 		display.display();
@@ -126,11 +127,12 @@ void scatto()
 		digitalWrite(p_shoot, HIGH); // Shoot !!
 
 		d_shoot = 100;
+    t_shoot = 100;
 
 		display.setTextSize(1);
 		display.setTextColor(WHITE);
 		display.setCursor(73,53);
-		display.println(d_shoot);
+		display.println(t_shoot);
 		display.setCursor(90,53);
 		display.println(c[6]);
 		display.display();
