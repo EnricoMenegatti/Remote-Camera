@@ -4,7 +4,7 @@ void Audio()
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
   Enc_cont = 0;
-  
+
   pagina_4();
   display.display();
 
@@ -106,7 +106,7 @@ void f_audio()
 void t_audio()
 {
 
-  d_audio = (c[0] - 48) * 1000000 + (c[1] - 48) * 100000 + (c[2] - 48) * 10000 + (c[3] - 48) * 1000 + (c[4] - 48) * 100 + (c[5] - 48) * 10 + (c[6] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+  d_audio = (c[0] - 48) * 10000 + (c[1] - 48) * 1000 + (c[2] - 48) * 100 + (c[3] - 48) * 10 + (c[4] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
   save_ee();
 
 }

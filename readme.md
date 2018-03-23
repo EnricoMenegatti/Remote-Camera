@@ -35,13 +35,13 @@
 
 ###	CONFIGURAZIONE FILE BLUETOOTH FOTOTRAPPOLA LASER
 
-|						OPERAZIONE | BIT 7 | BIT 6 | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |  
-| -------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |  
-|				 DELAY SCATTO [ms] |  TIME |  TIME |   TIME|   TIME|   TIME|   TIME|   TIME|	 * |
+|						OPERAZIONE | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |  
+| -------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- |  
+|				 DELAY SCATTO [ms] |   TIME|   TIME|   TIME|   TIME|   TIME|	 * |
 
 
 ###	CONFIGURAZIONE FILE BLUETOOTH FOTOTRAPPOLA ACUSTICA
 
-|						OPERAZIONE | BIT 7 | BIT 6 | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |  
-| -------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |  
-|				 DELAY SCATTO [ms] |  TIME |  TIME |   TIME|   TIME|   TIME|   TIME|   TIME|	 * |
+|						OPERAZIONE | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |  
+| -------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- |  
+|				 DELAY SCATTO [ms] |   TIME|   TIME|   TIME|   TIME|   TIME|	 * |
