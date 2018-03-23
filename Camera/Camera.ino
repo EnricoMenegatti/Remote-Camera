@@ -45,7 +45,7 @@ Encoder myEnc(p_DT, p_CLK);
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
 
-int modalita, laser, mul_d, t_focus = 1, t_shoot = 100, i, EE_ind;
+int modalita, laser, mul_d, t_focus, t_shoot, i, EE_ind;
 int Enc_cont, oldPosition  = -999, newPosition;
 
 unsigned long d_focus, d_shoot, d_laser, d_audio;

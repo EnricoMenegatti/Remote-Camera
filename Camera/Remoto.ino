@@ -50,135 +50,6 @@ void pagina_1()
 
 }
 
-void scatto()
-{
-	if (c[0] == 'F' && c[1] == 'F') //FOCUS
-	{
-		F_nera();
-
-		digitalWrite(p_focus, HIGH); // Focus..
-
-		if (c[2] != '-') //FUOCO CON TEMPO IMPOSTATO
-		{
-      time_remoto(d_focus);//CALCOLA TEMPO DI FUOCO
-
-			display.setTextSize(1);
-			display.setTextColor(WHITE);
-			display.setCursor(33,53);
-			display.println(d_focus);
-			display.setCursor(50,53);
-			display.println(c[6]);
-			display.display();
-
-			delay(d_focus);
-		}
-		else //FUOCO CON TEMPO STANDARD
-		{
-			d_focus = 1000;
-
-			display.setTextSize(1);
-			display.setTextColor(WHITE);
-			display.setCursor(33,53);
-			display.println(d_focus);
-			display.setCursor(50,53);
-			display.println(c[6]);
-			display.display();
-
-			delay(1000);
-		}
-
-		pagina_1();
-		display.display();
-
-		digitalWrite(p_focus, LOW);
-	}
-
-	if (c[0] == 'F' && c[1] == 'S') //FOCUS //FOCUS + SHOOT
-	{
-		F_nera();
-
-		digitalWrite(p_focus, HIGH); // Focus..
-
-		d_focus = 1;
-
-		display.setTextSize(1);
-		display.setTextColor(WHITE);
-		display.setCursor(33,53);
-		display.println(d_focus);
-		display.setCursor(50,53);
-		display.println(c[6]);
-		display.display();
-
-		delay(1000);
-
-		S_nera();
-
-		digitalWrite(p_shoot, HIGH); // Shoot !!
-
-		d_shoot = 100;
-
-		display.setTextSize(1);
-		display.setTextColor(WHITE);
-		display.setCursor(73,53);
-		display.println(d_shoot);
-		display.setCursor(90,53);
-		display.println(c[6]);
-		display.display();
-
-		delay(100);
-
-		pagina_1();
-		display.display();
-
-		digitalWrite(p_focus, LOW);
-		digitalWrite(p_shoot, LOW);
-	}
-
-
-	if (c[0] == 'S' && c[1] == 'S') //SHOOT
-	{
-    S_nera();
-
-		digitalWrite(p_focus, HIGH);
-		digitalWrite(p_shoot, HIGH); // Shoot !!
-
-		if (c[2] != '-') //SCATTA CON TEMPO BULB
-		{
-      time_remoto(d_shoot);
-
-			display.setTextSize(1);
-			display.setTextColor(WHITE);
-			display.setCursor(73,53);
-			display.println(d_shoot);
-			display.setCursor(90,53);
-			display.println(c[6]);
-			display.display();
-
-			delay(d_shoot);
-		}
-		else //SCATTA CON TEMPO MACCHINA
-		{
-			d_shoot = 100;
-			display.setTextSize(1);
-			display.setTextColor(WHITE);
-			display.setCursor(73,53);
-			display.println(d_shoot);
-			display.setCursor(90,53);
-			display.println(c[6]);
-			display.display();
-
-			delay(100);
-		}
-
-		pagina_1();
-		display.display();
-
-		digitalWrite(p_shoot, LOW);
-		digitalWrite(p_focus, LOW);
-
-	}
-}
-
 void F_nera()
 {
   display.setTextColor(BLACK, WHITE);
@@ -199,11 +70,119 @@ void S_nera()
   mySerial.println("Shoot");
 }
 
-void time_remoto(long delay_out)
+void scatto()
+{
+	if (c[0] == 'F' && c[1] == 'F') //FOCUS
+	{
+		F_nera();
+
+		digitalWrite(p_focus, HIGH); // Focus..
+
+		if (c[2] != '-') //FUOCO CON TEMPO IMPOSTATO
+      time_remoto(d_focus, t_focus);//CALCOLA TEMPO DI FUOCO
+
+		else //FUOCO CON TEMPO STANDARD
+    {
+      d_focus = 1000;
+      t_focus = 1000;
+    }
+
+		display.setTextSize(1);
+		display.setTextColor(WHITE);
+		display.setCursor(33,53);
+		display.println(t_focus);
+		display.setCursor(50,53);
+		display.println(c[6]);
+		display.display();
+
+		delay(d_focus);
+
+		pagina_1();
+		display.display();
+
+		digitalWrite(p_focus, LOW);
+	}
+
+	if (c[0] == 'F' && c[1] == 'S')//FOCUS + SHOOT
+	{
+		F_nera();
+
+		digitalWrite(p_focus, HIGH); // Focus..
+
+		d_focus = 1000;
+
+		display.setTextSize(1);
+		display.setTextColor(WHITE);
+		display.setCursor(33,53);
+		display.println(d_focus);
+		display.setCursor(50,53);
+		display.println(c[6]);
+		display.display();
+
+		delay(d_focus);
+
+		S_nera();
+
+		digitalWrite(p_shoot, HIGH); // Shoot !!
+
+		d_shoot = 100;
+
+		display.setTextSize(1);
+		display.setTextColor(WHITE);
+		display.setCursor(73,53);
+		display.println(d_shoot);
+		display.setCursor(90,53);
+		display.println(c[6]);
+		display.display();
+
+		delay(d_shoot);
+
+		pagina_1();
+		display.display();
+
+		digitalWrite(p_focus, LOW);
+		digitalWrite(p_shoot, LOW);
+	}
+
+
+	if (c[0] == 'S' && c[1] == 'S') //SHOOT
+	{
+    S_nera();
+
+		digitalWrite(p_focus, HIGH);
+		digitalWrite(p_shoot, HIGH); // Shoot !!
+
+		if (c[2] != '-') //SCATTA CON TEMPO BULB
+      time_remoto(d_shoot, t_shoot);
+
+		else //SCATTA CON TEMPO MACCHINA
+			d_shoot = 100;
+      t_shoot = 100;
+
+		display.setTextSize(1);
+		display.setTextColor(WHITE);
+		display.setCursor(73,53);
+		display.println(t_shoot);
+		display.setCursor(90,53);
+		display.println(c[6]);
+		display.display();
+
+		delay(d_shoot);
+
+		pagina_1();
+		display.display();
+
+		digitalWrite(p_shoot, LOW);
+		digitalWrite(p_focus, LOW);
+
+	}
+}
+
+void time_remoto(long delay_out, int Time)
 {
   int mul;
 
-  delay_out = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
+  Time = (c[2] - 48) * 1000 + (c[3] - 48) * 100 + (c[4] - 48) * 10 + (c[5] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
 
   if (c[6] == 'm')
   {
@@ -218,5 +197,5 @@ void time_remoto(long delay_out)
     mul = 60000;
   }
 
-  delay_out = delay_out * mul; //TRASFORMA IN MILLISECONDI
+  delay_out = Time * mul; //TRASFORMA IN MILLISECONDI
 }
