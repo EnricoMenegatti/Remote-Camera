@@ -305,7 +305,7 @@ void Aumento_var(long var, int page)
       display.display();
     }
     
-    if (page == 34
+    if (page == 4)
     {
       d_audio = Enc_cont;
 
