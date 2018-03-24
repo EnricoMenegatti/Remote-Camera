@@ -260,6 +260,62 @@ int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
     return 5;
 }
 
+void Aumento_var(long var, int page)
+{
+  Enc_cont = var;
+  mySerial.print("aumento");
+  
+  while(1)
+  {
+    newPosition = myEnc.read();
+
+    if (digitalRead(p_SW) == 0)
+    {
+      
+      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+
+      save_ee();
+      pagina_3();
+      display.display();
+      return;
+    }
+    
+    else if (newPosition > oldPosition)
+    {
+      if (newPosition % 4 == 0)
+        Enc_cont ++;
+  
+      oldPosition = newPosition;
+    }
+  
+    else if (newPosition < oldPosition)
+    {
+      if (newPosition % 4 == 0)
+        Enc_cont --;
+  
+      oldPosition = newPosition;
+    }
+
+    if (page == 3)
+    {
+      d_laser = Enc_cont;
+
+      pagina_3();
+      selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+      display.display();
+    }
+    
+    if (page == 34
+    {
+      d_audio = Enc_cont;
+
+      pagina_4();
+      selezione(d_audio, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+      display.display();
+    }
+  }
+}
+
 void linee_mancanti(int X, int Y)
 {
   display.drawLine(X - 1, Y - 1, X + 17, Y - 1, WHITE); //LINEE ORIZZONTALI

@@ -1,5 +1,7 @@
 void Laser()
 {
+laser_start://ETICHETTA PER GOTO
+  
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
   //detachInterrupt(digitalPinToInterrupt(p_audio));
 
@@ -51,17 +53,21 @@ void Laser()
       {
         if (selezione_ok == 0)
         {
+          selezione_ok = !selezione_ok;
           selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
           display.display();
+          Aumento_var(d_laser, 3);
+          mySerial.print("selezione");
+          goto laser_start;
         }
 
         else
         {
+          selezione_ok = !selezione_ok;
           pagina_3();
           display.display();
         }
-
-        selezione_ok = !selezione_ok; 
+        
       }
 
       else 
