@@ -4,6 +4,7 @@ void Audio()
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
   Enc_cont = 0;
+  selezione_ok = 0;
 
   pagina_4();
   display.display();
@@ -74,8 +75,19 @@ void Audio()
            
       if (t_pulsante < 500)//1000 = 2 SECONDI
       {
-        selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-        display.display();
+        if (selezione_ok == 0)
+        {
+          selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
+          display.display();
+        }
+
+        else
+        {
+          pagina_4();
+          display.display();
+        }
+
+        selezione_ok = !selezione_ok;
       }
 
       else 
