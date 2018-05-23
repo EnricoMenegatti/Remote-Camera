@@ -1,5 +1,5 @@
 
-ISR(TIMER2_COMPA_vect)
+/*ISR(TIMER2_COMPA_vect)
 {
   cli();
   t_pulsante ++;
@@ -25,4 +25,4 @@ void Timer_2_Setup() //ISR(TIMER2_COMPA_vect)
   OCR2A = 0X7C;      // SET THE TOP OF THE COUNT TO 124 FOR 500Hz SAMPLE RATE
   TIMSK2 = 0x02;     // ENABLE INTERRUPT ON MATCH BETWEEN TIMER2 AND OCR2A
   sei();             // MAKE SURE GLOBAL INTERRUPTS ARE ENABLED
-}
+}*/

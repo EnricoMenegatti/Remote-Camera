@@ -49,6 +49,8 @@ boolean selezione_ok;
 int modalita, laser, t_pulsante, t_focus, t_shoot, i, EE_ind;
 int Enc_cont, oldPosition  = -999, newPosition;
 
+long this_time, last_time;
+
 unsigned long d_focus, d_shoot, d_laser, d_audio;
 
 char c[8];
@@ -95,7 +97,7 @@ void setup()
 
   //mySerial.println(modalita);
 
-  Timer_2_Setup();
+  //Timer_2_Setup();
 }
 
 void loop()

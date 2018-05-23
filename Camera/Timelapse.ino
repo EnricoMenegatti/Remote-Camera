@@ -8,12 +8,16 @@ void Lapse()
 
   if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
   {
+    last_time = millis();
     t_pulsante = 0;
     
     while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+    {
+      t_pulsante = millis() - last_time;
       mySerial.print(t_pulsante);
-         
-    if (t_pulsante < 500)//1000 = 2 SECONDI
+    }
+          
+    if (t_pulsante < 2000)//2000 = 2 SECONDI
     {
       //selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
       //display.display();
