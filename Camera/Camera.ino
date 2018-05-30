@@ -1,3 +1,5 @@
+
+
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
@@ -5,6 +7,10 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Encoder.h>
+
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ESP8266WebServer.h>
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -42,6 +48,11 @@ const int p_RX = 11;
 
 Encoder myEnc(p_DT, p_CLK);
 
+const char *ssid = "Remote-camera";
+const char *pass = "123456789";
+String command, last_command;
+ESP8266WebServer server(80);
+
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
 
@@ -60,10 +71,12 @@ SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
 void setup()
 {
 
-	Serial.begin(19200);
-	mySerial.begin(19200);
+	Serial.begin(115200);
+	mySerial.begin(115200);
 
 	mySerial.println("Initializing I2C devices...");
+
+  ESP_Setup();
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
@@ -102,6 +115,7 @@ void setup()
 
 void loop()
 {
+  server.handleClient();
 	switch (modalita)
 	{
     case 0: //PAGINA HOME
@@ -142,6 +156,8 @@ void loop()
 		break;
 	}
 
+  ESP_Test();
+  
 	save_ee();
 
 }
