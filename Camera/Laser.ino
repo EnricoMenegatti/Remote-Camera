@@ -50,7 +50,7 @@ laser_start://ETICHETTA PER GOTO
       while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
       {
         t_pulsante = millis() - last_time;
-        mySerial.print(t_pulsante);
+        Serial.print(t_pulsante);
       }
             
       if (t_pulsante < 2000)//2000 = 2 SECONDI
@@ -61,7 +61,7 @@ laser_start://ETICHETTA PER GOTO
           selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
           display.display();
           Aumento_var(d_laser, 3);
-          mySerial.print("selezione");
+          Serial.print("selezione");
           goto laser_start;
         }
 
@@ -79,12 +79,12 @@ laser_start://ETICHETTA PER GOTO
         
     }
 
-    else if (mySerial.available() > 0)
+    else if (Serial.available() > 0)
     {
       i = i + 1;
 
       // Reading incoming bytes :
-      c[i-1] = mySerial.read();
+      c[i-1] = Serial.read();
 
       if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
       {

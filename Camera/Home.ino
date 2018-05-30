@@ -64,12 +64,12 @@ void Home()
       modalita = Enc_cont;
     }
   
-    else if (mySerial.available() > 0)
+    else if (Serial.available() > 0)
     {
       i = i + 1;
   
       // Reading incoming bytes :
-      c[i-1] = mySerial.read();
+      c[i-1] = Serial.read();
   
       if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
       {

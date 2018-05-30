@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -43,8 +43,8 @@ const int p_SW = 5;//ENCODER
 const int p_audio = 7;
 const int p_focus = 8;
 const int p_shoot = 9;
-const int p_TX = 10;
-const int p_RX = 11;
+//const int p_TX = 10;
+//const int p_RX = 11;
 
 Encoder myEnc(p_DT, p_CLK);
 
@@ -66,15 +66,15 @@ unsigned long d_focus, d_shoot, d_laser, d_audio;
 
 char c[8];
 
-SoftwareSerial mySerial(p_RX, p_TX); // RX, TX
+//SoftwareSerial Serial(p_RX, p_TX); // RX, TX
 
 void setup()
 {
 
 	Serial.begin(115200);
-	mySerial.begin(115200);
-
-	mySerial.println("Initializing I2C devices...");
+ 
+//	Serial.begin(115200);
+//	Serial.println("Initializing I2C devices...");
 
   ESP_Setup();
 
@@ -108,7 +108,7 @@ void setup()
   EEPROM.get(EE_ind, d_audio);
 	EE_ind += sizeof(d_audio);
 
-  //mySerial.println(modalita);
+  //Serial.println(modalita);
 
   //Timer_2_Setup();
 }
@@ -281,7 +281,7 @@ int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
 void Aumento_var(long var, int page)
 {
   Enc_cont = var;
-  mySerial.print("aumento");
+  Serial.println("aumento");
   
   while(1)
   {

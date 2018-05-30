@@ -14,7 +14,7 @@ void Lapse()
     while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
     {
       t_pulsante = millis() - last_time;
-      mySerial.print(t_pulsante);
+      Serial.print(t_pulsante);
     }
           
     if (t_pulsante < 2000)//2000 = 2 SECONDI
@@ -28,12 +28,12 @@ void Lapse()
       
   }
   
-  else if (mySerial.available() > 0)
+  else if (Serial.available() > 0)
   {
     i = i + 1;
 
     // Reading incoming bytes :
-    c[i-1] = mySerial.read();
+    c[i-1] = Serial.read();
 
     if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
     {
