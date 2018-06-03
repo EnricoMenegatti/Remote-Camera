@@ -50,19 +50,19 @@ Encoder myEnc(p_DT, p_CLK);
 
 const char *ssid = "Remote-camera";
 const char *pass = "123456789";
-String command, last_command;
+String command, last_command, myStr;
 ESP8266WebServer server(80);
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
 
-boolean selezione_ok;
+boolean selezione_ok, change_command;
 int modalita, laser, t_pulsante, t_focus, t_shoot, i, EE_ind;
 int Enc_cont, oldPosition  = -999, newPosition;
 
 long this_time, last_time;
 
-unsigned long d_focus, d_shoot, d_laser, d_audio;
+unsigned long d_focus, d_shoot, d_laser, d_audio, prev_millis, curr_millis;
 
 char c[8];
 
@@ -72,6 +72,8 @@ void setup()
 {
 
 	Serial.begin(115200);
+
+  Serial.println("Setup...");
  
 //	Serial.begin(115200);
 //	Serial.println("Initializing I2C devices...");
@@ -98,6 +100,8 @@ void setup()
   //Serial.println(modalita);
 
   //Timer_2_Setup();
+
+  Serial.println("Setup OK!");
 }
 
 void loop()
@@ -144,24 +148,24 @@ void loop()
 
 		break;
 	}
-
-  ESP_Test();
   
 	Eeprom_save();
 
+  curr_millis = millis();
+  if(curr_millis - prev_millis >= 1000) 
+  {
+    prev_millis = curr_millis;
+    Serial.println("loop");
+  }
+  
+  ESP_Command();
 }
 
 //--------------------------FUNZIONI------------------------
 
 void c_modo()
 {
-  if (c[0] == 'H')
-  {
-    modalita = 0;
-
-    pagina_0();
-    display.display();
-  }
+  Serial.println("Cambio modo");
 
 	if (c[0] == 'R')
 	{
@@ -193,7 +197,15 @@ void c_modo()
 
 		pagina_4();
 		display.display();*/
-	}
+	}  
+ 
+	else //if (c[0] == 'H')
+  {
+    modalita = 0;
+
+    pagina_0();
+    display.display();
+  }
 }
 
 void encoder(int Max, int Min)
@@ -221,6 +233,22 @@ void encoder(int Max, int Min)
 
     oldPosition = newPosition;
   }*/
+}
+
+void verifica_comando()
+{
+  myStr = command.substring(1,8);
+  myStr.toCharArray(c,9);
+  Serial.println(c[0]);
+  change_command = 0;
+
+  for(int j = 0; j < 8; j++)
+  {
+    if (c[j] == '+') //FINE STRINGA E CAMBIO MODALITA'
+    {
+      c_modo();
+    }
+  }
 }
 
 void selezione(long var, int x, int y)//FUNZIONE PER CREARE LINEA DI SELEZIONE SOTTO A VARIABILE. SI UTILIZZA "dim_var".

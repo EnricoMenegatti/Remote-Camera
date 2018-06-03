@@ -28,6 +28,11 @@ void Remoto()
       
   }
 
+  else if (change_command == 1)
+  {
+    verifica_comando();
+  }
+
   else if (Serial.available() > 0)
   {
     i = i + 1;

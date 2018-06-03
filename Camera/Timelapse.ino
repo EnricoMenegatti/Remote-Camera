@@ -27,6 +27,11 @@ void Lapse()
       modalita = 0;
       
   }
+
+  else if (change_command == 1)
+  {
+    verifica_comando();
+  }
   
   else if (Serial.available() > 0)
   {

@@ -1,5 +1,6 @@
 void Home()
 {
+  Serial.println("home");
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
@@ -11,7 +12,7 @@ void Home()
   while (modalita == 0)
   {
     encoder(4, 1);//VALORE MAX, MIN
-    ESP_Test();
+    ESP_Command();
 
     switch (Enc_cont)
     {
@@ -64,8 +65,13 @@ void Home()
       
       modalita = Enc_cont;
     }
-  
-    else if (Serial.available() > 0) //else
+
+    else if (change_command == 1)
+    {
+      verifica_comando();
+    }
+    
+    else if (Serial.available() > 0)
     {
       i = i + 1;
   

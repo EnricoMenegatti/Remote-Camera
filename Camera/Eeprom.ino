@@ -14,12 +14,12 @@ void Eeprom_read()
   
   EE_ind += sizeof(d_laser);
   EEPROM.get(EE_ind, d_audio);
+
+  Serial.println("Eeprom read");
 }
 
 void Eeprom_save()
 {
-  Serial.println("Save_ee");
-
   EE_ind = 0;
   EEPROM.put(EE_ind, modalita);//scrive valore su eeprom solo se viene modificato
  
@@ -36,5 +36,7 @@ void Eeprom_save()
   EEPROM.put(EE_ind, d_audio);
 
   EEPROM.commit();
+
+  Serial.println("Eeprom save");
 
 }
