@@ -1,7 +1,6 @@
 
 void ESP_Setup() 
 {
-  pinMode(BUILTIN_LED,OUTPUT);
   WiFi.softAP(ssid,pass);
   IPAddress IPserver = WiFi.softAPIP();
   Serial.println(" IP address server : ");
@@ -23,7 +22,8 @@ void respond()
 
 void ESP_Test() 
 {
-  // put your main code here, to run repeatedly:
+  //Serial.println("ESP_test");
+  server.handleClient();
   
   if(last_command != command)
   {

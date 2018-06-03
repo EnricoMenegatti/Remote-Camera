@@ -11,6 +11,7 @@ void Home()
   while (modalita == 0)
   {
     encoder(4, 1);//VALORE MAX, MIN
+    ESP_Test();
 
     switch (Enc_cont)
     {
@@ -64,7 +65,7 @@ void Home()
       modalita = Enc_cont;
     }
   
-    else if (Serial.available() > 0)
+    else if (Serial.available() > 0) //else
     {
       i = i + 1;
   

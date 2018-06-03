@@ -146,7 +146,7 @@ void t_laser()
 {
 
   d_laser = (c[0] - 48) * 10000 + (c[1] - 48) * 1000 + (c[2] - 48) * 100 + (c[3] - 48) * 10 + (c[4] - 48); //ESTRAI VALORI E CONVERI IN NUMERO
-  save_ee();
+  Eeprom_save();
 
 }
 

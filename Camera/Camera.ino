@@ -36,13 +36,13 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000,
   B11000000, B11000000};*/
 
-const int p_laser = 2;
-const int p_DT = 3;//ENCODER
-const int p_CLK = 4;//ENCODER
-const int p_SW = 5;//ENCODER
-const int p_audio = 7;
-const int p_focus = 8;
-const int p_shoot = 9;
+const int p_laser = D2;
+const int p_DT = D3;//ENCODER
+const int p_CLK = D4;//ENCODER
+const int p_SW = D5;//ENCODER
+const int p_audio = D6;
+const int p_focus = D7;
+const int p_shoot = D8;
 //const int p_TX = 10;
 //const int p_RX = 11;
 
@@ -92,21 +92,8 @@ void setup()
 
 	//display.display(); //LOGO
 
-	EE_ind = 0;
-  EEPROM.get(EE_ind, modalita);
-	EE_ind += sizeof(modalita);
-
-  EEPROM.get(EE_ind, d_focus);
-	EE_ind += sizeof(d_focus);
-
-  EEPROM.get(EE_ind, d_shoot);
-	EE_ind += sizeof(d_shoot);
-
-  EEPROM.get(EE_ind, d_laser);
-	EE_ind += sizeof(d_laser);
-
-  EEPROM.get(EE_ind, d_audio);
-	EE_ind += sizeof(d_audio);
+  EEPROM.begin(512);
+	Eeprom_read();
 
   //Serial.println(modalita);
 
@@ -115,7 +102,6 @@ void setup()
 
 void loop()
 {
-  server.handleClient();
 	switch (modalita)
 	{
     case 0: //PAGINA HOME
@@ -126,19 +112,22 @@ void loop()
 
 		case 1: //SCATTO REMOTO
 
-			Remoto();
+			//Remoto();
+     modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
 		case 2: //TIMELAPSE
 
-			Lapse();
+			//Lapse();
+      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
 		case 3: //FOTOTRAPPOLA LASER
 
-			Laser();
+			//Laser();
+      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
@@ -158,7 +147,7 @@ void loop()
 
   ESP_Test();
   
-	save_ee();
+	Eeprom_save();
 
 }
 
@@ -207,29 +196,8 @@ void c_modo()
 	}
 }
 
-void save_ee()
-{
-
-  EE_ind = 0;
-  EEPROM.put(EE_ind, modalita);//scrive valore su eeprom solo se viene modificato
-  EE_ind += sizeof(modalita);
-
-  EEPROM.put(EE_ind, d_focus);
-  EE_ind += sizeof(d_focus);
-
-  EEPROM.put(EE_ind, d_shoot);
-  EE_ind += sizeof(d_shoot);
-
-  EEPROM.put(EE_ind, d_laser);
-  EE_ind += sizeof(d_laser);
-
-  EEPROM.put(EE_ind, d_audio);
-  EE_ind += sizeof(d_audio);
-
-}
-
 void encoder(int Max, int Min)
-{
+{/*
   newPosition = myEnc.read();
 
   if (newPosition > oldPosition)
@@ -252,7 +220,7 @@ void encoder(int Max, int Min)
       Enc_cont = Max;
 
     oldPosition = newPosition;
-  }
+  }*/
 }
 
 void selezione(long var, int x, int y)//FUNZIONE PER CREARE LINEA DI SELEZIONE SOTTO A VARIABILE. SI UTILIZZA "dim_var".
@@ -292,7 +260,7 @@ void Aumento_var(long var, int page)
       
       while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
 
-      save_ee();
+      Eeprom_save();
       pagina_3();
       display.display();
       return;
