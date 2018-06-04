@@ -1,5 +1,7 @@
 void Remoto()
 {
+  Serial.println("Remoto");
+  
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
@@ -28,10 +30,10 @@ void Remoto()
       
   }
 
-  else if (change_command == 1)
+  /*else if (change_command == 1)
   {
     verifica_comando();
-  }
+  }*/
 
   else if (Serial.available() > 0)
   {

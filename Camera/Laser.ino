@@ -1,6 +1,8 @@
 void Laser()
 {
 laser_start://ETICHETTA PER GOTO
+
+  Serial.println("Laser");
   
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
   //detachInterrupt(digitalPinToInterrupt(p_audio));
@@ -79,10 +81,10 @@ laser_start://ETICHETTA PER GOTO
         
     }
 
-    else if (change_command == 1)
+    /*else if (change_command == 1)
     {
       verifica_comando();
-    }
+    }*/
 
     else if (Serial.available() > 0)
     {

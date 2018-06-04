@@ -1,5 +1,7 @@
 void Audio()
 {
+  Serial.println("Audio");
+  
   attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
@@ -99,10 +101,10 @@ void Audio()
         
     }
 
-    else if (change_command == 1)
+    /*else if (change_command == 1)
     {
       verifica_comando();
-    }
+    }*/
 
     else if (Serial.available() > 0)
     {

@@ -9,7 +9,7 @@
 | -------------------- | ----- | ----- |  
 |				  HOME |  	 H |	 + |  
 |		 SCATTO REMOTO |	 R |	 + |  
-|			 TIMELAPSE |	 T |	 + | 
+|			 TIMELAPSE |	 T |	 + |
 |	FOTOTRAPPOLA LASER |	 L |	 + |
 |FOTOTRAPPOLA ACUSTICA |	 A |	 + |
 
@@ -17,10 +17,10 @@
 ###	CONFIGURAZIONE FILE BLUETOOTH SCATTO REMOTO
 
 |						OPERAZIONE | BIT 7 | BIT 6 | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |  
-| -------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |  
+| -------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |  
 |				FUOCO STANDARD(1S) |	 F |	 F |	 - |	 - |	 - |	 - |	 - |	 * |  
 |				   FUOCO IMPOSTATO |	 F |	 F |   TIME|   TIME|   TIME|   TIME| UNITA'|	 * |  
-|  SCATTO STANDARD(TEMPO MACCHINA) |	 S |	 S |	 - |	 - |	 - |	 - |	 - |	 * | 
+|  SCATTO STANDARD(TEMPO MACCHINA) |	 S |	 S |	 - |	 - |	 - |	 - |	 - |	 * |
 |  SCATTO IMPOSTATO(MACCHINA BULB) |	 F |	 S |   TIME|   TIME|   TIME|   TIME| UNITA'|	 * |
 |		   FUOCO + SCATTO STANDARD |	 F |	 S |	 - |	 - |	 - |	 - |	 - |	 * |
 

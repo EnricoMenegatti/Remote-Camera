@@ -116,29 +116,29 @@ void loop()
 
 		case 1: //SCATTO REMOTO
 
-			//Remoto();
-     modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
+		  Remoto();
+      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
 		case 2: //TIMELAPSE
 
-			//Lapse();
-      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
+			Lapse();
+      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
 		case 3: //FOTOTRAPPOLA LASER
 
-			//Laser();
-      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
+			Laser();
+      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 
 		case 4: //FOTOTRAPPOLA AUDIO
 
-			//Audio();
-      modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
+			Audio();
+      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
 

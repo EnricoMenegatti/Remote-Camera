@@ -6,6 +6,11 @@ void ESP_Setup()
   Serial.print(" IP address server : ");
   Serial.println(IPserver);
   server.on("/",respond);
+  server.on("/H+",Home);
+  server.on("/R+",Remoto);
+  server.on("/A+",Audio);
+  server.on("/L+",Laser);
+  server.on("/T+",Lapse);
   server.begin();
   server.onNotFound([]()
   {
@@ -21,6 +26,11 @@ void respond()
 {
   server.send(200,"text/html","<h1>Remote Camera</h1>");
 }
+
+/*void handleHome()
+{
+  Serial.println("handle Home");
+}*/
 
 void ESP_Command() 
 {

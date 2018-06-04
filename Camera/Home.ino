@@ -1,6 +1,7 @@
 void Home()
 {
-  Serial.println("home");
+  Serial.println("Home");
+  
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
@@ -66,10 +67,10 @@ void Home()
       modalita = Enc_cont;
     }
 
-    else if (change_command == 1)
+    /*else if (change_command == 1)
     {
       verifica_comando();
-    }
+    }*/
     
     else if (Serial.available() > 0)
     {
