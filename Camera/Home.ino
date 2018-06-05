@@ -60,19 +60,24 @@ void Home()
       break;
     }
 
-    if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
+    /*if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
     {
-      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+      {
+        Serial.print(".");
+        yield();
+      }
       
       modalita = Enc_cont;
-    }
+    }/*
 
     /*else if (change_command == 1)
     {
       verifica_comando();
     }*/
     
-    else if (Serial.available() > 0)
+    //else 
+    if (Serial.available() > 0)
     {
       i = i + 1;
   
@@ -85,6 +90,7 @@ void Home()
         i = 0;
       }
     }
+    yield();
   }
 }
 

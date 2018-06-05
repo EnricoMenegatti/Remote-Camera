@@ -12,7 +12,8 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
-#define OLED_RESET 4
+#define ESP8266
+#define OLED_RESET 3
 Adafruit_SSD1306 display(OLED_RESET);
 
 #define NUMFLAKES 10
@@ -36,13 +37,13 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000,
   B11000000, B11000000};*/
 
-const int p_laser = D1;
-const int p_DT = D2;//ENCODER
-const int p_CLK = D3;//ENCODER
-const int p_SW = D4;//ENCODER
-const int p_audio = D6;
-const int p_focus = D7;
-const int p_shoot = D8;
+const int p_laser = D0;
+const int p_DT = D6;//ENCODER
+const int p_CLK = D7;//ENCODER
+const int p_SW = D8;//ENCODER
+const int p_audio = D5;
+const int p_focus = D3;
+const int p_shoot = D4;
 //const int p_TX = 10;
 //const int p_RX = 11;
 
@@ -286,7 +287,10 @@ void Aumento_var(long var, int page)
     if (digitalRead(p_SW) == 0)
     {
       
-      while (digitalRead(p_SW) == 0);//ATTENDO RILASCIO
+      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+      {
+        yield();
+      }
 
       Eeprom_save();
       pagina_3();
@@ -327,6 +331,7 @@ void Aumento_var(long var, int page)
       selezione(d_audio, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
       display.display();
     }
+  yield();
   }
 }
 

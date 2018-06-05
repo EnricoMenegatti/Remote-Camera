@@ -44,7 +44,7 @@ laser_start://ETICHETTA PER GOTO
 
     }
 
-    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+    /*else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
       last_time = millis();
       t_pulsante = 0;
@@ -53,6 +53,7 @@ laser_start://ETICHETTA PER GOTO
       {
         t_pulsante = millis() - last_time;
         Serial.print(t_pulsante);
+        yield();
       }
             
       if (t_pulsante < 2000)//2000 = 2 SECONDI
@@ -79,7 +80,7 @@ laser_start://ETICHETTA PER GOTO
       else 
         modalita = 0;
         
-    }
+    }*/
 
     /*else if (change_command == 1)
     {
@@ -137,6 +138,7 @@ laser_start://ETICHETTA PER GOTO
         }
       }*/
     }
+    yield();
   }
 }
 

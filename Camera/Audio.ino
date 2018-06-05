@@ -68,7 +68,7 @@ void Audio()
 
     }
 
-    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+    /*else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
       last_time = millis();
       t_pulsante = 0;
@@ -77,6 +77,7 @@ void Audio()
       {
         t_pulsante = millis() - last_time;
         Serial.print(t_pulsante);
+        yield();
       }
             
       if (t_pulsante < 2000)//2000 = 2 SECONDI
@@ -99,7 +100,7 @@ void Audio()
       else 
         modalita = 0;
         
-    }
+    }*/
 
     /*else if (change_command == 1)
     {
@@ -128,6 +129,7 @@ void Audio()
         display.display();
       }
     }
+    yield();
   }
 }
 
