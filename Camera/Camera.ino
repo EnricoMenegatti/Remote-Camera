@@ -36,10 +36,10 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000,
   B11000000, B11000000};*/
 
-const int p_laser = D2;
-const int p_DT = D3;//ENCODER
-const int p_CLK = D4;//ENCODER
-const int p_SW = D5;//ENCODER
+const int p_laser = D1;
+const int p_DT = D2;//ENCODER
+const int p_CLK = D3;//ENCODER
+const int p_SW = D4;//ENCODER
 const int p_audio = D6;
 const int p_focus = D7;
 const int p_shoot = D8;
