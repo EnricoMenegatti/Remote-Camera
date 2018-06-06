@@ -1,6 +1,7 @@
 void Audio()
 {
   Serial.println("Audio");
+  modalita = 0;
   
   attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
   detachInterrupt(digitalPinToInterrupt(p_laser));
@@ -8,7 +9,7 @@ void Audio()
   Enc_cont = 0;
   selezione_ok = 0;
 
-  pagina_4();
+  pagina(4);
   display.display();
 
   while (modalita == 4)
@@ -19,7 +20,7 @@ void Audio()
     {
       case 0:
 
-        pagina_4();
+        pagina(4);
         display.display();
 
       break;
@@ -33,7 +34,7 @@ void Audio()
 
       default:
 
-        pagina_4();
+        pagina(4);
         display.display();
 
       break;
@@ -68,7 +69,7 @@ void Audio()
 
     }
 
-    /*else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
       last_time = millis();
       t_pulsante = 0;
@@ -90,7 +91,7 @@ void Audio()
 
         else
         {
-          pagina_4();
+          pagina(4);
           display.display();
         }
 
@@ -100,7 +101,7 @@ void Audio()
       else 
         modalita = 0;
         
-    }*/
+    }
 
     /*else if (change_command == 1)
     {
@@ -125,7 +126,7 @@ void Audio()
         t_audio();
         i = 0;
 
-        pagina_4();
+        pagina(4);
         display.display();
       }
     }
@@ -147,45 +148,3 @@ void t_audio()
 
 }
 
-void pagina_4()
-{
-
-	display.clearDisplay();
-  display.setTextColor(WHITE);
-  display.setTextSize(3);
-  display.setCursor(80,30);
-  display.write(65);//A
-	display.setTextSize(2);
-	display.setCursor(30,0);
-	display.println("AUDIO");
-  display.setCursor(10,20);
-  display.println(d_audio);
-
-}
-
-void print_audio_1()
-{
-  display.clearDisplay();
-
-  display.setTextColor(BLACK, WHITE);
-  display.setTextSize(3);
-  linee_mancanti(80,30);
-  display.setCursor(80,30);
-  display.write(65);//A
-
-  display.setTextColor(WHITE);
-  display.setTextSize(2);
-  display.setCursor(30,0);
-  display.println("AUDIO");
-  display.setCursor(10,20);
-  display.println(d_audio);
-  display.display();
-}
-
-void print_audio_2()
-{
-	pagina_4();
-	display.setCursor(10,40);
-	display.println(time_0);
-	display.display();
-}

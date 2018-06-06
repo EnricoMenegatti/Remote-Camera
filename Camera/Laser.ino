@@ -3,6 +3,7 @@ void Laser()
 laser_start://ETICHETTA PER GOTO
 
   Serial.println("Laser");
+  modalita = 3;
   
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
   //detachInterrupt(digitalPinToInterrupt(p_audio));
@@ -10,7 +11,7 @@ laser_start://ETICHETTA PER GOTO
   Enc_cont = 0;
   selezione_ok = 0;
 
-  pagina_3();
+  pagina(3);
   display.display();
 
   while (modalita == 3)
@@ -44,7 +45,7 @@ laser_start://ETICHETTA PER GOTO
 
     }
 
-    /*else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
       last_time = millis();
       t_pulsante = 0;
@@ -71,7 +72,7 @@ laser_start://ETICHETTA PER GOTO
         else
         {
           selezione_ok = !selezione_ok;
-          pagina_3();
+          pagina(3);
           display.display();
         }
         
@@ -80,7 +81,7 @@ laser_start://ETICHETTA PER GOTO
       else 
         modalita = 0;
         
-    }*/
+    }
 
     /*else if (change_command == 1)
     {
@@ -105,11 +106,11 @@ laser_start://ETICHETTA PER GOTO
         t_laser();
         i = 0;
 
-        pagina_3();
+        pagina(3);
         display.display();
       }
 
-     /* else
+      else
       {
         encoder(1, 0);//VALORE MAX, MIN
 
@@ -117,7 +118,7 @@ laser_start://ETICHETTA PER GOTO
         {
           case 0:
     
-            pagina_3();
+            pagina(3);
             display.display();
     
           break;
@@ -131,12 +132,12 @@ laser_start://ETICHETTA PER GOTO
     
           default:
     
-            pagina_3();
+            pagina(3);
             display.display();
     
           break;
         }
-      }*/
+      }
     }
     yield();
   }
@@ -159,45 +160,3 @@ void t_laser()
 
 }
 
-void pagina_3()
-{
-
-  display.clearDisplay();
-  display.setTextColor(WHITE);
-  display.setTextSize(3);
-  display.setCursor(80,30);
-  display.write(76);//L
-  display.setTextSize(2);
-  display.setCursor(30,0);
-  display.println("LASER");
-  display.setCursor(10,20);
-  display.println(d_laser);
-
-}
-
-void print_laser_1()
-{
-  display.clearDisplay();
-
-  display.setTextColor(BLACK, WHITE);
-  display.setTextSize(3);
-  linee_mancanti(80,30);
-  display.setCursor(80,30);
-  display.write(76);//L
-
-  display.setTextColor(WHITE);
-  display.setTextSize(2);
-  display.setCursor(30,0);
-  display.println("LASER");
-  display.setCursor(10,20);
-  display.println(d_laser);
-  display.display();
-}
-
-void print_laser_2()
-{
-  pagina_3();
-  display.setCursor(10,40);
-  display.println(time_0);
-  display.display();
-}

@@ -13,6 +13,9 @@
 #include <ESP8266WebServer.h>
 
 #define ESP8266
+
+#define ENCODER_USE_INTERRUPTS
+
 #define OLED_RESET 3
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -38,14 +41,12 @@ Adafruit_SSD1306 display(OLED_RESET);
   B11000000, B11000000};*/
 
 const int p_laser = D0;
-const int p_DT = D6;//ENCODER
-const int p_CLK = D7;//ENCODER
-const int p_SW = D8;//ENCODER
+const int p_DT = D7;//ENCODER
+const int p_CLK = D6;//ENCODER
+const int p_SW = D5;//ENCODER
 const int p_audio = D5;
 const int p_focus = D3;
 const int p_shoot = D4;
-//const int p_TX = 10;
-//const int p_RX = 11;
 
 Encoder myEnc(p_DT, p_CLK);
 
@@ -67,8 +68,6 @@ unsigned long d_focus, d_shoot, d_laser, d_audio, prev_millis, curr_millis;
 
 char c[8];
 
-//SoftwareSerial Serial(p_RX, p_TX); // RX, TX
-
 void setup()
 {
 
@@ -88,7 +87,7 @@ void setup()
 
   pinMode (p_CLK,INPUT);
   pinMode (p_DT,INPUT);
-  pinMode (p_SW,INPUT);
+  pinMode (p_SW,INPUT_PULLUP);
 
 	pinMode(p_focus, OUTPUT);
 	pinMode(p_shoot, OUTPUT);
@@ -172,7 +171,7 @@ void c_modo()
 	{
 		modalita = 1;
 
-		pagina_1();
+		pagina(1);
 		display.display();
 	}
 
@@ -180,7 +179,7 @@ void c_modo()
 	{
 		modalita = 2;
 
-		pagina_2();
+		pagina(2);
 		display.display();
 	}
 
@@ -188,7 +187,7 @@ void c_modo()
 	{
 		modalita = 3;
 
-		pagina_3();
+		pagina(3);
 		display.display();
 	}
 
@@ -196,7 +195,7 @@ void c_modo()
 	{
 		/*modalita = 4;
 
-		pagina_4();
+		pagina(4);
 		display.display();*/
 	}  
  
@@ -204,20 +203,21 @@ void c_modo()
   {
     modalita = 0;
 
-    pagina_0();
+    pagina(0);
     display.display();
   }
 }
 
 void encoder(int Max, int Min)
-{/*
+{
   newPosition = myEnc.read();
 
   if (newPosition > oldPosition)
   {
     if (newPosition % 4 == 0)
       Enc_cont ++;
-
+      //Serial.print(Enc_cont);
+      
       if (Enc_cont > Max)
       Enc_cont = Min;
 
@@ -228,12 +228,13 @@ void encoder(int Max, int Min)
   {
     if (newPosition % 4 == 0)
       Enc_cont --;
-
+      //Serial.print(Enc_cont);
+      
       if (Enc_cont < Min)
       Enc_cont = Max;
 
     oldPosition = newPosition;
-  }*/
+  }
 }
 
 void verifica_comando()
@@ -293,7 +294,7 @@ void Aumento_var(long var, int page)
       }
 
       Eeprom_save();
-      pagina_3();
+      pagina(3);
       display.display();
       return;
     }
@@ -318,7 +319,7 @@ void Aumento_var(long var, int page)
     {
       d_laser = Enc_cont;
 
-      pagina_3();
+      pagina(3);
       selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
       display.display();
     }
@@ -327,7 +328,7 @@ void Aumento_var(long var, int page)
     {
       d_audio = Enc_cont;
 
-      pagina_4();
+      pagina(4);
       selezione(d_audio, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
       display.display();
     }
@@ -335,12 +336,3 @@ void Aumento_var(long var, int page)
   }
 }
 
-void linee_mancanti(int X, int Y)
-{
-  display.drawLine(X - 1, Y - 1, X + 17, Y - 1, WHITE); //LINEE ORIZZONTALI
-  display.drawLine(X - 2, Y - 2, X + 17, Y - 2, WHITE);
-  display.drawLine(X - 3, Y - 3, X + 17, Y - 3, WHITE);
-  display.drawLine(X - 1, Y - 1, X - 1, Y + 23, WHITE); //LINEE VERTICALI
-  display.drawLine(X - 2, Y - 2, X - 2, Y + 23, WHITE);
-  display.drawLine(X - 3, Y - 3, X - 3, Y + 23, WHITE);
-}

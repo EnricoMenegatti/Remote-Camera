@@ -1,14 +1,16 @@
 void Lapse()
 {
   Serial.println("Lapse");
+
+  modalita = 0;
   
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
-  pagina_2();
+  pagina(2);
   display.display();
 
-  /*if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
+  if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
   {
     last_time = millis();
     t_pulsante = 0;
@@ -29,15 +31,14 @@ void Lapse()
     else 
       modalita = 0;
       
-  }*/
+  }
 
   /*else if (change_command == 1)
   {
     verifica_comando();
   }*/
   
-  //else 
-  if (Serial.available() > 0)
+  else if (Serial.available() > 0)
   {
     i = i + 1;
 
@@ -57,13 +58,3 @@ void Lapse()
   }
 }
 
-void pagina_2()
-{
-
-	display.clearDisplay();
-	display.setTextSize(2);
-	display.setTextColor(WHITE);
-	display.setCursor(0,0);
-	display.println("TIMELAPSE");
-
-}

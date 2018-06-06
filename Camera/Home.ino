@@ -1,13 +1,14 @@
 void Home()
 {
   Serial.println("Home");
+  modalita = 0;
   
   //detachInterrupt(digitalPinToInterrupt(p_audio));
   detachInterrupt(digitalPinToInterrupt(p_laser));
 
   Enc_cont = 0;
 
-  pagina_0();
+  pagina(0);
   display.display();
 
   while (modalita == 0)
@@ -18,35 +19,35 @@ void Home()
     switch (Enc_cont)
     {
       case 0:
-  
-        pagina_0();
+        //Serial.println("0");
+        pagina(0);
         display.display();
   
       break;
       
       case 1: 
-  
+        //Serial.println("1");
         pagina_R();
         display.display();
   
       break;
   
       case 2:
-  
+        //Serial.println("2");
         pagina_T();
         display.display();
   
       break;
   
       case 3:
-  
+        //Serial.println("3");
         pagina_L();
         display.display();
   
       break;
   
       case 4:
-  
+        //Serial.println("4");
         pagina_A();
         display.display();
   
@@ -54,13 +55,13 @@ void Home()
   
       default:
   
-        pagina_0();
+        pagina(0);
         display.display();
   
       break;
     }
 
-    /*if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
+    if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
     {
       while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
       {
@@ -69,15 +70,14 @@ void Home()
       }
       
       modalita = Enc_cont;
-    }/*
+    }
 
     /*else if (change_command == 1)
     {
       verifica_comando();
     }*/
     
-    //else 
-    if (Serial.available() > 0)
+    else if (Serial.available() > 0)
     {
       i = i + 1;
   
@@ -93,107 +93,4 @@ void Home()
     yield();
   }
 }
-
-void pagina_0()
-{
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(30,0);
-  display.println("HOME");
-  display.setTextSize(3);
-  display.setCursor(8,30);
-  display.write(82);//R
-  display.setCursor(36,30);
-  display.write(84);//T
-  display.setCursor(64,30);
-  display.write(76);//L
-  display.setCursor(92,30);
-  display.write(65);//A
-}
-
-void pagina_R()
-{
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(30,0);
-  display.println("HOME");
-  display.setTextSize(3);
-  display.setCursor(36,30);
-  display.write(84);//T
-  display.setCursor(64,30);
-  display.write(76);//L
-  display.setCursor(92,30);
-  display.write(65);//A
-
-  display.setTextColor(BLACK, WHITE);
-  display.setCursor(8,30);
-  display.write(82);//R
-  linee_mancanti(8,30);
-}
-
-void pagina_T()
-{
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(30,0);
-  display.println("HOME");
-  display.setTextSize(3);
-  display.setCursor(8,30);
-  display.write(82);//R
-  display.setCursor(64,30);
-  display.write(76);//L
-  display.setCursor(92,30);
-  display.write(65);//A
-
-  display.setTextColor(BLACK, WHITE);
-  display.setCursor(36,30);
-  display.write(84);//T
-  linee_mancanti(36,30);
-}
-
-void pagina_L()
-{
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(30,0);
-  display.println("HOME");
-  display.setTextSize(3);
-  display.setCursor(8,30);
-  display.write(82);//R
-  display.setCursor(36,30);
-  display.write(84);//T
-  display.setCursor(92,30);
-  display.write(65);//A
-
-  display.setTextColor(BLACK, WHITE);
-  display.setCursor(64,30);
-  display.write(76);//L
-  linee_mancanti(64,30);
-}
-
-void pagina_A()
-{
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.setCursor(30,0);
-  display.println("HOME");
-  display.setTextSize(3);
-  display.setCursor(8,30);
-  display.write(82);//R
-  display.setCursor(36,30);
-  display.write(84);//T
-  display.setCursor(64,30);
-  display.write(76);//L
-
-  display.setTextColor(BLACK, WHITE);
-  display.setCursor(92,30);
-  display.write(65);//A
-  linee_mancanti(92,30);
-}
-
 
