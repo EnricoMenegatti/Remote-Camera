@@ -11,6 +11,7 @@ void ESP_Setup()
   server.on("/A+",Audio);
   server.on("/L+",Laser);
   server.on("/T+",Lapse);
+  server.on("/S+",Slider);
   server.begin();
   server.onNotFound([]()
   {

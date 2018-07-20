@@ -35,10 +35,11 @@ void Remoto()
         
     }
   
-    /*else if (change_command == 1)
+    else if (change_command == 1)
     {
       verifica_comando();
-    }*/
+      scatto(0);
+    }
   
     else if (Serial.available() > 0)
     {
@@ -63,7 +64,7 @@ void Remoto()
 
 void scatto(int flag)
 {
-  if (flag == 1)
+  if (flag == 1)//solo premendo encoder
   {
     F_nera();
   
@@ -106,7 +107,7 @@ void scatto(int flag)
       digitalWrite(p_shoot, LOW);
   }
   
-  else
+  else//scatto da applucazione
   {
   	if (c[0] == 'F' && c[1] == 'F') //FOCUS
   	{
