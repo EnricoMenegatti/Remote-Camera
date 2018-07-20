@@ -49,10 +49,11 @@ const int p_shoot = D4;
 
 Encoder myEnc(p_DT, p_CLK);
 
-const char *ssid = "Remote-camera";
-const char *pass = "123456789";
+const char* ssid = "Remote-camera";
+const char* pass = "123456789";
 String command, last_command, myStr;
 ESP8266WebServer server(80);
+WiFiServer server1(90);
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
@@ -109,7 +110,7 @@ void loop()
 	{
     case 0: //PAGINA HOME
 
-      Home();
+      Slider();
 
     break;
 
@@ -140,6 +141,13 @@ void loop()
       //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
+
+    case 5: //FOTOTRAPPOLA AUDIO
+
+      Slider();
+      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
+
+    break;
 
 		default:
 
