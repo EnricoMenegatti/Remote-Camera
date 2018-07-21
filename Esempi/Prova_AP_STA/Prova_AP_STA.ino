@@ -18,7 +18,6 @@ void setup()
   /* You can remove the password parameter if you want the AP to be open. */
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP(ssid);
-
   WiFi.softAPConfig(IP, IP, mask);
   Serial.print("AP IP address: ");
   Serial.println(WiFi.softAPIP());
@@ -31,19 +30,14 @@ void loop()
 {
   // Check if a client has connected
   WiFiClient client = server.available();
-  if (!client) {
-    return;
+  if (client) 
+  {
+    // Wait until the client sends some data
+    Serial.println("new client");
+    // Read the first line of the request
+    String req = client.readStringUntil('\r');
+    Serial.println(req);
+    client.flush();
+    Serial.println(client.println(req + "_OK" + "\r"));
   }
-  
-  // Wait until the client sends some data
-  Serial.println("new client");
-  while(!client.available()){
-    delay(1);
-  }
-  
-  // Read the first line of the request
-  String req = client.readStringUntil('\r');
-  Serial.println(req);
-  client.flush();
-
 }
