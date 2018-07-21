@@ -16,7 +16,7 @@ void ESP_Setup()
   server.onNotFound([]()
   {
     //command=" ini data dari klien : ";
-    command=server.uri();
+    command = server.uri();
     server.send(200,"text/plain",command);
   });
 
