@@ -1,7 +1,6 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-//#include <SoftwareSerial.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -43,7 +42,7 @@ const int p_laser = D0;
 const int p_DT = D7;//ENCODER
 const int p_CLK = D6;//ENCODER
 const int p_SW = D5;//ENCODER
-const int p_audio = D5;
+const int p_audio = D8;
 const int p_focus = D3;
 const int p_shoot = D4;
 
@@ -51,9 +50,14 @@ Encoder myEnc(p_DT, p_CLK);
 
 const char* ssid = "Remote-camera";
 const char* pass = "123456789";
+const char* slider = "192.168.4.2";
 String command, last_command, myStr;
+
+IPAddress IP(192,168,4,1);
+IPAddress GTW(192,168,4,1);
+IPAddress mask = (255, 255, 255, 0);
+
 ESP8266WebServer server(80);
-WiFiServer server1(90);
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
@@ -74,9 +78,6 @@ void setup()
 	Serial.begin(115200);
 
   Serial.println("Setup...");
- 
-//	Serial.begin(115200);
-//	Serial.println("Initializing I2C devices...");
 
   ESP_Setup();
 
@@ -110,7 +111,7 @@ void loop()
 	{
     case 0: //PAGINA HOME
 
-      Slider();
+      Home();
 
     break;
 
@@ -142,7 +143,7 @@ void loop()
 
 		break;
 
-    case 5: //FOTOTRAPPOLA AUDIO
+    case 5: //SLIDER
 
       Slider();
       //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
