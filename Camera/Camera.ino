@@ -10,6 +10,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
+#include <WebSocketsServer.h>
 
 #define ESP8266
 
@@ -49,11 +50,13 @@ const int p_shoot = D4;
 
 Encoder myEnc(p_DT, p_CLK);
 
-const char* ssid = "Remote-camera";
-const char* pass = "123456789";
+const char *ssid = "Remote-camera";
+const char *pass = "123456789";
 String command, last_command, myStr;
-ESP8266WebServer server(80);
-WiFiServer server1(90);
+
+ESP8266WebServer server(80);    //Per comunicare con app
+WebSocketsServer webSocket(81); //Per mantenere aperta la comunicazione con app
+WiFiServer server1(90);         //Per comunicare con slider
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
