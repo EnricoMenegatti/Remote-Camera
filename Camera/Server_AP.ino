@@ -1,6 +1,7 @@
 
 void ESP_Setup() 
 {
+<<<<<<< HEAD
   WiFi.softAP(ssid, pass);
   IPAddress IPserver = WiFi.softAPIP();
   Serial.print(" IP address server : ");
@@ -10,6 +11,18 @@ void ESP_Setup()
   webSocket.onEvent(webSocketEvent); // if there's an incomming websocket message, go to function 'webSocketEvent'
 
   server.on("/",respond);
+=======
+  WiFi.softAPConfig(IP, GTW, mask);
+  WiFi.softAP(ssid, pass);
+
+  Serial.println();
+  Serial.print("AP SSID: ");
+  Serial.println(ssid);
+  Serial.print("AP IP address: ");
+  Serial.println(WiFi.softAPIP());
+  
+  server.on("/",Respond);
+>>>>>>> 5e5c9141fb5b950feb4089bbb8a45a99a07cd4c3
   server.on("/H+",Home);
   server.on("/R+",Remoto);
   server.on("/A+",Audio);
@@ -18,16 +31,20 @@ void ESP_Setup()
   server.on("/S+",Slider);
   server.onNotFound([]()
   {
-    //command=" ini data dari klien : ";
     command = server.uri();
     server.send(200,"text/plain",command);
   });
+<<<<<<< HEAD
   server.begin();
   
   Serial.println("Server setup");
+=======
+
+  Serial.println("Server setup OK");
+>>>>>>> 5e5c9141fb5b950feb4089bbb8a45a99a07cd4c3
 }
 
-void respond()
+void Respond()
 {
   server.send(200,"text/html","<h1>Remote Camera</h1>");
 }
@@ -71,7 +88,10 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
 
 void ESP_Command() 
 {
+<<<<<<< HEAD
   webSocket.loop();
+=======
+>>>>>>> 5e5c9141fb5b950feb4089bbb8a45a99a07cd4c3
   server.handleClient();
   
   if(last_command != command)

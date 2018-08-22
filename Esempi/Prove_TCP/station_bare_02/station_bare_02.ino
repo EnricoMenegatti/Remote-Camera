@@ -7,20 +7,18 @@
 
 byte ledPin = 2;
 char ssid[] = "Remote-camera";           // SSID of your AP
-char pass[] = "123456789";         // password of your AP
+char pass[] = "Wemos_comm";         // password of your AP
 
-IPAddress server(192,168,4,15);     // IP address of the AP
+IPAddress server(192,168,4,1);     // IP address of the AP
 WiFiClient client;
 
-void setup() 
-{
+void setup() {
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, pass);           // connects to the WiFi AP
+  WiFi.begin(ssid);           // connects to the WiFi AP
   Serial.println();
   Serial.println("Connection to the AP");
-  while (WiFi.status() != WL_CONNECTED) 
-  {
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(500);
   }
@@ -34,13 +32,12 @@ void setup()
   pinMode(ledPin, OUTPUT);
 }
 
-void loop() 
-{
+void loop() {
   client.connect(server, 80);
   digitalWrite(ledPin, LOW);
   Serial.println("********************************");
   Serial.print("Byte sent to the AP: ");
-  Serial.println(client.print("Req\r"));
+  Serial.println(client.print("Anyo\r"));
   String answer = client.readStringUntil('\r');
   Serial.println("From the AP: " + answer);
   client.flush();

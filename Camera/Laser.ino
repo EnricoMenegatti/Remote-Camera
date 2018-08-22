@@ -16,6 +16,8 @@ laser_start://ETICHETTA PER GOTO
 
   while (modalita == 3)
   {
+    ESP_Command();
+    
     if (laser_ok == true) // SE INTERRUPT AVVENUTO
     {
       detachInterrupt(digitalPinToInterrupt(p_laser)); // BLOCCO ALTRI INTERRUPT

@@ -61,6 +61,8 @@ void Home()
       break;
     }
 
+    ESP_Command();
+
     if (digitalRead(p_SW) == 0)//SELEZIONO MODALITA'
     {
       while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO

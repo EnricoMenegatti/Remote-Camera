@@ -1,27 +1,58 @@
 void Slider()
 {
   Serial.println("Slider");
-  modalita = 0;
+  modalita = 5;
+  
+  //detachInterrupt(digitalPinToInterrupt(p_audio));
+  detachInterrupt(digitalPinToInterrupt(p_laser));
 
-  while (modalita == 0)
+  //pagina(1);
+  //display.display();
+
+  while (modalita == 5)
   {
-    // Check if a client has connected
-    WiFiClient client = server1.available();
-    if (!client)
+    ESP_Command();
+    
+    if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
     {
-      yield();
-      //return;
+      last_time = millis();
+      t_pulsante = 0;
+      
+      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
+      {
+        t_pulsante = millis() - last_time;
+        //Serial.print(t_pulsante);
+        yield();
+      }
+            
+      if (t_pulsante < 2000)//2000 = 2 SECONDI
+      {
+        //scatto(1);
+      }
+  
+      else 
+        modalita = 0;
+        
     }
   
-    digitalWrite(D2, LOW);
-    //ricevi richiesta da client
-    String Richiesta = client.readStringUntil('\r');
-    Serial.println("********************************");
-    Serial.println("Richiesta: " + Richiesta);
-    client.flush();
-    //rispondi a client
-    client.println("OK\r");
-    digitalWrite(D2, HIGH);
+    else if (Serial.available() > 0)
+    {
+      i = i + 1;
+  
+      // Reading incoming bytes :
+      c[i-1] = Serial.read();
+  
+      if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
+      {
+        c_modo();
+        i = 0;
+      }
+      else if (c[i-1] == '*') //FINE STRINGA E CICLO DI SCATTO
+      {
+        
+        i = 0;
+      }
+    }
   }
 }
 
