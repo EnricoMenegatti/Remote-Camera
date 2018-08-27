@@ -49,15 +49,6 @@ const int p_shoot = D4;
 
 Encoder myEnc(p_DT, p_CLK);
 
-<<<<<<< HEAD
-const char *ssid = "Remote-camera";
-const char *pass = "123456789";
-String command, last_command, myStr;
-
-ESP8266WebServer server(80);    //Per comunicare con app
-WebSocketsServer webSocket(81); //Per mantenere aperta la comunicazione con app
-WiFiServer server1(90);         //Per comunicare con slider
-=======
 const char* ssid = "Remote-camera";
 const char* pass = "123456789";
 const char* slider = "192.168.4.2";
@@ -68,7 +59,7 @@ IPAddress GTW(192,168,4,1);
 IPAddress mask = (255, 255, 255, 0);
 
 ESP8266WebServer server(80);
->>>>>>> 5e5c9141fb5b950feb4089bbb8a45a99a07cd4c3
+WebSocketsServer webSocket(81);
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
