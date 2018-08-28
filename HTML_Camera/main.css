@@ -30,19 +30,7 @@ h3 {
     font-size: 22;
 }
 
-#pulsante_menu {
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    color: #DDDDDD;
-    outline: none;
-    border: none;
-    padding-left: 10px;
-    padding-top: 20px;
-    padding-bottom: 30px;
-    background: #373E52;
-}
-
+/* NOTE: vecchio menu verticale non adattivo
 .vertical-menu a {
     background-color: #445963;
     color: #FFFFFF;
@@ -61,8 +49,131 @@ h3 {
 
 .vertical-menu a:active {
     background-color: #708690;
+}*/
+
+/* NOTE: CSS per barra di navigazione */
+ul.sidenav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    background-color: #445963;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
 }
 
+ul.sidenav li a {
+    display: block;
+    color: #FFFFFF;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+}
+
+ul.sidenav li a:hover{
+    background-color: #1B3039;
+    color: #FFFFFF;
+}
+
+ul.sidenav li a.active {
+    background-color: #4CB5AB;
+    color: #FFFFFF;
+    box-shadow: 0px 3px 3px 0px #1B3039;
+}
+
+div.content {
+    margin-left: 300px;
+    padding: 1px 16px;
+    height: 100%;
+}
+
+.dropdown {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .dropdown {
+        display: none;
+    }
+
+    ul.sidenav {
+        width: 100%;
+        position: relative;
+        height: auto;
+        box-shadow: 0px 3px 3px 0px #1B3039;
+    }
+
+    ul.sidenav li a {
+        float: left;
+        padding: 15px;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    ul.sidenav {
+        display: none;
+    }
+
+    /* NOTE: ul.sidenav li a {
+        text-align: center;
+        float: none;
+        padding: 15px;
+    }
+
+    .dropbtn {
+        display: block;
+        background-color: #4CB5AB;
+        color: #FFFFFF;
+        padding: 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #81E8DD;
+        color: black;
+    }*/
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown_content {
+        display: none;
+        position: absolute;
+        background-color: #445963;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+    .dropdown_content a {
+        color: #FFFFFF;
+        padding: 15px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown_content a:hover {
+        background-color: #1B3039;
+    }
+
+    .dropdown_content a.active {
+        color: #4CB5AB;
+    }
+
+    .dropdown:hover .dropdown_content {
+        display: block;
+    }
+}
+
+
+/* NOTE:
 ul {
     background-color: #708690;
     list-style-type: none;
@@ -94,4 +205,4 @@ li a:active{
 .sub_menu {
   background-color: #000000;
   color: #FFFFFF;
-}
+} */
