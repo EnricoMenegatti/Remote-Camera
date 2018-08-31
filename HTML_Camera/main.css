@@ -1,6 +1,8 @@
 
+:root {
+    --btnfuoco: 25%;
+}
 center {
-    width: 100%;
     margin: 0px;
     font-family: 'Roboto', sans-serif;
 }
@@ -18,8 +20,7 @@ header {
 h1 {
     margin: 0px;
     text-align: left;
-    padding-left: 20px;
-    padding-top: 10px;
+    padding: 10px 0px 15px 15px;
     font-family: 'Roboto', sans-serif;
     font-size: 32;
 }
@@ -29,27 +30,6 @@ h3 {
     font-family: 'Roboto', sans-serif;
     font-size: 22;
 }
-
-/* NOTE: vecchio menu verticale non adattivo
-.vertical-menu a {
-    background-color: #445963;
-    color: #FFFFFF;
-    display: block;
-    padding-left: 20px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    text-decoration: none;
-    vertical-align: middle;
-}
-
-.vertical-menu a:hover {
-    background-color: #1B3039;
-    color: #FFFFFF;
-}
-
-.vertical-menu a:active {
-    background-color: #708690;
-}*/
 
 /* NOTE: CSS per barra di navigazione */
 ul.sidenav {
@@ -92,6 +72,144 @@ div.content {
     display: none;
 }
 
+/* NOTE: Per manuale/auto scatto remoto */
+div.AM {
+
+}
+
+/* NOTE: Per campi di inserimento valori */
+input[type=text], input[type=number] {
+    width: 98%;
+    padding: 15px 0px 15px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+select {
+  width: 100%;
+  padding: 15px 15px 15px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.container {
+    width: 600px;
+    border-radius: 10px;
+    background-color: #F0F0F0;
+    padding: 20px;
+    float: left;
+}
+
+#Avanzata {
+    display: none;
+}
+
+.col-1 {
+    float: left;
+    width: 25%;
+    margin-top: 12px;
+}
+
+.col-2 {
+    float: left;
+    width: 50%;
+    margin-top: 13px;
+    margin-bottom: 1px;
+}
+
+.col-3 {
+  float: right;
+  width: auto;
+  margin-top: 12px;
+}
+
+div.button {
+    width: 25%;
+    height: auto;
+    float: left;
+}
+
+div.button-2 {
+    width: 100%;
+    height: auto;
+}
+
+button.but-1 {
+    background-color: #00857C;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border: 2px solid #00857C;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 30px 20px 0px 20px;
+    transition-duration: 0.4s;
+    outline: none;
+}
+
+button.but-2 {
+    background-color: #00857C;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border: 2px solid #00857C;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 30px 20px 0px 20px;
+    transition-duration: 0.4s;
+    outline: none;
+}
+
+button.but-3 {
+    background-color: #00857C;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border: 2px solid #00857C;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 28px;
+    margin: 24px 20px 0px 20px;
+    transition-duration: 0.4s;
+    outline: none;
+}
+
+button.but-1:hover {
+    background-color: #F0F0F0;
+    color: #000000;
+}
+
+button.but-1:active {
+    background-color: #445963;
+    transition-duration: 0;
+}
+
+button.but-2:hover {
+    background-color: #F0F0F0;
+    color: #000000;
+}
+
+button.but-2:active {
+    background-color: #445963;
+    transition-duration: 0;
+}
+
+button.but-3:hover {
+    background-color: #F0F0F0;
+    color: #000000;
+}
+
+button.but-3:active {
+    background-color: #445963;
+    transition-duration: 0;
+}
+
 @media screen and (max-width: 1200px) {
     .dropdown {
         display: none;
@@ -112,36 +230,34 @@ div.content {
     div.content {
         margin-left: 0;
     }
+
+    .container {
+        width: 600px;
+    }
+
+    #Avanzata {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 600px) {
+    h1 {
+        text-align: center;
+    }
+
+    div.content {
+        padding-right: 50px;
+    }
+
     ul.sidenav {
         display: none;
     }
 
-    /* NOTE: ul.sidenav li a {
-        text-align: center;
-        float: none;
-        padding: 15px;
-    }
-
-    .dropbtn {
-        display: block;
-        background-color: #4CB5AB;
-        color: #FFFFFF;
-        padding: 15px;
-        border: none;
-        cursor: pointer;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: #81E8DD;
-        color: black;
-    }*/
-
     .dropdown {
         position: relative;
         display: inline-block;
+        float: left;
+        padding: 0px 20px 0px 0px;
     }
 
     .dropdown_content {
@@ -164,45 +280,55 @@ div.content {
     }
 
     .dropdown_content a.active {
-        color: #4CB5AB;
+        background-color: #4CB5AB;
     }
 
     .dropdown:hover .dropdown_content {
         display: block;
     }
+
+    .container {
+        width: 100%;
+    }
+
+    #Avanzata {
+        display: none;
+    }
+
+    .col-1 {
+        width: 100%;
+        margin-top: 0;
+    }
+    .col-2 {
+        width: calc(100% - 150px);
+    }
+    .col-3 {
+      float: right;
+      width: 125px;
+      margin-top: 12px;
+    }
+
+    div.button {
+        width: 50%;
+        height: auto;
+        float: left;
+    }
+
+    div.button-2 {
+        width: 100%;
+        height: auto;
+        float: none;
+    }
+
+    button.but-1 {
+        float: right;
+    }
+
+    button.but-2 {
+        float: left;
+    }
+
+    button.but-3 {
+        margin: 15px 0px 0px 0px;
+    }
 }
-
-
-/* NOTE:
-ul {
-    background-color: #708690;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: #FFFFFF;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover:not(.active){
-    background-color: #708690;
-}
-
-li a:active{
-    background-color: #708690;
-}
-
-.sub_menu {
-  background-color: #000000;
-  color: #FFFFFF;
-} */

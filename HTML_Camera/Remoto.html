@@ -3,10 +3,14 @@
     <head>
         <title>Remote Camera</title>
         <link href='main.css' rel='stylesheet' type='text/css'>
-        <link href="Menu.html">
+        <script src="main.js" type="text/javascript"></script>
     </head>
 
     <body>
+      <script>
+
+      </script>
+
         <ul class="sidenav">
             <li><a class="content" href="Home.html">HOME</a></li>
             <li><a class="active" href="Remoto.html">Remoto</a></li>
@@ -16,22 +20,84 @@
             <li><a class="content" href="Audio.html">Trappola Audio</a></li>
         </ul>
 
-        <div class="dropdown">
-            <img src="fotocamera.png" height="50px" width="50px">
-            <div class="dropdown_content">
-              <a href="Home.html">HOME</a>
-              <a class="active" href="Remoto.html">Remoto</a>
-              <a href="Timelapse.html">Timelapse</a>
-              <a href="Slider.html">Slider</a>
-              <a href="Laser.html">Trappola Laser</a>
-              <a href="Audio.html">Trappola Audio</a>
-            </div>
-          </div>
-
         <center>
             <div class="content">
+              <div class="dropdown">
+                  <img src="fotocamera.png" height="50px" width="50px">
+                  <div class="dropdown_content">
+                    <a href="Home.html">HOME</a>
+                    <a class="active" href="Remoto.html">Remoto</a>
+                    <a href="Timelapse.html">Timelapse</a>
+                    <a href="Slider.html">Slider</a>
+                    <a href="Laser.html">Trappola Laser</a>
+                    <a href="Audio.html">Trappola Audio</a>
+                  </div>
+                </div>
+
                 <H1>Remoto</H1> <!--titolo-->
 
+                <div class="container">
+                    <div>
+                        <button id="Btn_modalita" onclick="Func_mod()">Semplice</button>
+                    </div>
+
+                    <div id="Avanzata">
+                        <div class="col-1">
+                            <label for="t_fuoco">Tempo di Fuoco</label>
+                        </div>
+                        <div class="col-2">
+                            <input type="number" id="t_fuoco" name="t_fuoco">
+                        </div>
+                        <div class="col-3">
+                            <select id="tempo_f" name="tempo_f">
+                                <option value="ms">Millisecondi</option>
+                                <option value="sec">Secondi</option>
+                                <option value="min">Minuti</option>
+                            </select>
+                        </div>
+
+                        <div class="col-1">
+                            <label for="t_scatto">Tempo di Scatto</label>
+                        </div>
+                        <div class="col-2">
+                            <input type="number" id="t_scatto" name="t_scatto">
+                        </div>
+                        <div class="col-3">
+                            <select id="tempo_s" name="tempo_s">
+                                <option value="ms">Millisecondi</option>
+                                <option value="sec">Secondi</option>
+                                <option value="min">Minuti</option>
+                            </select>
+                        </div>
+
+                        <div class="button">
+                            <button class="but-1" id="fuoco">Fuoco</button>
+                        </div>
+
+                        <div class="button">
+                            <button class="but-2" id="scatto">Scatto</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="button-2">
+                            <button class="but-3" id="f+s">Fuoco + Scatto</button>
+                        </div>
+                    </div>
+
+                    <!--div class="col-25">
+                        <label for="country">Paese</label>
+                    </div>
+
+                    <div class="col-65">
+                        <select id="country" name="paese">
+                            <option value="italia">Italia</option>
+                            <option value="america">America</option>
+                        </select>
+                    </div>
+
+                    <input type="submit" value="Submit"-->
+                </div>
             </div>
         </center>
     </body>
