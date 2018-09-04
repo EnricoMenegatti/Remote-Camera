@@ -23,12 +23,16 @@ function Func_mod() {
     {
       Mod_A.style.display = "none";
       Btn.innerHTML = "Semplice";
+      Btn.style.color = "#000000";
+      Btn.style.backgroundColor = "#FFFFFF";
 
     }
     else
     {
       Mod_A.style.display = "inline";
       Btn.innerHTML = "Avanzata";
+      Btn.style.color = "#FFFFFF";
+      Btn.style.backgroundColor = "#00857C";
     }
 }
 

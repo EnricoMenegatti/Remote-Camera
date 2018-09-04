@@ -141,6 +141,20 @@ div.button-2 {
     height: auto;
 }
 
+#Btn_modalita {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 4px;
+  float: right;
+  border: 2px solid #00857C;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 0;
+  transition-duration: 0.4s;
+  outline: none;
+}
+
 button.but-1 {
     background-color: #00857C;
     color: #FFFFFF;
@@ -181,7 +195,7 @@ button.but-3 {
 }
 
 button.but-1:hover {
-    background-color: #F0F0F0;
+    background-color: #FFFFFF;
     color: #000000;
 }
 
@@ -191,7 +205,7 @@ button.but-1:active {
 }
 
 button.but-2:hover {
-    background-color: #F0F0F0;
+    background-color: #FFFFFF;
     color: #000000;
 }
 
@@ -201,7 +215,7 @@ button.but-2:active {
 }
 
 button.but-3:hover {
-    background-color: #F0F0F0;
+    background-color: #FFFFFF;
     color: #000000;
 }
 
