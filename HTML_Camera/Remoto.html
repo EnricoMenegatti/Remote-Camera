@@ -43,13 +43,13 @@
                             <label for="t_fuoco">Tempo di Fuoco</label>
                         </div>
                         <div class="col-2">
-                            <input type="number" id="t_fuoco" name="t_fuoco">
+                            <input type="number" id="t_fuoco" name="t_fuoco" min="0" max="9999" value="100">
                         </div>
                         <div class="col-3">
                             <select id="tempo_f" name="tempo_f">
-                                <option value="ms">Millisecondi</option>
-                                <option value="sec">Secondi</option>
-                                <option value="min">Minuti</option>
+                                <option value="m">Millisecondi</option>
+                                <option value="S">Secondi</option>
+                                <option value="M">Minuti</option>
                             </select>
                         </div>
 
@@ -57,28 +57,28 @@
                             <label for="t_scatto">Tempo di Scatto</label>
                         </div>
                         <div class="col-2">
-                            <input type="number" id="t_scatto" name="t_scatto">
+                            <input type="number" id="t_scatto" name="t_scatto" min="0" max="9999" value="100">
                         </div>
                         <div class="col-3">
                             <select id="tempo_s" name="tempo_s">
-                                <option value="ms">Millisecondi</option>
-                                <option value="sec">Secondi</option>
-                                <option value="min">Minuti</option>
+                                <option value="m">Millisecondi</option>
+                                <option value="S">Secondi</option>
+                                <option value="M">Minuti</option>
                             </select>
                         </div>
 
                         <div class="button">
-                            <button class="but-1" id="fuoco">Fuoco</button>
+                            <button class="but-1" id="fuoco" onclick="Send_Shoot('1')">Fuoco</button>
                         </div>
 
                         <div class="button">
-                            <button class="but-2" id="scatto">Scatto</button>
+                            <button class="but-2" id="scatto" onclick="Send_Shoot('2')">Scatto</button>
                         </div>
                     </div>
 
                     <div>
                         <div class="button-2">
-                            <button class="but-3" id="f+s">Fuoco + Scatto</button>
+                            <button class="but-3" id="f+s" onclick="Send_Shoot('0')">Fuoco + Scatto</button>
                         </div>
                     </div>
                 </div>

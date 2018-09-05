@@ -1,5 +1,6 @@
-var rainbowEnable = false;
+
 var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+var Btn = document.getElementById("Btn_modalita");
 
 connection.onopen = function () {
     connection.send('Connect ' + new Date());
@@ -17,7 +18,6 @@ connection.onclose = function(){
 function Func_mod() {
     var Mod_S = document.getElementById("Semplice");
     var Mod_A = document.getElementById("Avanzata");
-    var Btn = document.getElementById("Btn_modalita");
 
     if(Mod_A.style.display === "inline")
     {
@@ -36,37 +36,114 @@ function Func_mod() {
     }
 }
 
-function sendRGB() {
-    var r = document.getElementById('r').value**2/1023;
-    var g = document.getElementById('g').value**2/1023;
-    var b = document.getElementById('b').value**2/1023;
+function Send_Shoot(ind) {
+    var T_focus = document.getElementById('t_fuoco').value;
+    var T_shoot = document.getElementById('t_scatto').value;
+    var Time_f = document.getElementById('tempo_f').value;
+    var Time_s = document.getElementById('tempo_s').value;
 
-    var rgb = r << 20 | g << 10 | b;
-    var rgbstr = '#'+ rgb.toString(16);
-    console.log('RGB: ' + rgbstr);
-    connection.send(rgbstr);
-}
-
-function rainbowEffect(){
-    rainbowEnable = ! rainbowEnable;
-    if(rainbowEnable){
-        connection.send("R");
-        document.getElementById('rainbow').style.backgroundColor = '#00878F';
-        document.getElementById('r').className = 'disabled';
-        document.getElementById('g').className = 'disabled';
-        document.getElementById('b').className = 'disabled';
-        document.getElementById('r').disabled = true;
-        document.getElementById('g').disabled = true;
-        document.getElementById('b').disabled = true;
-    } else {
-        connection.send("N");
-        document.getElementById('rainbow').style.backgroundColor = '#999';
-        document.getElementById('r').className = 'enabled';
-        document.getElementById('g').className = 'enabled';
-        document.getElementById('b').className = 'enabled';
-        document.getElementById('r').disabled = false;
-        document.getElementById('g').disabled = false;
-        document.getElementById('b').disabled = false;
-        sendRGB();
+    if(T_focus > 9999)
+    {
+      T_focus.value = 9999;
     }
+
+    if(T_shoot > 9999)
+    {
+      T_shoot.value = 9999;
+    }
+
+    if(ind == "0") //FS
+    {
+      var head = "FS";
+      if(1 <= T_shoot && T_shoot <= 9)//Millisecondi
+      {
+        var center = T_shoot;
+        var linee = "---";
+      }
+      else if(10 <= T_shoot && T_shoot <= 99)//Secondi
+      {
+        var center = T_shoot;
+        var linee = "--";
+      }
+      else if(100 <= T_shoot && T_shoot <= 999)//Minuti
+      {
+        var center = T_shoot;
+        var linee = "-";
+      }
+      else if(1000 <= T_shoot && T_shoot <= 9999)//Minuti
+      {
+        var center = T_shoot;
+        var linee = "";
+      }
+      else
+      {
+        var center = "";
+        var linee = "----";
+      }
+    }
+
+    else if(ind == "1") //FF
+    {
+      var head = "FF";
+      if(1 <= T_focus && T_focus <= 9)//Millisecondi
+      {
+        var center = T_focus;
+        var linee = "---";
+      }
+      else if(10 <= T_focus && T_focus <= 99)//Secondi
+      {
+        var center = T_focus;
+        var linee = "--";
+      }
+      else if(100 <= T_focus && T_focus <= 999)//Minuti
+      {
+        var center = T_focus;
+        var linee = "-";
+      }
+      else if(1000 <= T_focus && T_focus <= 9999)//Minuti
+      {
+        var center = T_focus;
+        var linee = "";
+      }
+      else
+      {
+        var center = "";
+        var linee = "----";
+      }
+    }
+
+    else if(ind == "2") //SS
+    {
+      var head = "SS";
+      if(1 <= T_shoot && T_shoot <= 9)//Millisecondi
+      {
+        var center = T_shoot;
+        var linee = "---";
+      }
+      else if(10 <= T_shoot && T_shoot <= 99)//Secondi
+      {
+        var center = T_shoot;
+        var linee = "--";
+      }
+      else if(100 <= T_shoot && T_shoot <= 999)//Minuti
+      {
+        var center = T_shoot;
+        var linee = "-";
+      }
+      else if(1000 <= T_shoot && T_shoot <= 9999)//Minuti
+      {
+        var center = T_shoot;
+        var linee = "";
+      }
+      else
+      {
+        var center = "";
+        var linee = "----";
+      }
+    }
+
+    var Tempo_finale = head + center + linee + "*";
+
+    Btn.innerHTML = Tempo_finale;
+    connection.send(linee);
 }
