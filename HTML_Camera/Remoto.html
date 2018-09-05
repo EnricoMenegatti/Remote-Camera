@@ -43,7 +43,7 @@
                             <label for="t_fuoco">Tempo di Fuoco</label>
                         </div>
                         <div class="col-2">
-                            <input type="number" id="t_fuoco" name="t_fuoco" min="0" max="9999" value="100">
+                            <input type="number" id="t_fuoco" name="t_fuoco" min="0" max="9999" placeholder="Default: 1000">
                         </div>
                         <div class="col-3">
                             <select id="tempo_f" name="tempo_f">
@@ -57,7 +57,7 @@
                             <label for="t_scatto">Tempo di Scatto</label>
                         </div>
                         <div class="col-2">
-                            <input type="number" id="t_scatto" name="t_scatto" min="0" max="9999" value="100">
+                            <input type="number" id="t_scatto" name="t_scatto" min="0" max="9999" placeholder="Default: 100">
                         </div>
                         <div class="col-3">
                             <select id="tempo_s" name="tempo_s">
@@ -81,6 +81,10 @@
                             <button class="but-3" id="f+s" onclick="Send_Shoot('0')">Fuoco + Scatto</button>
                         </div>
                     </div>
+                </div>
+
+                <div>
+                  <p id="debug"></p>
                 </div>
             </div>
         </center>

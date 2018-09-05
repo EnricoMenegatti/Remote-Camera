@@ -1,6 +1,5 @@
 
 var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
-var Btn = document.getElementById("Btn_modalita");
 
 connection.onopen = function () {
     connection.send('Connect ' + new Date());
@@ -16,6 +15,7 @@ connection.onclose = function(){
 };
 
 function Func_mod() {
+    var Btn = document.getElementById("Btn_modalita");
     var Mod_S = document.getElementById("Semplice");
     var Mod_A = document.getElementById("Avanzata");
 
@@ -37,6 +37,7 @@ function Func_mod() {
 }
 
 function Send_Shoot(ind) {
+    var Debug = document.getElementById("debug");
     var T_focus = document.getElementById('t_fuoco').value;
     var T_shoot = document.getElementById('t_scatto').value;
     var Time_f = document.getElementById('tempo_f').value;
@@ -55,6 +56,8 @@ function Send_Shoot(ind) {
     if(ind == "0") //FS
     {
       var head = "FS";
+      var bottom = Time_s;
+
       if(1 <= T_shoot && T_shoot <= 9)//Millisecondi
       {
         var center = T_shoot;
@@ -85,6 +88,8 @@ function Send_Shoot(ind) {
     else if(ind == "1") //FF
     {
       var head = "FF";
+      var bottom = Time_f;
+
       if(1 <= T_focus && T_focus <= 9)//Millisecondi
       {
         var center = T_focus;
@@ -115,6 +120,8 @@ function Send_Shoot(ind) {
     else if(ind == "2") //SS
     {
       var head = "SS";
+      var bottom = Time_s;
+
       if(1 <= T_shoot && T_shoot <= 9)//Millisecondi
       {
         var center = T_shoot;
@@ -142,8 +149,8 @@ function Send_Shoot(ind) {
       }
     }
 
-    var Tempo_finale = head + center + linee + "*";
+    var Tempo_finale = head + center + linee + bottom + "*";
 
-    Btn.innerHTML = Tempo_finale;
-    connection.send(linee);
+    Debug.innerHTML = Tempo_finale;
+    connection.send(Tempo_finale);
 }
