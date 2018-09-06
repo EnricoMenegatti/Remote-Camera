@@ -1,89 +1,87 @@
-
 :root {
-    --btnfuoco: 25%;
+  --btnfuoco: 25%;
 }
+
 center {
-    margin: 0px;
-    font-family: 'Roboto', sans-serif;
+  margin: 0px;
+  font-family: 'Roboto', sans-serif;
 }
 
 header {
-    text-align: center;
-    background-color: #4CB5AB;
-    color: white;
-    padding: 6px;
-    font-family: 'Roboto', sans-serif;
-    box-shadow: 1px 1px 5px #222222;
-    position: relative;
+  text-align: center;
+  background-color: #4CB5AB;
+  color: white;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 1px 1px 5px #222222;
+  position: relative;
 }
 
 h1 {
-    margin: 0px;
-    text-align: left;
-    padding: 10px 0px 15px 15px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 32;
+  margin: 0px;
+  text-align: left;
+  padding: 10px 0px 15px 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 32;
 }
 
 h3 {
-    margin: 7px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 22;
+  margin: 7px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22;
 }
 
 /* NOTE: CSS per barra di navigazione */
 ul.sidenav {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 250px;
-    background-color: #445963;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  background-color: #445963;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
 }
 
 ul.sidenav li a {
-    display: block;
-    color: #FFFFFF;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
+  display: block;
+  color: #FFFFFF;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
 }
 
-ul.sidenav li a:hover{
-    background-color: #1B3039;
-    color: #FFFFFF;
+ul.sidenav li a:hover {
+  background-color: #1B3039;
+  color: #FFFFFF;
 }
 
 ul.sidenav li a.active {
-    background-color: #4CB5AB;
-    color: #FFFFFF;
-    box-shadow: 0px 3px 3px 0px #1B3039;
+  background-color: #4CB5AB;
+  color: #FFFFFF;
+  box-shadow: 0px 3px 3px 0px #1B3039;
 }
 
 div.content {
-    margin-left: 300px;
-    padding: 1px 16px;
-    height: 100%;
+  margin-left: 300px;
+  padding: 1px 16px;
+  height: 100%;
 }
 
 .dropdown {
-    display: none;
+  display: none;
 }
 
 /* NOTE: Per manuale/auto scatto remoto */
-div.AM {
-
-}
+div.AM {}
 
 /* NOTE: Per campi di inserimento valori */
 input[type=text], input[type=number] {
-    width: 98%;
-    padding: 15px 0px 15px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
+  width: 98%;
+  padding: 15px 0px 15px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
 }
 
 select {
@@ -95,33 +93,33 @@ select {
 }
 
 label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
+  padding: 12px 12px 12px 0;
+  display: inline-block;
 }
 
 .container {
-    width: 600px;
-    border-radius: 10px;
-    background-color: #F0F0F0;
-    padding: 20px;
-    float: left;
+  width: 600px;
+  border-radius: 10px;
+  background-color: #F0F0F0;
+  padding: 20px;
+  float: left;
 }
 
 #Avanzata {
-    display: none;
+  display: none;
 }
 
 .col-1 {
-    float: left;
-    width: 25%;
-    margin-top: 12px;
+  float: left;
+  width: 25%;
+  margin-top: 12px;
 }
 
 .col-2 {
-    float: left;
-    width: 50%;
-    margin-top: 13px;
-    margin-bottom: 1px;
+  float: left;
+  width: 50%;
+  margin-top: 13px;
+  margin-bottom: 1px;
 }
 
 .col-3 {
@@ -131,14 +129,14 @@ label {
 }
 
 div.button {
-    width: 25%;
-    height: auto;
-    float: left;
+  width: 25%;
+  height: auto;
+  float: left;
 }
 
 div.button-2 {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 #Btn_modalita {
@@ -156,193 +154,195 @@ div.button-2 {
 }
 
 button.but-1 {
-    background-color: #00857C;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border: 2px solid #00857C;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 20px;
-    margin: 30px 20px 0px 20px;
-    transition-duration: 0.4s;
-    outline: none;
+  background-color: #00857C;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border: 2px solid #00857C;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 30px 20px 0px 20px;
+  transition-duration: 0.4s;
+  outline: none;
 }
 
 button.but-2 {
-    background-color: #00857C;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border: 2px solid #00857C;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 20px;
-    margin: 30px 20px 0px 20px;
-    transition-duration: 0.4s;
-    outline: none;
+  background-color: #00857C;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border: 2px solid #00857C;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 30px 20px 0px 20px;
+  transition-duration: 0.4s;
+  outline: none;
 }
 
 button.but-3 {
-    background-color: #00857C;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border: 2px solid #00857C;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 28px;
-    margin: 24px 20px 0px 20px;
-    transition-duration: 0.4s;
-    outline: none;
+  background-color: #00857C;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border: 2px solid #00857C;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 28px;
+  margin: 24px 20px 0px 20px;
+  transition-duration: 0.4s;
+  outline: none;
 }
 
 button.but-1:hover {
-    background-color: #FFFFFF;
-    color: #000000;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 button.but-1:active {
-    background-color: #445963;
-    transition-duration: 0;
+  background-color: #445963;
+  transition-duration: 0;
 }
 
 button.but-2:hover {
-    background-color: #FFFFFF;
-    color: #000000;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 button.but-2:active {
-    background-color: #445963;
-    transition-duration: 0;
+  background-color: #445963;
+  transition-duration: 0;
 }
 
 button.but-3:hover {
-    background-color: #FFFFFF;
-    color: #000000;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 button.but-3:active {
-    background-color: #445963;
-    transition-duration: 0;
+  background-color: #445963;
+  transition-duration: 0;
 }
 
 @media screen and (max-width: 1200px) {
-    .dropdown {
-        display: none;
-    }
+  .dropdown {
+    display: none;
+  }
 
-    ul.sidenav {
-        width: 100%;
-        position: relative;
-        height: auto;
-        box-shadow: 0px 3px 3px 0px #1B3039;
-    }
+  ul.sidenav {
+    width: 100%;
+    position: relative;
+    height: auto;
+    box-shadow: 0px 3px 3px 0px #1B3039;
+  }
 
-    ul.sidenav li a {
-        float: left;
-        padding: 15px;
-    }
+  ul.sidenav li a {
+    float: left;
+    padding: 15px;
+  }
 
-    div.content {
-        margin-left: 0;
-    }
+  div.content {
+    margin-left: 0;
+  }
 
-    .container {
-        width: 600px;
-    }
+  .container {
+    width: 600px;
+  }
 
-    #Avanzata {
-        display: none;
-    }
+  #Avanzata {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    h1 {
-        text-align: center;
-    }
+  h1 {
+    text-align: center;
+  }
 
-    div.content {
-        padding-right: 50px;
-    }
+  div.content {
+    padding-right: 50px;
+  }
 
-    ul.sidenav {
-        display: none;
-    }
+  ul.sidenav {
+    display: none;
+  }
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-        float: left;
-        padding: 0px 20px 0px 0px;
-    }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    float: left;
+    padding: 0px 20px 0px 0px;
+  }
 
-    .dropdown_content {
-        display: none;
-        position: absolute;
-        background-color: #445963;
-        min-width: 160px;
-        z-index: 1;
-    }
+  .dropdown_content {
+    display: none;
+    position: absolute;
+    background-color: #445963;
+    min-width: 160px;
+    z-index: 1;
+  }
 
-    .dropdown_content a {
-        color: #FFFFFF;
-        padding: 15px;
-        text-decoration: none;
-        display: block;
-    }
+  .dropdown_content a {
+    color: #FFFFFF;
+    padding: 15px;
+    text-decoration: none;
+    display: block;
+  }
 
-    .dropdown_content a:hover {
-        background-color: #1B3039;
-    }
+  .dropdown_content a:hover {
+    background-color: #1B3039;
+  }
 
-    .dropdown_content a.active {
-        background-color: #4CB5AB;
-    }
+  .dropdown_content a.active {
+    background-color: #4CB5AB;
+  }
 
-    .dropdown:hover .dropdown_content {
-        display: block;
-    }
+  .dropdown:hover .dropdown_content {
+    display: block;
+  }
 
-    .container {
-        width: 100%;
-    }
+  .container {
+    width: 100%;
+  }
 
-    #Avanzata {
-        display: none;
-    }
+  #Avanzata {
+    display: none;
+  }
 
-    .col-1 {
-        width: 100%;
-        margin-top: 0;
-    }
-    .col-2 {
-        width: calc(100% - 150px);
-    }
-    .col-3 {
-      float: right;
-      width: 125px;
-      margin-top: 12px;
-    }
+  .col-1 {
+    width: 100%;
+    margin-top: 0;
+  }
 
-    div.button {
-        width: 50%;
-        height: auto;
-        float: left;
-    }
+  .col-2 {
+    width: calc(100% - 150px);
+  }
 
-    div.button-2 {
-        width: 100%;
-        height: auto;
-        float: none;
-    }
+  .col-3 {
+    float: right;
+    width: 125px;
+    margin-top: 12px;
+  }
 
-    button.but-1 {
-        float: right;
-    }
+  div.button {
+    width: 50%;
+    height: auto;
+    float: left;
+  }
 
-    button.but-2 {
-        float: left;
-    }
+  div.button-2 {
+    width: 100%;
+    height: auto;
+    float: none;
+  }
 
-    button.but-3 {
-        margin: 15px 0px 0px 0px;
-    }
+  button.but-1 {
+    float: right;
+  }
+
+  button.but-2 {
+    float: left;
+  }
+
+  button.but-3 {
+    margin: 15px 0px 0px 0px;
+  }
 }

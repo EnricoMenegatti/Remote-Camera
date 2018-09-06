@@ -11,16 +11,35 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
 </head>
 <body>
-	<center>
-        <header>
-            <h1>HTML Uploader</h1>
-        </header>
-        <div>
-            <p style="text-align: left">Use this page to upload new files to the ESP8266.<br/>You can use compressed (deflated) files (files with a .gz extension) to save space and bandwidth.</p>
-            <form method="post" enctype="multipart/form-data" style="margin: 0px auto 8px auto" >
-                <input type="file" name="Choose file" accept=".gz,.html,.ico,.js,.css">
+  <ul class="sidenav">
+      <li><a class="content" href="Remoto.html">Remoto</a></li>
+      <li><a class="content" href="Timelapse.html">Timelapse</a></li>
+      <li><a class="content" href="Slider.html">Slider</a></li>
+      <li><a class="content" href="Laser.html">Trappola Laser</a></li>
+      <li><a class="content" href="Audio.html">Trappola Audio</a></li>
+      <li><a class="active" href="Edit.html">Invia File</a></li>
+  </ul>
+
+  <center>
+      <div class="content">
+        <div class="dropdown">
+            <img src="fotocamera.png" height="50px" width="50px">
+            <div class="dropdown_content">
+              <a href="Remoto.html">Remoto</a>
+              <a href="Timelapse.html">Timelapse</a>
+              <a href="Slider.html">Slider</a>
+              <a href="Laser.html">Trappola Laser</a>
+              <a href="Audio.html">Trappola Audio</a>
+              <a class="active" href="Edit.html">Invia File</a>
+            </div>
+          </div>
+
+          <H1>Invia File</H1> <!--titolo-->
+        <div class="container">
+            <form method="post" enctype="multipart/form-data" style="margin: 0" >
+                <input type="file" name="File" accept=".gz,.html,.ico,.js,.css">
                 <input class="button" type="submit" value="Upload" name="submit">
-            </form>            
+            </form>
         </div>
 	</center>
 </body>
