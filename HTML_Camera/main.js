@@ -37,6 +37,7 @@ function Func_mod() {
 }
 
 function Cambia_pagina(page) {
+    var Debug = document.getElementById("debug");
     Debug.innerHTML = page;
     connection.send(page);
 }
