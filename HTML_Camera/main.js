@@ -36,6 +36,11 @@ function Func_mod() {
     }
 }
 
+function Cambia_pagina(page) {
+    Debug.innerHTML = page;
+    connection.send(page);
+}
+
 function Send_Shoot(ind) {
     var Debug = document.getElementById("debug");
     var T_focus = document.getElementById('t_fuoco').value;

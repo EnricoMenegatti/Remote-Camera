@@ -3,32 +3,36 @@
     <head>
         <title>Remote Camera</title>
         <link href='main.css' rel='stylesheet' type='text/css'>
+        <script src="main.js" type="text/javascript"></script>
     </head>
 
     <body>
         <ul class="sidenav">
-            <li><a class="content" href="Remoto.html">Remoto</a></li>
-            <li><a class="content" href="Timelapse.html">Timelapse</a></li>
-            <li><a class="content" href="Slider.html">Slider</a></li>
+            <li><a class="content" href="Remoto.html" onclick="Cambia_pagina('R onclick="Cambia_pagina('+')"+')">Remoto</a></li>
+            <li><a class="content" href="Timelapse.html" onclick="Cambia_pagina('T+')">Timelapse</a></li>
+            <li><a class="content" href="Slider.html" onclick="Cambia_pagina('S+')">Slider</a></li>
             <li><a class="active" href="Laser.html">Trappola Laser</a></li>
-            <li><a class="content" href="Audio.html">Trappola Audio</a></li>
+            <li><a class="content" href="Audio.html" onclick="Cambia_pagina('A+')">Trappola Audio</a></li>
+            <li><a class="content" href="Edit.html" onclick="Cambia_pagina('E+')">Invia File</a></li>
         </ul>
 
-        <div class="dropdown">
-            <img src="fotocamera.png" height="50px" width="50px">
-            <div class="dropdown_content">
-              <a href="Remoto.html">Remoto</a>
-              <a href="Timelapse.html">Timelapse</a>
-              <a href="Slider.html">Slider</a>
-              <a class="active" href="Laser.html">Trappola Laser</a>
-              <a href="Audio.html">Trappola Audio</a>
-            </div>
-          </div>
-
         <center>
-            <div class="content">
-                <H1>Trappola Laser</H1> <!--titolo-->
+          <div class="content">
+            <div class="dropdown">
+                <img src="fotocamera.png" height="50px" width="50px">
+                <div class="dropdown_content">
+                  <a href="Remoto.html" onclick="Cambia_pagina('R+')">Remoto</a>
+                  <a href="Timelapse.html" onclick="Cambia_pagina('T+')">Timelapse</a>
+                  <a href="Slider.html" onclick="Cambia_pagina('S+')">Slider</a>
+                  <a class="active" href="Laser.html">Trappola Laser</a>
+                  <a href="Audio.html" onclick="Cambia_pagina('A+')">Trappola Audio</a>
+                  <a href="Edit.html" onclick="Cambia_pagina('E+')">Invia File</a>
+                </div>
+              </div>
 
+              <div class="content">
+                  <H1>Trappola Laser</H1> <!--titolo-->
+              </div>
             </div>
         </center>
     </body>
