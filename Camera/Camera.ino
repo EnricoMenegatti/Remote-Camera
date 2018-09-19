@@ -10,6 +10,9 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <WebSocketsServer.h>
+#include <ESP8266mDNS.h>
+#include <WiFiUdp.h>
+#include <ArduinoOTA.h>
 
 #define ESP8266
 
@@ -49,6 +52,8 @@ const int p_shoot = D4;
 
 Encoder myEnc(p_DT, p_CLK);
 
+const char* HOME_ssid = "Vodafone-Menegatti";
+const char* HOME_pass = "Menegatti13";
 const char* ssid = "Remote-camera";
 const char* pass = "123456789";
 const char* slider = "192.168.4.2";
@@ -82,6 +87,7 @@ void setup()
   Serial.println("Setup...");
 
   ESP_Setup();
+  //OTA_Setup();
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
@@ -169,6 +175,7 @@ void loop()
   }
   
   ESP_Command();
+  ArduinoOTA.handle();
 }
 
 //--------------------------FUNZIONI------------------------
@@ -345,4 +352,3 @@ void Aumento_var(long var, int page)
   yield();
   }
 }
-
