@@ -12,8 +12,9 @@ void ESP_Setup()
 
   webSocket.begin();                 // start the websocket server
   webSocket.onEvent(webSocketEvent); // if there's an incomming websocket message, go to function 'webSocketEvent'
-  
-  server.on("/",Respond);
+
+  startServer();
+  /*server.on("/",Respond);
   server.on("/H+",Home);
   server.on("/R+",Remoto);
   server.on("/A+",Audio);
@@ -25,14 +26,28 @@ void ESP_Setup()
     command = server.uri();
     server.send(200,"text/plain",command);
   });
-  server.begin();
+  server.begin();*/
   
   Serial.println("Server setup OK");
 }
 
-void Respond()
+void startServer() // Start a HTTP server with a file read handler and an upload handler
 {
-  server.send(200,"text/html","<h1>Remote Camera</h1>");
+  server.on("/edit.html", HTTP_POST, []() { // If a POST request is sent to the /edit.html address,
+  server.send(200, "text/plain", "");
+  }, handleFileUpload); // go to 'handleFileUpload'
+  server.onNotFound(handleNotFound); // if someone requests any other file or page, go to function 'handleNotFound'
+                                     // and check if the file exists
+  server.begin(); // start the HTTP server
+  Serial.println("HTTP server started.");
+}
+
+void handleNotFound() // if the requested file or page doesn't exist, return a 404 not found error
+{
+  if(!handleFileRead(server.uri())) // check if the file exists in the flash memory (SPIFFS), if so, send it
+  {
+    server.send(404, "text/plain", "404: File Not Found");
+  }
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
@@ -65,6 +80,34 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       }
     break;
   }
+}
+
+String formatBytes(size_t bytes) // convert sizes in bytes to KB and MB
+{ 
+  if (bytes < 1024) 
+  {
+    return String(bytes) + "B";
+  } 
+  
+  else if (bytes < (1024 * 1024)) 
+  {
+    return String(bytes / 1024.0) + "KB";
+  } 
+  
+  else if (bytes < (1024 * 1024 * 1024)) 
+  {
+    return String(bytes / 1024.0 / 1024.0) + "MB";
+  }
+}
+
+String getContentType(String filename) // determine the filetype of a given filename, based on the extension
+{ 
+  if (filename.endsWith(".html")) return "text/html";
+  else if (filename.endsWith(".css")) return "text/css";
+  else if (filename.endsWith(".js")) return "application/javascript";
+  else if (filename.endsWith(".ico")) return "image/x-icon";
+  else if (filename.endsWith(".gz")) return "application/x-gzip";
+  return "text/plain";
 }
 
 /*void handleHome()

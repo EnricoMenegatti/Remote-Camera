@@ -1,4 +1,4 @@
-
+ 
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Wire.h>
@@ -13,6 +13,7 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
+#include <FS.h>
 
 #define ESP8266
 
@@ -65,6 +66,7 @@ IPAddress mask = (255, 255, 255, 0);
 
 ESP8266WebServer server(80);
 WebSocketsServer webSocket(81);
+File fsUploadFile;
 
 volatile boolean audio_ok, laser_ok;
 volatile unsigned long time_1, time_2, time_0;
@@ -88,6 +90,7 @@ void setup()
 
   ESP_Setup();
   //OTA_Setup();
+  SPIFFS_Setup();
 
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C (for the 128x64)
 
