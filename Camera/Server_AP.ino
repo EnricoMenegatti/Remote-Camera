@@ -67,28 +67,36 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
     
     case WStype_TEXT:                     // if new text data is received
 
-      char* c2;
-      c2 = ((char*) &payload);
-      strcpy(c, c2);
-      /*for (int i = 0; i > 7; i++)
-      {
-        c[i] = (char) &payload[i];
-      }*/
-      
       Serial.printf("[%u] get Text: %s\n", num, payload);
-      Serial.printf("%s",c2);
+      if(payload[1] == '+')
+      {
+        if (payload[0] == 'R')
+        {
+          modalita = 1;
+        }
+      
+        else if (payload[0] == 'T')
+        {
+          modalita = 2;
+        }
+      
+        else if (payload[0] == 'L')
+        {
+          modalita = 3;
+        }
+      
+        else if (payload[0] == 'A')
+        {
+          modalita = 4;
+        }  
+        else if (payload[0] == 'S')
+        {
+          modalita = 5;
+        }  
+      }
+      
     break;
   }
-}
-
-String getContentType(String filename) // determine the filetype of a given filename, based on the extension
-{ 
-  if (filename.endsWith(".html")) return "text/html";
-  else if (filename.endsWith(".css")) return "text/css";
-  else if (filename.endsWith(".js")) return "application/javascript";
-  else if (filename.endsWith(".ico")) return "image/x-icon";
-  else if (filename.endsWith(".gz")) return "application/x-gzip";
-  return "text/plain";
 }
 
 /*void handleHome()
