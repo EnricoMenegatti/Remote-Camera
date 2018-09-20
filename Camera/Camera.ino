@@ -119,28 +119,11 @@ void setup()
 
 void loop()
 {
+  detachInterrupt(digitalPinToInterrupt(p_audio));
+  detachInterrupt(digitalPinToInterrupt(p_laser));
+  
 	switch (modalita)
 	{
-    case 0: //PAGINA HOME
-
-      //Home();
-
-    break;
-
-		case 1: //SCATTO REMOTO
-
-		  Remoto();
-      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
-
-		break;
-
-		case 2: //TIMELAPSE
-
-			Lapse();
-      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
-
-		break;
-
 		case 3: //FOTOTRAPPOLA LASER
 
 			Laser();
@@ -154,13 +137,6 @@ void loop()
       //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
 
 		break;
-
-    case 5: //SLIDER
-
-      Slider();
-      //modalita = 0;//PROVISSORIO, FINO A FIX PIN PER AUDIO
-
-    break;
 
 		default:
 
@@ -178,85 +154,12 @@ void loop()
     Serial.println("loop");
   }
   
-  ESP_Command();
+  webSocket.loop();
+  //server.handleClient();
   ArduinoOTA.handle();
 }
 
 //--------------------------FUNZIONI------------------------
-
-void c_modo()
-{
-  Serial.println("Cambio modo");
-
-	if (c[0] == 'R')
-	{
-		modalita = 1;
-
-		pagina(1);
-		display.display();
-	}
-
-	else if (c[0] == 'T')
-	{
-		modalita = 2;
-
-		pagina(2);
-		display.display();
-	}
-
-	else if (c[0] == 'L')
-	{
-		modalita = 3;
-
-		pagina(3);
-		display.display();
-	}
-
-	else if (c[0] == 'A')
-	{
-		/*modalita = 4;
-
-		pagina(4);
-		display.display();*/
-	}  
- 
-	else //if (c[0] == 'H')
-  {
-    modalita = 0;
-
-    pagina(0);
-    display.display();
-  }
-}
-
-void encoder(int Max, int Min)
-{
-  newPosition = myEnc.read();
-
-  if (newPosition > oldPosition)
-  {
-    if (newPosition % 4 == 0)
-      Enc_cont ++;
-      //Serial.print(Enc_cont);
-      
-      if (Enc_cont > Max)
-      Enc_cont = Min;
-
-    oldPosition = newPosition;
-  }
-
-  else if (newPosition < oldPosition)
-  {
-    if (newPosition % 4 == 0)
-      Enc_cont --;
-      //Serial.print(Enc_cont);
-      
-      if (Enc_cont < Min)
-      Enc_cont = Max;
-
-    oldPosition = newPosition;
-  }
-}
 
 void verifica_comando()
 {
@@ -264,19 +167,6 @@ void verifica_comando()
   myStr.toCharArray(c,9);
   Serial.println(c[0]);
   change_command = 0;
-
-  for(int j = 0; j < 8; j++)
-  {
-    if (c[j] == '+') //FINE STRINGA E CAMBIO MODALITA'
-    {
-      c_modo();
-    }
-  }
-}
-
-void selezione(long var, int x, int y)//FUNZIONE PER CREARE LINEA DI SELEZIONE SOTTO A VARIABILE. SI UTILIZZA "dim_var".
-{
-	display.drawLine(x, y + 17, x + (11 * dim_var(var)), y + 17, WHITE); //LINEA ORIZZONTALE SOTTO A VARIABILE
 }
 
 int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
@@ -295,64 +185,4 @@ int dim_var(long var)//FUNZIONE PER DETERMINARE LUNGHEZZA VARIABILE
 
   else if (var >= 10000 && var < 100000)//10000-99999ms = 5 CIFRE
     return 5;
-}
-
-void Aumento_var(long var, int page)
-{
-  Enc_cont = var;
-  Serial.println("aumento");
-  
-  while(1)
-  {
-    newPosition = myEnc.read();
-
-    if (digitalRead(p_SW) == 0)
-    {
-      
-      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
-      {
-        yield();
-      }
-
-      Eeprom_save();
-      pagina(3);
-      display.display();
-      return;
-    }
-    
-    else if (newPosition > oldPosition)
-    {
-      if (newPosition % 4 == 0)
-        Enc_cont ++;
-  
-      oldPosition = newPosition;
-    }
-  
-    else if (newPosition < oldPosition)
-    {
-      if (newPosition % 4 == 0)
-        Enc_cont --;
-  
-      oldPosition = newPosition;
-    }
-
-    if (page == 3)
-    {
-      d_laser = Enc_cont;
-
-      pagina(3);
-      selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-      display.display();
-    }
-    
-    if (page == 4)
-    {
-      d_audio = Enc_cont;
-
-      pagina(4);
-      selezione(d_audio, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-      display.display();
-    }
-  yield();
-  }
 }

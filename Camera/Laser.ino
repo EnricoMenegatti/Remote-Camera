@@ -6,18 +6,9 @@ laser_start://ETICHETTA PER GOTO
   modalita = 3;
   
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
-  //detachInterrupt(digitalPinToInterrupt(p_audio));
-
-  Enc_cont = 0;
-  selezione_ok = 0;
-
-  pagina(3);
-  display.display();
 
   while (modalita == 3)
   {
-    ESP_Command();
-    
     if (laser_ok == true) // SE INTERRUPT AVVENUTO
     {
       detachInterrupt(digitalPinToInterrupt(p_laser)); // BLOCCO ALTRI INTERRUPT
@@ -28,8 +19,7 @@ laser_start://ETICHETTA PER GOTO
 
       digitalWrite(p_focus, HIGH);
       digitalWrite(p_shoot, HIGH); // Shoot !!
-
-      print_laser_1();
+      
       delay(100);
 
       digitalWrite(p_shoot, LOW);
@@ -41,106 +31,10 @@ laser_start://ETICHETTA PER GOTO
       {
         delay(500);
       }
-
-      print_laser_2();
-      attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
-
-    }
-
-    else if (digitalRead(p_SW) == 0)//RITORNO ALLA HOME SE PREMUTO PER PIU DI 2 SECONDI
-    {
-      last_time = millis();
-      t_pulsante = 0;
       
-      while (digitalRead(p_SW) == 0)//ATTENDO RILASCIO
-      {
-        t_pulsante = millis() - last_time;
-        Serial.print(t_pulsante);
-        yield();
-      }
-            
-      if (t_pulsante < 2000)//2000 = 2 SECONDI
-      {
-        if (selezione_ok == 0)
-        {
-          selezione_ok = !selezione_ok;
-          selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-          display.display();
-          Aumento_var(d_laser, 3);
-          Serial.print("selezione");
-          goto laser_start;
-        }
-
-        else
-        {
-          selezione_ok = !selezione_ok;
-          pagina(3);
-          display.display();
-        }
-        
-      }
-
-      else 
-        modalita = 0;
-        
+      attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
     }
-
-    /*else if (change_command == 1)
-    {
-      verifica_comando();
-    }*/
-
-    else if (Serial.available() > 0)
-    {
-      i = i + 1;
-
-      // Reading incoming bytes :
-      c[i-1] = Serial.read();
-
-      if (c[i-1] == '+') //FINE STRINGA E CAMBIO MODALITA'
-      {
-        c_modo();
-        i = 0;
-      }
-
-      else if (c[i-1] == '*') //FINE STRINGA E CICLO
-      {
-        t_laser();
-        i = 0;
-
-        pagina(3);
-        display.display();
-      }
-
-      else
-      {
-        encoder(1, 0);//VALORE MAX, MIN
-
-        switch (Enc_cont)
-        {
-          case 0:
-    
-            pagina(3);
-            display.display();
-    
-          break;
-    
-          case 1:
-    
-            selezione(d_laser, 10, 20);//VARIABILE, X VARIABILE, Y VARIABILE
-            display.display();
-    
-          break;
-    
-          default:
-    
-            pagina(3);
-            display.display();
-    
-          break;
-        }
-      }
-    }
+    webSocket.loop();
     yield();
   }
 }

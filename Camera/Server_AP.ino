@@ -11,22 +11,9 @@ void ESP_Setup()
   Serial.println(WiFi.softAPIP());
 
   webSocket.begin();                 // start the websocket server
-  webSocket.onEvent(webSocketEvent); // if there's an incomming websocket message, go to function 'webSocketEvent'
+  webSocket.onEvent(WSS_Event); // if there's an incomming websocket message, go to function 'webSocketEvent'
 
   Start_Server();
-  /*server.on("/",Respond);
-  server.on("/H+",Home);
-  server.on("/R+",Remoto);
-  server.on("/A+",Audio);
-  server.on("/L+",Laser);
-  server.on("/T+",Lapse);
-  server.on("/S+",Slider);
-  server.onNotFound([]()
-  {
-    command = server.uri();
-    server.send(200,"text/plain",command);
-  });
-  server.begin();*/
   
   Serial.println("Server setup OK");
 }
@@ -51,7 +38,7 @@ void handleNotFound() // if the requested file or page doesn't exist, return a 4
   }
 }
 
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
+void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
   switch (type) 
   {
     case WStype_DISCONNECTED:             // if the websocket is disconnected
@@ -96,23 +83,5 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       }
       
     break;
-  }
-}
-
-/*void handleHome()
-{
-  Serial.println("handle Home");
-}*/
-
-void ESP_Command() 
-{
-  webSocket.loop();
-  server.handleClient();
-  
-  if(last_command != command)
-  {
-    last_command = command;
-    Serial.println(command);
-    change_command = 1;
   }
 }
