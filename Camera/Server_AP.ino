@@ -13,7 +13,7 @@ void ESP_Setup()
   webSocket.begin();                 // start the websocket server
   webSocket.onEvent(webSocketEvent); // if there's an incomming websocket message, go to function 'webSocketEvent'
 
-  startServer();
+  Start_Server();
   /*server.on("/",Respond);
   server.on("/H+",Home);
   server.on("/R+",Remoto);
@@ -31,15 +31,36 @@ void ESP_Setup()
   Serial.println("Server setup OK");
 }
 
-void startServer() // Start a HTTP server with a file read handler and an upload handler
+void Start_Server() // Start a HTTP server with a file read handler and an upload handler
 {
-  server.on("/edit.html", HTTP_POST, []() { // If a POST request is sent to the /edit.html address,
-  server.send(200, "text/plain", "");
+  server.on("/Audio.html", HTTP_POST, []() 
+  {
+    server.send(200, "text/plain", "");
+  }, Audio);
+  
+  server.on("/Laser.html", HTTP_POST, []() 
+  {
+    server.send(200, "text/plain", "");
+  }, Laser);
+  
+  server.on("/Timelapse.html", HTTP_POST, []() 
+  {
+    server.send(200, "text/plain", "");
+  }, Lapse);
+  
+  server.on("/Slider.html", HTTP_POST, []() 
+  {
+    server.send(200, "text/plain", "");
+  }, Slider);
+  
+  server.on("/Edit.html", HTTP_POST, []() 
+  {
+    server.send(200, "text/plain", "");
   }, handleFileUpload); // go to 'handleFileUpload'
+  
   server.onNotFound(handleNotFound); // if someone requests any other file or page, go to function 'handleNotFound'
                                      // and check if the file exists
   server.begin(); // start the HTTP server
-  Serial.println("HTTP server started.");
 }
 
 void handleNotFound() // if the requested file or page doesn't exist, return a 404 not found error
@@ -66,18 +87,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
     
     case WStype_TEXT:                     // if new text data is received
       Serial.printf("[%u] get Text: %s\n", num, payload);
-      if (payload[0] == '#') // we get RGB data
-      {            
-        uint32_t rgb = (uint32_t) strtol((const char *) &payload[1], NULL, 16);   // decode rgb data
-      } 
-      else if (payload[0] == 'R') 
-      {                      // the browser sends an R when the rainbow effect is enabled
-
-      } 
-      else if (payload[0] == 'N') 
-      {                      // the browser sends an N when the rainbow effect is disabled
-
-      }
     break;
   }
 }
@@ -127,4 +136,3 @@ void ESP_Command()
     change_command = 1;
   }
 }
-
