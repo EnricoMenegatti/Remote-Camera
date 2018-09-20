@@ -1,6 +1,6 @@
 void Lapse()
 {
-  Serial.println("Lapse");
+  Serial.println("++++++++++++Lapse++++++++++++");
   modalita = 2;
   
   //detachInterrupt(digitalPinToInterrupt(p_audio));
@@ -61,4 +61,3 @@ void Lapse()
     }
   }
 }
-

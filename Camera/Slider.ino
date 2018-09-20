@@ -1,6 +1,6 @@
 void Slider()
 {
-  Serial.println("Slider");
+  Serial.println("++++++++++++Slider++++++++++++");
   modalita = 5;
   
   //detachInterrupt(digitalPinToInterrupt(p_audio));
@@ -55,4 +55,3 @@ void Slider()
     }
   }
 }
-

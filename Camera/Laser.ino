@@ -2,7 +2,7 @@ void Laser()
 {
 laser_start://ETICHETTA PER GOTO
 
-  Serial.println("Laser");
+  Serial.println("++++++++++++Laser++++++++++++");
   modalita = 3;
   
   attachInterrupt(digitalPinToInterrupt(p_laser), f_laser, LOW);
@@ -161,4 +161,3 @@ void t_laser()
   Eeprom_save();
 
 }
-

@@ -15,6 +15,24 @@ void SPIFFS_Setup()
   }
 }
 
+String formatBytes(size_t bytes) // convert sizes in bytes to KB and MB
+{ 
+  if (bytes < 1024) 
+  {
+    return String(bytes) + "B";
+  } 
+  
+  else if (bytes < (1024 * 1024)) 
+  {
+    return String(bytes / 1024.0) + "KB";
+  } 
+  
+  else if (bytes < (1024 * 1024 * 1024)) 
+  {
+    return String(bytes / 1024.0 / 1024.0) + "MB";
+  }
+}
+
 bool handleFileRead(String path) // send the right file to the client (if it exists)
 {
   Serial.println("handleFileRead: " + path);
@@ -40,6 +58,7 @@ bool handleFileRead(String path) // send the right file to the client (if it exi
 
 void handleFileUpload() // upload a new file to the SPIFFS
 {
+  Serial.print("++++++++++++FILE UPLOAD++++++++++++");
   HTTPUpload& upload = server.upload();
   String path;
   

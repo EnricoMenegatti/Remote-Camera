@@ -33,26 +33,6 @@ void ESP_Setup()
 
 void Start_Server() // Start a HTTP server with a file read handler and an upload handler
 {
-  server.on("/Audio.html", HTTP_POST, []() 
-  {
-    server.send(200, "text/plain", "");
-  }, Audio);
-  
-  server.on("/Laser.html", HTTP_POST, []() 
-  {
-    server.send(200, "text/plain", "");
-  }, Laser);
-  
-  server.on("/Timelapse.html", HTTP_POST, []() 
-  {
-    server.send(200, "text/plain", "");
-  }, Lapse);
-  
-  server.on("/Slider.html", HTTP_POST, []() 
-  {
-    server.send(200, "text/plain", "");
-  }, Slider);
-  
   server.on("/Edit.html", HTTP_POST, []() 
   {
     server.send(200, "text/plain", "");
@@ -86,26 +66,18 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
     break;
     
     case WStype_TEXT:                     // if new text data is received
-      Serial.printf("[%u] get Text: %s\n", num, payload);
-    break;
-  }
-}
 
-String formatBytes(size_t bytes) // convert sizes in bytes to KB and MB
-{ 
-  if (bytes < 1024) 
-  {
-    return String(bytes) + "B";
-  } 
-  
-  else if (bytes < (1024 * 1024)) 
-  {
-    return String(bytes / 1024.0) + "KB";
-  } 
-  
-  else if (bytes < (1024 * 1024 * 1024)) 
-  {
-    return String(bytes / 1024.0 / 1024.0) + "MB";
+      char* c2;
+      c2 = ((char*) &payload);
+      strcpy(c, c2);
+      /*for (int i = 0; i > 7; i++)
+      {
+        c[i] = (char) &payload[i];
+      }*/
+      
+      Serial.printf("[%u] get Text: %s\n", num, payload);
+      Serial.printf("%s",c2);
+    break;
   }
 }
 

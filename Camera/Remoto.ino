@@ -1,6 +1,6 @@
 void Remoto()
 {
-  Serial.println("Remoto");
+  Serial.println("++++++++++++Remoto++++++++++++");
   modalita = 1;
   
   //detachInterrupt(digitalPinToInterrupt(p_audio));

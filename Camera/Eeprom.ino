@@ -37,6 +37,6 @@ void Eeprom_save()
 
   EEPROM.commit();
 
-  Serial.println("Eeprom save");
+  //Serial.println("Eeprom save");
 
 }

@@ -1,6 +1,6 @@
 void Audio()
 {
-  Serial.println("Audio");
+  Serial.println("++++++++++++Audio++++++++++++");
   modalita = 0;
   
   attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
@@ -147,4 +147,3 @@ void t_audio()
   Eeprom_save();
 
 }
-

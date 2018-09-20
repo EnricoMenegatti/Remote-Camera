@@ -114,6 +114,7 @@ void setup()
   //Timer_2_Setup();
 
   Serial.println("Setup OK!");
+  prev_millis = millis();
 }
 
 void loop()
@@ -122,7 +123,7 @@ void loop()
 	{
     case 0: //PAGINA HOME
 
-      Home();
+      //Home();
 
     break;
 
@@ -168,10 +169,10 @@ void loop()
 		break;
 	}
   
-	Eeprom_save();
+	//Eeprom_save();
 
   curr_millis = millis();
-  if(curr_millis - prev_millis >= 1000) 
+  if(curr_millis - prev_millis >= 2000) 
   {
     prev_millis = curr_millis;
     Serial.println("loop");
