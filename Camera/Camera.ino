@@ -11,23 +11,7 @@
 #include <ArduinoOTA.h>
 #include <FS.h>
 
-#define ESP8266
-
-/*static const unsigned char PROGMEM page_1[] =
-{ B11111111, B00000000,
-  B11111111, B00000000,
-  B11000000, B11000000,
-  B11000000, B11000000,
-  B11000000, B11000000,
-  B11000000, B11000000,
-  B11111111, B00000000,
-  B11111111, B00000000,
-  B11001100, B00000000,
-  B11001100, B00000000,
-  B11000011, B00000000,
-  B11000011, B00000000,
-  B11000000, B11000000,
-  B11000000, B11000000};*/
+#define ESP8266 
 
 const int p_laser = D0;
 const int p_audio = D8;
@@ -121,11 +105,26 @@ void loop()
   }
   
   webSocket.loop();
-  //server.handleClient();
+  server.handleClient();
   ArduinoOTA.handle();
 }
 
 //--------------------------FUNZIONI------------------------
+
+void Scatto(unsigned long delay_f, long delay_s)
+{
+  digitalWrite(p_focus, HIGH); // Focus..
+
+  delay(delay_f);
+
+  digitalWrite(p_shoot, HIGH); // Shoot !!
+
+  delay(delay_s);
+
+  digitalWrite(p_focus, LOW);
+  digitalWrite(p_shoot, LOW);
+  
+}
 
 /*void verifica_comando()
 {

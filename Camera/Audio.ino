@@ -1,7 +1,6 @@
 void Audio()
 {
   Serial.println("++++++++++++Audio++++++++++++");
-  modalita = 4;
   
   attachInterrupt(digitalPinToInterrupt(p_audio), f_audio, LOW);
 

@@ -38,7 +38,8 @@ void handleNotFound() // if the requested file or page doesn't exist, return a 4
   }
 }
 
-void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
+void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) 
+{ // When a WebSocket message is received
   switch (type) 
   {
     case WStype_DISCONNECTED:             // if the websocket is disconnected
@@ -53,9 +54,9 @@ void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { /
     break;
     
     case WStype_TEXT:                     // if new text data is received
-
+    {
       Serial.printf("[%u] get Text: %s\n", num, payload);
-      if(payload[1] == '+')
+      if (payload[1] == '+')
       {
         if (payload[0] == 'R')
         {
@@ -81,7 +82,13 @@ void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { /
           modalita = 5;
         }  
       }
-      
+
+      else if (payload[12] == '*')
+      {
+        //uint32_t Time_1 = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
+
+      }
+    }
     break;
   }
 }
