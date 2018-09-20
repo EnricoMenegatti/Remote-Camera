@@ -41,11 +41,8 @@ laser_start://ETICHETTA PER GOTO
 
 void f_laser()
 {
-  if (Enc_cont == 0)
-  {
-    laser_ok = true;
-    time_1 = micros();
-  }
+  laser_ok = true;
+  time_1 = micros();
 }
 
 void t_laser()
