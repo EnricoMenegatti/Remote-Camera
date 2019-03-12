@@ -11,7 +11,7 @@ void ESP_Setup()
   Serial.println(WiFi.softAPIP());
 
   webSocket.begin();                 // start the websocket server
-  webSocket.onEvent(WSS_Event); // if there's an incomming websocket message, go to function 'webSocketEvent'
+  webSocket.onEvent(WSS_Event); // if there's an incomming websocket message, go to function 'WSS_Event'
 
   Start_Server();
   

@@ -90,7 +90,7 @@ function Send_Shoot(ind) {
       else
       {
         var center_1 = "";
-        var linee_1 = "0000";
+        var linee_1 = "1000";
       }
 
 
@@ -117,7 +117,7 @@ function Send_Shoot(ind) {
       else
       {
         var center_2 = "";
-        var linee_2 = "0000";
+        var linee_2 = "0100";
       }
     }
 
@@ -152,7 +152,7 @@ function Send_Shoot(ind) {
       else
       {
         var center_1 = "";
-        var linee_1 = "0000";
+        var linee_1 = "1000";
       }
 
     }
@@ -188,7 +188,7 @@ function Send_Shoot(ind) {
       else
       {
         var center_2 = "";
-        var linee_2 = "0000";
+        var linee_2 = "0100";
       }
     }
 
