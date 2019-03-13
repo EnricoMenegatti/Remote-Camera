@@ -86,7 +86,7 @@ void WSS_Event(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght)
       else if (payload[12] == '*')
       {
         //uint32_t Time_1 = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
-
+        Time_Remoto(payload);
       }
     }
     break;
